@@ -44,13 +44,13 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-muted border-b border-border">
-            <th className="text-left px-4 py-3 text-sm font-medium text-industrial-red border-r border-border">
+            <th className="text-left px-3 py-2 text-xs font-medium text-industrial-red border-r border-border">
               Various parameters of equipment ex.
             </th>
-            <th className="text-center px-4 py-3 text-sm font-medium text-industrial-red border-r border-border w-32">
+            <th className="text-center px-3 py-2 text-xs font-medium text-industrial-red border-r border-border w-20">
               Status in Checked/Not-Checked to be displayed
             </th>
-            <th className="text-left px-4 py-3 text-sm font-medium text-industrial-red">
+            <th className="text-left px-3 py-2 text-xs font-medium text-industrial-red">
               Add comments during inspection ex.
             </th>
           </tr>
