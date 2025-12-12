@@ -112,19 +112,21 @@ const KPICards = () => {
 
       {/* Card 7: Inspection Date */}
       <div className="kpi-card">
-        <span className="kpi-label">Inspection Date</span>
-        <div className="text-xs space-y-1 mt-2">
-          <div className="flex justify-between gap-2">
-            <span className="text-muted-foreground">Last:</span>
-            <span className="font-mono">{selectedEquipment.lastInspectionDate}</span>
-          </div>
-          <div className="flex justify-between gap-2">
-            <span className="text-muted-foreground">Scheduled:</span>
-            <span className="font-mono">{selectedEquipment.scheduledInspectionDate}</span>
-          </div>
-          <div className="flex justify-between gap-2">
-            <span className="text-muted-foreground">Actual:</span>
-            <span className="font-mono">{selectedEquipment.actualInspectionDate}</span>
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Inspection Date</div>
+          <div className="text-xs space-y-0.5 mt-1">
+            <div className="flex justify-between gap-1">
+              <span className="text-muted-foreground text-xs">Last:</span>
+              <span className="font-mono text-xs">{selectedEquipment.lastInspectionDate}</span>
+            </div>
+            <div className="flex justify-between gap-1">
+              <span className="text-muted-foreground text-xs">Sch:</span>
+              <span className="font-mono text-xs">{selectedEquipment.scheduledInspectionDate}</span>
+            </div>
+            <div className="flex justify-between gap-1">
+              <span className="text-muted-foreground text-xs">Act:</span>
+              <span className="font-mono text-xs">{selectedEquipment.actualInspectionDate}</span>
+            </div>
           </div>
         </div>
       </div>
