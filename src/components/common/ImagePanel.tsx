@@ -20,11 +20,11 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4">
+    <div className="bg-card border border-border rounded-lg p-2">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-3">
-        <Camera className="w-4 h-4 text-industrial-red" />
-        <h3 className="text-sm font-medium text-industrial-red">{title}</h3>
+      <div className="flex items-center gap-2 mb-2">
+        <Camera className="w-3 h-3 text-industrial-red" />
+        <h3 className="text-xs font-medium text-industrial-red">{title}</h3>
       </div>
 
       {/* Image Container with Navigation */}
@@ -50,7 +50,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
 
         {/* Image Area */}
-        <div className="h-40 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
+        <div className="h-56 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
           {images.length > 0 ? (
             <img
               src={images[currentIndex]}
@@ -89,7 +89,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
 
       {/* Image Counter */}
       {images.length > 0 && (
-        <div className="text-center mt-4 text-xs text-muted-foreground">
+        <div className="text-center mt-1 text-xs text-muted-foreground">
           Image {currentIndex + 1} of {images.length}
         </div>
       )}
