@@ -141,8 +141,8 @@ const PlanningReports = () => {
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Controls */}
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 flex-1">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-1 flex-wrap">
           <div className="relative flex-1 max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
