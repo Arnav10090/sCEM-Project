@@ -44,17 +44,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Fixed Header Section */}
       <Header currentPage={currentPage} />
       <ScrollingAlert />
       <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      
+
       {/* Conditional KPI Cards */}
       {showKPICards && <KPICards />}
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 pt-1 pb-24 overflow-auto">
+      <main className="flex-1 p-4 pt-1 min-h-0 pb-10">
         {renderPage()}
       </main>
 
