@@ -50,7 +50,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
 
         {/* Image Area */}
-        <div className="h-40 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
+        <div className="h-80 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
           {images.length > 0 ? (
             <img
               src={images[currentIndex]}
