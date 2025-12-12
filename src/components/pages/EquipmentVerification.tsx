@@ -133,7 +133,7 @@ const EquipmentVerification = () => {
         </div>
 
         {/* Overall Status Card */}
-        <div className="bg-card border border-border rounded-lg p-3 flex-1 flex flex-col justify-between">
+        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
           <div>
             <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
             <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
@@ -152,6 +152,27 @@ const EquipmentVerification = () => {
                 {status}
               </Button>
             ))}
+          </div>
+        </div>
+
+        {/* Verification Card */}
+        <div className="bg-card border border-border rounded-lg p-3">
+          <h5 className="text-xs font-medium text-industrial-red mb-3">Verification</h5>
+          <DropdownSelect
+            label="Verified By"
+            options={engineers}
+            value={verifiedBy}
+            onChange={setVerifiedBy}
+            placeholder="Select..."
+          />
+          <div className="mt-2">
+            <DropdownSelect
+              label="Confirmed By"
+              options={engineers}
+              value={confirmedBy}
+              onChange={setConfirmedBy}
+              placeholder="Select..."
+            />
           </div>
         </div>
       </div>
