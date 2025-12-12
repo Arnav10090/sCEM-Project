@@ -27,26 +27,26 @@ const Header = ({ currentPage }: HeaderProps) => {
   };
 
   return (
-    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-4">
+    <header className="h-10 bg-card border-b border-border flex items-center justify-between px-3 gap-2">
       {/* Customer Logo */}
-      <div className="w-44 h-12 border border-border rounded flex items-center justify-center bg-card">
+      <div className="w-32 h-8 border border-border rounded flex items-center justify-center bg-card flex-shrink-0">
         <span className="text-xs text-muted-foreground font-medium">Customer Name/Logo</span>
       </div>
 
       {/* System Title */}
-      <div className="flex-1 text-center">
-        <h1 className="text-industrial-red font-bold text-lg tracking-wide">
+      <div className="flex-1 text-center min-w-0">
+        <h1 className="text-industrial-red font-bold text-sm tracking-wide truncate">
           Smart Critical Equipment Monitoring System (sCEM) - {currentPage}
         </h1>
       </div>
 
       {/* Date/Time and Hitachi Logo */}
-      <div className="flex items-center gap-4">
-        <div className="text-sm text-foreground">
+      <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="text-xs text-foreground">
           <span className="font-medium">Date: </span>
           <span className="font-mono">{formatDateTime(currentDateTime)}</span>
         </div>
-        <div className="w-32 h-12 border border-border rounded flex items-center justify-center bg-card">
+        <div className="w-24 h-8 border border-border rounded flex items-center justify-center bg-card flex-shrink-0">
           <span className="text-xs text-muted-foreground font-medium">Hitachi Logo</span>
         </div>
       </div>
