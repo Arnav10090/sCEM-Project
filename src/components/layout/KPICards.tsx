@@ -69,11 +69,13 @@ const KPICards = () => {
 
       {/* Card 3: Equipment */}
       <div className="kpi-card">
-        <span className="kpi-label">Equipment</span>
-        <div className="w-12 h-12 border border-dashed border-border rounded flex items-center justify-center">
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Equipment</div>
+          <div className="kpi-value">{selectedEquipment.name}</div>
+        </div>
+        <div className="w-8 h-8 border border-dashed border-border rounded flex-shrink-0 flex items-center justify-center">
           <span className="text-xs text-muted-foreground">Logo</span>
         </div>
-        <span className="kpi-value mt-1">{selectedEquipment.name}</span>
       </div>
 
       {/* Card 4: Criticality Level */}
