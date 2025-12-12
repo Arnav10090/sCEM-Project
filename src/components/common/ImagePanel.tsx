@@ -20,7 +20,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-2 flex flex-col h-full">
+    <div className="bg-card border border-border rounded-lg p-2 flex flex-col h-full flex-1 min-h-0">
       {/* Header */}
       <div className="flex items-center gap-2 mb-2 flex-shrink-0">
         <Camera className="w-3 h-3 text-industrial-red" />
