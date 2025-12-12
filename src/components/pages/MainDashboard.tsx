@@ -155,7 +155,7 @@ const MainDashboard = () => {
                     key={status}
                     variant="outline"
                     size="sm"
-                    className="flex-1 text-xs"
+                    className="flex-1 text-xs py-1 h-auto"
                     onClick={() => setOverallStatus(status)}
                   >
                     {status}
