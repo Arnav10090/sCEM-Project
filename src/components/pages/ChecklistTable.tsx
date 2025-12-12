@@ -57,12 +57,12 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
         </thead>
         <tbody>
           {checklist.map((item, index) => (
-            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors">
-              <td className="px-4 py-3 text-sm text-industrial-red border-r border-border">
+            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
+              <td className="px-4 py-4 text-sm text-industrial-red border-r border-border">
                 {item.parameter}
               </td>
-              <td className="px-4 py-3 text-center border-r border-border">
-                <div className="flex items-center justify-center">
+              <td className="px-4 py-4 text-center border-r border-border align-middle">
+                <div className="flex items-center justify-center h-full">
                   <Checkbox
                     checked={item.isChecked}
                     onCheckedChange={() => handleCheckChange(item.id)}
@@ -70,13 +70,13 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
                   />
                 </div>
               </td>
-              <td className="px-4 py-3">
-                <input
-                  type="text"
+              <td className="px-4 py-4">
+                <textarea
                   value={item.comment}
                   onChange={(e) => handleCommentChange(item.id, e.target.value)}
                   placeholder="Add comment..."
-                  className="w-full px-2 py-1 text-sm border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground"
+                  rows={4}
+                  className="w-full px-2 py-2 text-sm border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground resize-none"
                 />
               </td>
             </tr>
