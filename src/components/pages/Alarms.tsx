@@ -57,16 +57,25 @@ const allAlarms = generateAlarms(50);
 
 const Alarms = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [levelFilter, setLevelFilter] = useState<string>('');
+  const [deviceFilter, setDeviceFilter] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 15;
 
-  const filteredAlarms = allAlarms.filter(
-    (alarm) =>
+  const uniqueLevels = Array.from(new Set(allAlarms.map(a => a.level)));
+  const uniqueDevices = Array.from(new Set(allAlarms.map(a => a.device)));
+
+  const filteredAlarms = allAlarms.filter((alarm) => {
+    const matchesSearch =
       alarm.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
       alarm.device.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      alarm.level.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      alarm.alarmNo.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesLevel = !levelFilter || alarm.level === levelFilter;
+    const matchesDevice = !deviceFilter || alarm.device === deviceFilter;
+
+    return matchesSearch && matchesLevel && matchesDevice;
+  });
 
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
