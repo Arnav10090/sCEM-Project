@@ -112,7 +112,7 @@ const MainDashboard = () => {
     setOverallStatus('Good');
   }, [selectedEquipment?.id]);
 
- return (
+  return (
     <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-2 h-full">
@@ -121,8 +121,8 @@ const MainDashboard = () => {
       </div>
 
       {/* Middle Column: Checklist Table */}
-      <div className="h-full flex">
-        <div className="flex-1">
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
           <ChecklistTable initialItems={currentChecklist} />
         </div>
       </div>
