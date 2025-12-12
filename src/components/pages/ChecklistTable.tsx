@@ -62,7 +62,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: Che
               <td className="px-3 py-3 text-xs text-industrial-red border-r border-border">
                 {item.parameter}
               </td>
-              <td className="px-3 py-1 text-center border-r border-border align-middle">
+              <td className="px-3 py-3 text-center border-r border-border align-middle">
                 <div className="flex items-center justify-center h-full">
                   <Checkbox
                     checked={item.isChecked}
