@@ -58,7 +58,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: Che
         </thead>
         <tbody>
           {checklist.map((item, index) => (
-            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top h-40">
+            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top h-24">
               <td className="px-3 py-3 text-xs text-industrial-red border-r border-border">
                 {item.parameter}
               </td>
