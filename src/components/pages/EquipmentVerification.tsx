@@ -133,7 +133,7 @@ const EquipmentVerification = () => {
         </div>
 
         {/* Overall Status Card */}
-        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between flex-1">
           <div>
             <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
             <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
