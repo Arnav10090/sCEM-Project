@@ -260,15 +260,16 @@ const Alarms = () => {
             </div>
           )}
 
-          {startDate && (
+          {(fromEventTime || toEventTime) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Event Time: {startDate}</span>
+              <span>Event Time: {fromEventTime} to {toEventTime}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setStartDate('');
+                  setFromEventTime('');
+                  setToEventTime('');
                   setCurrentPage(1);
                 }}
               >
@@ -277,15 +278,16 @@ const Alarms = () => {
             </div>
           )}
 
-          {endDate && (
+          {(fromRecoveredTime || toRecoveredTime) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Recovered Time: {endDate}</span>
+              <span>Recovered Time: {fromRecoveredTime} to {toRecoveredTime}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setEndDate('');
+                  setFromRecoveredTime('');
+                  setToRecoveredTime('');
                   setCurrentPage(1);
                 }}
               >
