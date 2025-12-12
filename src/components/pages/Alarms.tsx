@@ -186,8 +186,10 @@ const Alarms = () => {
                 setSearchTerm('');
                 setLevelFilter('');
                 setDeviceFilter('');
-                setStartDate('');
-                setEndDate('');
+                setFromEventTime('');
+                setToEventTime('');
+                setFromRecoveredTime('');
+                setToRecoveredTime('');
                 setCurrentPage(1);
               }}
             >
