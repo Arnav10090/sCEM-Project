@@ -6,7 +6,7 @@ const KPICards = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-7 gap-4 p-4 bg-muted/30">
+      <div className="grid grid-cols-7 gap-4 px-4 py-2 bg-muted/30">
         {[...Array(7)].map((_, i) => (
           <div key={i} className="kpi-card animate-pulse">
             <div className="flex-1">
