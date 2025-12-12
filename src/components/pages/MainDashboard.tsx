@@ -113,7 +113,7 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-2 animate-fade-in">
       {/* Top Section - Two Column Layout */}
       <div className="grid grid-cols-2 gap-2 items-end">
         {/* Left Column - Stacked Images */}
