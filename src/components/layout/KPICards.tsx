@@ -58,11 +58,13 @@ const KPICards = () => {
 
       {/* Card 2: Plant */}
       <div className="kpi-card">
-        <span className="kpi-label">Plant</span>
-        <div className="w-12 h-12 border border-dashed border-border rounded flex items-center justify-center">
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Plant</div>
+          <div className="kpi-value">{selectedEquipment.plant}</div>
+        </div>
+        <div className="w-8 h-8 border border-dashed border-border rounded flex-shrink-0 flex items-center justify-center">
           <span className="text-xs text-muted-foreground">Logo</span>
         </div>
-        <span className="kpi-value mt-1">{selectedEquipment.plant}</span>
       </div>
 
       {/* Card 3: Equipment */}
