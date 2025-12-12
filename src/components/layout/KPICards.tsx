@@ -101,11 +101,13 @@ const KPICards = () => {
 
       {/* Card 6: Spare Tab */}
       <div className="kpi-card">
-        <span className="kpi-label">Spare Tab</span>
-        <div className="w-12 h-12 border border-dashed border-border rounded flex items-center justify-center">
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Spare Tab</div>
+          <div className="kpi-value">{selectedEquipment.spareParts}</div>
+        </div>
+        <div className="w-8 h-8 border border-dashed border-border rounded flex-shrink-0 flex items-center justify-center">
           <span className="text-xs text-muted-foreground">Logo</span>
         </div>
-        <span className="kpi-value mt-1">{selectedEquipment.spareParts}</span>
       </div>
 
       {/* Card 7: Inspection Date */}
