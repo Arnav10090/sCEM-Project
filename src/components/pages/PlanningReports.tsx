@@ -93,8 +93,10 @@ const PlanningReports = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [plantFilter, setPlantFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [fromLastInspectionDate, setFromLastInspectionDate] = useState<string>('');
+  const [toLastInspectionDate, setToLastInspectionDate] = useState<string>('');
+  const [fromPlannedDate, setFromPlannedDate] = useState<string>('');
+  const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 10;
