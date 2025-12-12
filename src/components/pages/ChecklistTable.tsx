@@ -41,7 +41,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: Che
   };
 
   return (
-    <div className={`bg-card border border-border rounded-lg overflow-auto flex flex-col ${className}`}>
+    <div className={`bg-card border border-border rounded-lg overflow-auto flex flex-col ${className || 'h-96'}`}>
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-muted border-b border-border">
