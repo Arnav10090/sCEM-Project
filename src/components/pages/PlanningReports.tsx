@@ -370,9 +370,9 @@ const PlanningReports = () => {
                     {record.lastObservation && (
                       <div className="w-16 h-12 bg-muted border border-border rounded flex items-center justify-center flex-shrink-0">
                         {record.sn === 1 ? (
-                          <img src="/image.png" alt="Inspection observation" className="w-full h-full object-cover rounded" />
+                          <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
                         ) : record.sn === 2 ? (
-                          <img src="/image2.png" alt="Inspection observation" className="w-full h-full object-cover rounded" />
+                          <img src="/image2.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
                         ) : (
                           <Camera className="w-4 h-4 text-muted-foreground" />
                         )}
