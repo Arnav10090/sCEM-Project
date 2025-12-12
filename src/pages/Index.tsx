@@ -1,27 +1,19 @@
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import ScrollingAlert from '@/components/layout/ScrollingAlert';
-import Navigation from '@/components/layout/Navigation';
+import Navigation, { PageName } from '@/components/layout/Navigation';
 import KPICards from '@/components/layout/KPICards';
 import Footer from '@/components/layout/Footer';
 import MainDashboard from '@/components/pages/MainDashboard';
 import EquipmentVerification from '@/components/pages/EquipmentVerification';
 import ParameterMonitoring from '@/components/pages/ParameterMonitoring';
+import EquipmentConfiguration from '@/components/pages/EquipmentConfiguration/EquipmentConfiguration';
 import PlanningReports from '@/components/pages/PlanningReports';
 import Alarms from '@/components/pages/Alarms';
 import SystemArchitecture from '@/components/pages/SystemArchitecture';
 import SpareTab from '@/components/pages/SpareTab';
 
-type PageName = 
-  | 'Main Dashboard'
-  | 'Equipment Verification'
-  | 'Parameter Monitoring'
-  | 'Planning & Reports'
-  | 'Alarms'
-  | 'System Architecture'
-  | 'Spare Tab';
-
-const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring'];
+const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring', 'Equipment Configuration'];
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState<PageName>('Main Dashboard');
@@ -36,6 +28,8 @@ const Index = () => {
         return <EquipmentVerification />;
       case 'Parameter Monitoring':
         return <ParameterMonitoring />;
+      case 'Equipment Configuration':
+        return <EquipmentConfiguration />;
       case 'Planning & Reports':
         return <PlanningReports />;
       case 'Alarms':
