@@ -150,31 +150,33 @@ const Alarms = () => {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Event Time:</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Event Time:"
+            fromDate={fromEventTime}
+            toDate={toEventTime}
+            onFromDateChange={(date) => {
+              setFromEventTime(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToEventTime(date);
+              setCurrentPage(1);
+            }}
+          />
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Recovered Time:</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Recovered Time:"
+            fromDate={fromRecoveredTime}
+            toDate={toRecoveredTime}
+            onFromDateChange={(date) => {
+              setFromRecoveredTime(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToRecoveredTime(date);
+              setCurrentPage(1);
+            }}
+          />
 
           {isFiltered && (
             <Button
