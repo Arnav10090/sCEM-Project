@@ -85,26 +85,10 @@ const EquipmentVerification = () => {
         {/* Observations by Person Checking */}
         <div className="bg-card border border-border rounded-lg p-3 h-1/2 overflow-auto">
           <h5 className="text-xs font-medium text-industrial-red mb-2">Observations by person checking</h5>
-          <ul className="text-xs text-muted-foreground space-y-1 mb-3">
+          <ul className="text-xs text-muted-foreground space-y-1">
             <li>• {selectedEquipment?.name}</li>
             <li>• {selectedEquipment?.type}</li>
           </ul>
-          <DropdownSelect
-            label="Verified By"
-            options={engineers}
-            value={verifiedBy}
-            onChange={setVerifiedBy}
-            placeholder="Select..."
-          />
-          <div className="mt-2">
-            <DropdownSelect
-              label="Confirmed By"
-              options={engineers}
-              value={confirmedBy}
-              onChange={setConfirmedBy}
-              placeholder="Select..."
-            />
-          </div>
         </div>
       </div>
 
