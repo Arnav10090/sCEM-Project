@@ -24,30 +24,30 @@ const Footer = () => {
   return (
     <div
       className={`fixed bottom-0 left-0 right-0 bg-industrial-amber border-t border-border transition-all duration-300 ${
-        isExpanded ? 'max-h-64' : 'max-h-8'
+        isExpanded ? 'max-h-80' : 'max-h-12'
       } overflow-hidden z-50`}
     >
       {/* Collapsed Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full h-8 px-3 flex items-center justify-between hover:bg-industrial-amber/80 transition-colors"
+        className="w-full h-12 px-4 flex items-center justify-between hover:bg-industrial-amber/80 transition-colors"
       >
-        <div className="flex items-center gap-1 min-w-0">
-          <AlertTriangle className="w-4 h-4 text-industrial-red flex-shrink-0" />
-          <span className="text-industrial-red font-medium text-xs truncate">
+        <div className="flex items-center gap-2 min-w-0">
+          <AlertTriangle className="w-5 h-5 text-industrial-red flex-shrink-0" />
+          <span className="text-industrial-red font-medium text-sm truncate">
             System & Solutions related Alarms message at bottom, which can be extended for 5/6 rows. Top side latest alarms
           </span>
         </div>
-        <div className="flex items-center gap-1 text-industrial-red flex-shrink-0">
-          <span className="text-xs font-medium">{isExpanded ? 'Collapse' : 'Expand'}</span>
-          {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
+        <div className="flex items-center gap-2 text-industrial-red flex-shrink-0">
+          <span className="text-sm font-medium">{isExpanded ? 'Collapse' : 'Expand'}</span>
+          {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
         </div>
       </button>
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="px-3 py-2 overflow-auto max-h-56">
-          <table className="data-table w-full text-xs">
+        <div className="px-4 py-3 overflow-auto max-h-64">
+          <table className="data-table w-full text-sm">
             <thead>
               <tr>
                 <th className="w-16">Alarm No.</th>

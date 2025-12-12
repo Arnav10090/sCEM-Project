@@ -144,15 +144,15 @@
   
   /* KPI Card Styles */
   .kpi-card {
-    @apply bg-card border border-border rounded-md p-2 flex flex-row items-center justify-between gap-2 min-h-[55px];
+    @apply bg-card border border-border rounded-md p-3 flex flex-row items-center justify-between gap-3 min-h-[75px];
   }
 
   .kpi-label {
-    @apply text-xs font-medium text-industrial-red uppercase tracking-wide;
+    @apply text-sm font-medium text-industrial-red uppercase tracking-wide;
   }
 
   .kpi-value {
-    @apply text-xs font-bold text-foreground;
+    @apply text-sm font-bold text-foreground;
   }
   
   /* Data Table Styles */
@@ -161,11 +161,11 @@
   }
   
   .data-table th {
-    @apply bg-industrial-red text-white text-xs font-bold uppercase px-3 py-2 text-left border border-border;
+    @apply bg-industrial-red text-white text-sm font-bold uppercase px-3 py-3 text-left border border-border;
   }
   
   .data-table td {
-    @apply px-3 py-2 text-sm border border-border;
+    @apply px-3 py-3 text-sm border border-border;
   }
   
   .data-table tr:nth-child(even) {

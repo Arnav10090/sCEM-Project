@@ -114,7 +114,7 @@ const Alarms = () => {
   const isFiltered = searchTerm || levelFilter || deviceFilter || fromEventTime || toEventTime || fromRecoveredTime || toRecoveredTime;
 
   return (
-    <div className="space-y-4 animate-fade-in mt-6">
+    <div className="space-y-4 animate-fade-in mt-14">
       {/* Controls */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 flex-1">

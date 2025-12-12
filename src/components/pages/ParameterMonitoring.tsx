@@ -104,7 +104,7 @@ const ParameterMonitoring = () => {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <p className="text-xs text-muted-foreground italic">
+      <p className="text-sm text-muted-foreground italic">
         Parameters for {selectedEquipment?.name || 'selected equipment'} - critical parameters and real-time monitoring data.
       </p>
 
