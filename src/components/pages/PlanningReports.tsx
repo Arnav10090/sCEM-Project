@@ -92,6 +92,8 @@ const PlanningReports = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [plantFilter, setPlantFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 10;
@@ -107,7 +109,14 @@ const PlanningReports = () => {
     const matchesPlant = !plantFilter || record.plant === plantFilter;
     const matchesStatus = !statusFilter || record.status === statusFilter;
 
-    return matchesSearch && matchesPlant && matchesStatus;
+    let matchesDateRange = true;
+    if (startDate || endDate) {
+      const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
+      if (startDate && lastInspDate < startDate) matchesDateRange = false;
+      if (endDate && lastInspDate > endDate) matchesDateRange = false;
+    }
+
+    return matchesSearch && matchesPlant && matchesStatus && matchesDateRange;
   });
 
   const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
