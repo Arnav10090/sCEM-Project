@@ -89,8 +89,102 @@ const inspectionRecords: InspectionRecord[] = [
 ];
 
 const PlanningReports = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [plantFilter, setPlantFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const itemsPerPage = 10;
+
+  const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
+  const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
+
+  const filteredRecords = inspectionRecords.filter((record) => {
+    const matchesSearch =
+      record.equipment.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.plant.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.lastObservation.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesPlant = !plantFilter || record.plant === plantFilter;
+    const matchesStatus = !statusFilter || record.status === statusFilter;
+
+    return matchesSearch && matchesPlant && matchesStatus;
+  });
+
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedRecords = filteredRecords.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleReset = () => {
+    setSearchTerm('');
+    setPlantFilter('');
+    setStatusFilter('');
+    setCurrentPage(1);
+    setShowResetDialog(false);
+  };
+
+  const isFiltered = searchTerm || plantFilter || statusFilter;
+
   return (
-    <div className="animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
+      {/* Controls */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 flex-1">
+          <div className="relative flex-1 max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search reports..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+
+          <Select value={plantFilter} onValueChange={setPlantFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Plant" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniquePlants.map(plant => (
+                <SelectItem key={plant} value={plant}>{plant}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Status" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueStatuses.map(status => (
+                <SelectItem key={status} value={status}>{status}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {isFiltered && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSearchTerm('');
+                setPlantFilter('');
+                setStatusFilter('');
+                setCurrentPage(1);
+              }}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+
+        <Button variant="outline" size="sm" onClick={() => setShowResetDialog(true)}>
+          <RotateCcw className="w-4 h-4 mr-1" />
+          RESET
+        </Button>
+      </div>
+
+      {/* Table */}
       <div className="bg-card border border-border rounded-lg overflow-hidden">
         <table className="data-table">
           <thead>
