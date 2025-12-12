@@ -114,59 +114,57 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="w-full h-[calc(100vh-120px)] overflow-hidden p-2">
-      {/* GRID: Left | Center | Right */}
-      <div className="grid grid-cols-[20%_1fr_28%] h-full gap-3">
-
-        {/* -------------------------------------- */}
-        {/* LEFT COLUMN (Images) */}
-        {/* -------------------------------------- */}
-        <div className="flex flex-col h-full gap-3">
-          <div className="h-1/2">
-            <ImagePanel title="Image Captured During Inspection" />
+    // Parent: 3 columns: left (images), center (big table), right (grid of small cards)
+    <div className="h-full w-full p-2 animate-fade-in">
+      <div className="grid grid-cols-[20%_1fr_30%] gap-4 h-[calc(100vh-160px)]">
+        {/* LEFT: two stacked image panels */}
+        <div className="flex flex-col gap-4">
+          {/* both panels should share available space equally */}
+          <div className="flex-1">
+            <ImagePanel title="Image Captured During Inspection" className="h-full" />
           </div>
-          <div className="h-1/2">
-            <ImagePanel title="Last Image Captured" />
+          <div className="flex-1">
+            <ImagePanel title="Last Image Captured" className="h-full" />
           </div>
         </div>
 
-        {/* -------------------------------------- */}
-        {/* CENTER COLUMN (Checklist table) */}
-        {/* -------------------------------------- */}
-        <div className="h-full overflow-hidden">
-          <div className="bg-card border border-border rounded-lg h-full p-3 overflow-auto">
+        {/* CENTER: large table / checklist occupying most of the center column */}
+        <div className="bg-transparent flex flex-col gap-4">
+          <div className="flex-1 bg-card border border-border rounded-lg p-3 overflow-auto">
+            {/* Keep ChecklistTable as the main centered large panel */}
             <ChecklistTable initialItems={currentChecklist} />
           </div>
         </div>
 
-        {/* -------------------------------------- */}
-        {/* RIGHT COLUMN — 3 ROWS */}
-        {/* -------------------------------------- */}
-        <div className="grid grid-rows-[30%_30%_40%] h-full gap-3">
-
-          {/* ---------- ROW 1 (Top row: 2 boxes) ---------- */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-card border border-border rounded-lg p-3 overflow-hidden">
-              <h4 className="text-xs text-industrial-red font-medium mb-2">
-                Observations based on image comparison
-              </h4>
-              <ul className="text-xs text-industrial-red space-y-1 overflow-auto h-[85%]">
-                {currentObservations.map((obs, i) => <li key={i}>{obs}</li>)}
+        {/* RIGHT: grid with 2 columns and rows to match the wireframe */}
+        <div className="grid grid-rows-[auto_auto_1fr] gap-4">
+          {/* Top two small boxes (row 1): Observations & Overall Equipment */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-card border border-border rounded-lg p-3">
+              <h4 className="text-xs font-medium text-industrial-red mb-2">Observations based on image comparison (Old and Latest)</h4>
+              <ul className="space-y-1 text-xs text-industrial-red">
+                {currentObservations.map((obs, idx) => (
+                  <li key={idx}>{obs}</li>
+                ))}
               </ul>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-3 flex flex-col">
-              <h5 className="text-xs text-industrial-red font-medium mb-2">Overall Equipment Status</h5>
-
-              <div className={`text-center py-1 rounded text-white text-xs font-bold mb-2 ${getStatusClass()}`}>
-                {overallStatus}
+            <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+              <div>
+                <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
+                <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
+                  {overallStatus}
+                </div>
               </div>
 
-              <div className="flex gap-1 mt-auto">
-                {['Good', 'Bad', 'Worst'].map(status => (
-                  <Button key={status} size="sm" variant="outline"
-                    className="flex-1 text-xs"
-                    onClick={() => setOverallStatus(status as any)}
+              <div className="flex gap-1 mt-2">
+                {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                  <Button
+                    key={status}
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 text-xs py-0 h-auto"
+                    onClick={() => setOverallStatus(status)}
                   >
                     {status}
                   </Button>
@@ -175,48 +173,68 @@ const MainDashboard = () => {
             </div>
           </div>
 
-          {/* ---------- ROW 2 (Middle row: 2 boxes) ---------- */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-card border border-border rounded-lg p-3 text-xs">
-              <h5 className="text-industrial-red font-medium mb-2">Last Inspection Date</h5>
-              <div className="space-y-1">
-                <div className="flex justify-between"><span>Last:</span><span>{selectedEquipment?.lastInspectionDate}</span></div>
-                <div className="flex justify-between"><span>Scheduled:</span><span>{selectedEquipment?.scheduledInspectionDate}</span></div>
-                <div className="flex justify-between"><span>Actual:</span><span>{selectedEquipment?.actualInspectionDate}</span></div>
+          {/* Middle two small boxes (row 2): Last Inspection Date & Observations by person */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-card border border-border rounded-lg p-3">
+              <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Last:</span>
+                  <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Scheduled:</span>
+                  <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Actual:</span>
+                  <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+                </div>
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-3 overflow-hidden">
-              <h4 className="text-xs text-industrial-red font-medium mb-2">Observations by person checking</h4>
-              <ul className="text-xs text-muted-foreground space-y-1 overflow-auto h-[85%]">
-                {currentComments.map((c, i) => <li key={i}>{c}</li>)}
+            <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+              <h4 className="text-xs font-medium text-industrial-red mb-2">Observations by person checking</h4>
+              <ul className="space-y-1 text-xs text-muted-foreground">
+                {currentComments.map((comment, idx) => (
+                  <li key={idx}>{comment}</li>
+                ))}
               </ul>
             </div>
           </div>
 
-          {/* ---------- ROW 3 (Bottom full width) ---------- */}
-          <div className="bg-card border border-border rounded-lg p-3">
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <DropdownSelect
-                label="Verified By"
-                options={engineers}
-                value={verifiedBy}
-                onChange={setVerifiedBy}
-              />
-              <DropdownSelect
-                label="Confirmed By"
-                options={engineers}
-                value={confirmedBy}
-                onChange={setConfirmedBy}
-              />
+          {/* Bottom wide area (row 3): Verified / Confirmed spanning full width */}
+          <div className="bg-card border border-border rounded-lg p-3 flex items-center">
+            <div className="w-full">
+              <div className="grid grid-cols-2 gap-4 items-center">
+                <div>
+                  <label className="text-xs text-muted-foreground block mb-1">Verified By:</label>
+                  <DropdownSelect
+                    label=""
+                    options={engineers}
+                    value={verifiedBy}
+                    onChange={setVerifiedBy}
+                    placeholder="Name from drop down list"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs text-muted-foreground block mb-1">Confirmed By:</label>
+                  <DropdownSelect
+                    label=""
+                    options={engineers}
+                    value={confirmedBy}
+                    onChange={setConfirmedBy}
+                    placeholder="Name from drop down list"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   );
-
 };
 
 export default MainDashboard;
