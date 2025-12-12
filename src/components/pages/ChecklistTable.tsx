@@ -55,7 +55,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="overflow-auto block">
           {checklist.map((item, index) => (
             <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
               <td className="px-3 py-1 text-xs text-industrial-red border-r border-border">
