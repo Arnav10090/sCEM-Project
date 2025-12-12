@@ -11,6 +11,7 @@ interface ChecklistItem {
 interface ChecklistTableProps {
   equipmentType?: string;
   initialItems?: ChecklistItem[];
+  className?: string;
 }
 
 const defaultChecklist: ChecklistItem[] = [
@@ -20,7 +21,7 @@ const defaultChecklist: ChecklistItem[] = [
   { id: '4', parameter: 'Overall status', isChecked: false, comment: '' },
 ];
 
-const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps) => {
+const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: ChecklistTableProps) => {
   const [checklist, setChecklist] = useState<ChecklistItem[]>(initialItems);
 
   const handleCheckChange = (id: string) => {
@@ -40,7 +41,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden">
+    <div className={`bg-card border border-border rounded-lg overflow-auto flex flex-col ${className || 'h-96'}`}>
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-muted border-b border-border">
@@ -57,11 +58,11 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
         </thead>
         <tbody>
           {checklist.map((item, index) => (
-            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top">
-              <td className="px-3 py-1 text-xs text-industrial-red border-r border-border">
+            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors align-top h-16">
+              <td className="px-3 py-3 text-xs text-industrial-red border-r border-border">
                 {item.parameter}
               </td>
-              <td className="px-3 py-1 text-center border-r border-border align-middle">
+              <td className="px-3 py-3 text-center border-r border-border align-middle">
                 <div className="flex items-center justify-center h-full">
                   <Checkbox
                     checked={item.isChecked}
@@ -70,12 +71,12 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
                   />
                 </div>
               </td>
-              <td className="px-3 py-1">
+              <td className="px-3 py-3">
                 <textarea
                   value={item.comment}
                   onChange={(e) => handleCommentChange(item.id, e.target.value)}
                   placeholder="Add comment..."
-                  rows={1}
+                  rows={3}
                   className="w-full px-2 py-1 text-xs border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground resize-none"
                 />
               </td>

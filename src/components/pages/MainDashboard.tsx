@@ -94,7 +94,7 @@ const MainDashboard = () => {
     }
   };
 
-  const currentObservations = selectedEquipment 
+  const currentObservations = selectedEquipment
     ? equipmentObservations[selectedEquipment.id] || equipmentObservations['motor-001']
     : equipmentObservations['motor-001'];
 
@@ -113,26 +113,64 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="space-y-2 animate-fade-in">
-      {/* Top Section - Three Column Layout */}
-      <div className="grid grid-cols-3 gap-2">
-        {/* Left Column - Side by Side Images */}
-        <div className="flex flex-col gap-1">
-          <ImagePanel title="Image Captured During Inspection" />
-          <ImagePanel title="Last Image Captured" />
+    <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
+      {/* Left Column: Images (stacked) */}
+      <div className="flex flex-col gap-2 h-full">
+        <ImagePanel title="Image Captured During Inspection" />
+        <ImagePanel title="Last Image Captured" />
+      </div>
+
+      {/* Middle Column: Checklist Table */}
+      <div className="flex flex-col h-full">
+        <ChecklistTable initialItems={currentChecklist} className="h-full" />
+      </div>
+
+      {/* Right Column: All cards stacked */}
+      <div className="flex flex-col gap-2 h-full">
+        {/* Top Row: Observations and Overall Status */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Observations Based on Image Comparison */}
+          <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+            <h4 className="text-xs font-medium text-industrial-red mb-2">
+              Observations based on image comparison (Old and Latest)
+            </h4>
+            <ul className="space-y-1 text-xs text-industrial-red">
+              {currentObservations.map((obs, idx) => (
+                <li key={idx}>{obs}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Overall Equipment Status */}
+          <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+            <div>
+              <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
+              <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
+                {overallStatus}
+              </div>
+            </div>
+            <div className="flex gap-1">
+              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs py-0 h-auto"
+                  onClick={() => setOverallStatus(status)}
+                >
+                  {status}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Middle Column - Checklist Table */}
-        <div>
-          <ChecklistTable initialItems={currentChecklist} />
-        </div>
-
-        {/* Right Column - Inspection Dates and Status Card */}
-        <div className="space-y-2">
-          {/* Inspection Dates Card */}
+        {/* Middle Row: Last Inspection Date and Observations by Person */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Last Inspection Date */}
           <div className="bg-card border border-border rounded-lg p-3">
             <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
-            <div className="space-y-1 text-xs mb-3">
+            <div className="space-y-1 text-xs">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Last:</span>
                 <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
@@ -148,58 +186,22 @@ const MainDashboard = () => {
             </div>
           </div>
 
-          {/* Overall Equipment Status Card */}
-          <div className="bg-card border border-border rounded-lg p-3">
-            <h5 className="text-xs font-medium text-industrial-red mb-1">Overall Equipment Status</h5>
-            <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
-              {overallStatus}
-            </div>
-            <div className="flex gap-1">
-              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
-                <Button
-                  key={status}
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 text-xs py-1 h-auto"
-                  onClick={() => setOverallStatus(status)}
-                >
-                  {status}
-                </Button>
+          {/* Observations by Person Checking */}
+          <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+            <h4 className="text-xs font-medium text-industrial-red mb-2">
+              Observations by person checking
+            </h4>
+            <ul className="space-y-1 text-xs text-muted-foreground">
+              {currentComments.map((comment, idx) => (
+                <li key={idx}>{comment}</li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Section - Three Cards */}
-      <div className="grid grid-cols-3 gap-4">
-        {/* Observations Based on Image Comparison */}
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h4 className="text-sm font-medium text-industrial-red mb-3">
-            Observations based on image comparison (Old and Latest)
-          </h4>
-          <ul className="space-y-2 text-sm text-industrial-red">
-            {currentObservations.map((obs, idx) => (
-              <li key={idx}>{obs}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Observations by Person Checking */}
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h4 className="text-sm font-medium text-industrial-red mb-3">
-            Observations by person checking
-          </h4>
-          <ul className="space-y-1 text-sm text-muted-foreground">
-            {currentComments.map((comment, idx) => (
-              <li key={idx}>{comment}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Verified By / Confirmed By */}
-        <div className="bg-card border border-border rounded-lg p-4">
-          <div className="space-y-4">
+        {/* Bottom Row: Verified/Confirmed By spanning full width */}
+        <div className="bg-card border border-border rounded-lg p-3">
+          <div className="grid grid-cols-2 gap-3">
             <DropdownSelect
               label="Verified By"
               options={engineers}
