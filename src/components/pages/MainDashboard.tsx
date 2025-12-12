@@ -113,7 +113,7 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid grid-cols-3 gap-2 animate-fade-in">
+    <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-2">
         <ImagePanel title="Image Captured During Inspection" />
