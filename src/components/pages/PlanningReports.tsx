@@ -110,10 +110,13 @@ const PlanningReports = () => {
     const matchesStatus = !statusFilter || record.status === statusFilter;
 
     let matchesDateRange = true;
-    if (startDate || endDate) {
+    if (startDate) {
       const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
-      if (startDate && lastInspDate < startDate) matchesDateRange = false;
-      if (endDate && lastInspDate > endDate) matchesDateRange = false;
+      if (lastInspDate < startDate) matchesDateRange = false;
+    }
+    if (endDate) {
+      const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
+      if (plannedInspDate > endDate) matchesDateRange = false;
     }
 
     return matchesSearch && matchesPlant && matchesStatus && matchesDateRange;
