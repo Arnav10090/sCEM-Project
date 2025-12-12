@@ -368,7 +368,7 @@ const PlanningReports = () => {
                   <div className="flex flex-col items-start gap-2">
                     <span className="text-industrial-red">{record.lastObservation || '-'}</span>
                     {record.lastObservation && (
-                      <div className="w-24 h-16 bg-muted border border-border rounded flex items-center justify-center">
+                      <div className="w-40 h-32 bg-muted border border-border rounded flex items-center justify-center">
                         {record.sn === 1 ? (
                           <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
                         ) : record.sn === 2 ? (
