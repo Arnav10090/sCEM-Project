@@ -133,13 +133,15 @@ const PlanningReports = () => {
     setSearchTerm('');
     setPlantFilter('');
     setStatusFilter('');
-    setStartDate('');
-    setEndDate('');
+    setFromLastInspectionDate('');
+    setToLastInspectionDate('');
+    setFromPlannedDate('');
+    setToPlannedDate('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
-  const isFiltered = searchTerm || plantFilter || statusFilter || startDate || endDate;
+  const isFiltered = searchTerm || plantFilter || statusFilter || fromLastInspectionDate || toLastInspectionDate || fromPlannedDate || toPlannedDate;
 
   return (
     <div className="space-y-4 animate-fade-in">
