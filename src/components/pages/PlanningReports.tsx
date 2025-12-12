@@ -390,48 +390,68 @@ const PlanningReports = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-end gap-2">
-        <span className="text-sm text-muted-foreground">PAGE</span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(1)}
-          disabled={currentPage === 1}
-        >
-          <ChevronsLeft className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-        <span className="text-sm font-mono px-2">
-          {currentPage} / {totalPages}
-        </span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronsRight className="w-4 h-4" />
-        </Button>
+      {/* Rows Per Page and Pagination */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-muted-foreground">Rows per page:</label>
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+            setItemsPerPage(parseInt(value));
+            setCurrentPage(1);
+          }}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {rowsPerPageOptions.map(option => (
+                <SelectItem key={option} value={option.toString()}>{option}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-end gap-2">
+          <span className="text-sm text-muted-foreground">PAGE</span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronsLeft className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+          <span className="text-sm font-mono px-2">
+            {currentPage} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronsRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Reset Confirmation Dialog */}
