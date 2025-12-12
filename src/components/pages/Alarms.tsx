@@ -79,14 +79,19 @@ const Alarms = () => {
     const matchesLevel = !levelFilter || alarm.level === levelFilter;
     const matchesDevice = !deviceFilter || alarm.device === deviceFilter;
 
-    let matchesDateRange = true;
-    if (startDate || endDate) {
-      const eventDate = alarm.eventTime.split(' ')[0];
-      if (startDate && eventDate < startDate) matchesDateRange = false;
-      if (endDate && eventDate > endDate) matchesDateRange = false;
+    let matchesEventTimeRange = true;
+    const eventDate = alarm.eventTime.split(' ')[0];
+    if (fromEventTime && eventDate < fromEventTime) matchesEventTimeRange = false;
+    if (toEventTime && eventDate > toEventTime) matchesEventTimeRange = false;
+
+    let matchesRecoveredTimeRange = true;
+    if (alarm.recoveredTime !== '-') {
+      const recoveredDate = alarm.recoveredTime.split(' ')[0];
+      if (fromRecoveredTime && recoveredDate < fromRecoveredTime) matchesRecoveredTimeRange = false;
+      if (toRecoveredTime && recoveredDate > toRecoveredTime) matchesRecoveredTimeRange = false;
     }
 
-    return matchesSearch && matchesLevel && matchesDevice && matchesDateRange;
+    return matchesSearch && matchesLevel && matchesDevice && matchesEventTimeRange && matchesRecoveredTimeRange;
   });
 
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
