@@ -144,15 +144,15 @@
   
   /* KPI Card Styles */
   .kpi-card {
-    @apply bg-card border border-border rounded-md p-3 flex flex-row items-center justify-between gap-3 min-h-[75px];
+    @apply bg-card border border-border rounded-md p-5 flex flex-row items-center justify-between gap-3 min-h-[100px];
   }
 
   .kpi-label {
-    @apply text-sm font-medium text-industrial-red uppercase tracking-wide;
+    @apply text-base font-medium text-industrial-red uppercase tracking-wide;
   }
 
   .kpi-value {
-    @apply text-sm font-bold text-foreground;
+    @apply text-lg font-bold text-foreground;
   }
   
   /* Data Table Styles */
