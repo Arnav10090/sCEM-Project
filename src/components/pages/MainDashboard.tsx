@@ -121,7 +121,7 @@ const MainDashboard = () => {
       </div>
 
       {/* Middle Column: Checklist Table */}
-      <div>
+      <div className="h-full">
         <ChecklistTable initialItems={currentChecklist} />
       </div>
 
