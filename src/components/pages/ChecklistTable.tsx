@@ -40,9 +40,9 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden flex flex-col max-h-96">
+    <div className="bg-card border border-border rounded-lg overflow-auto flex flex-col max-h-96">
       <table className="w-full border-collapse">
-        <thead className="sticky top-0">
+        <thead>
           <tr className="bg-muted border-b border-border">
             <th className="text-left px-3 py-2 text-xs font-medium text-industrial-red border-r border-border">
               Various parameters of equipment ex.
