@@ -113,20 +113,20 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
+    <div className="grid grid-cols-3 gap-2 h-[calc(100vh-300px)] animate-fade-in">
       {/* Left Column: Images (stacked) */}
-      <div className="flex flex-col gap-2 h-full">
+      <div className="flex flex-col gap-2 h-full min-h-0">
         <ImagePanel title="Image Captured During Inspection" />
         <ImagePanel title="Last Image Captured" />
       </div>
 
       {/* Middle Column: Checklist Table */}
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full min-h-0">
         <ChecklistTable initialItems={currentChecklist} className="h-full" />
       </div>
 
       {/* Right Column: All cards stacked */}
-      <div className="flex flex-col gap-2 h-full">
+      <div className="flex flex-col gap-2 h-full min-h-0 overflow-auto">
         {/* Top Row: Observations and Overall Status */}
         <div className="grid grid-cols-2 gap-2">
           {/* Observations Based on Image Comparison */}
