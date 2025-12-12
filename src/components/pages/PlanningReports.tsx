@@ -127,11 +127,13 @@ const PlanningReports = () => {
     setSearchTerm('');
     setPlantFilter('');
     setStatusFilter('');
+    setStartDate('');
+    setEndDate('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
-  const isFiltered = searchTerm || plantFilter || statusFilter;
+  const isFiltered = searchTerm || plantFilter || statusFilter || startDate || endDate;
 
   return (
     <div className="space-y-4 animate-fade-in">
