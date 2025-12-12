@@ -114,7 +114,7 @@ const EquipmentVerification = () => {
       {/* Right Columns - Status & Info */}
       <div className="flex flex-col gap-2 h-full">
         {/* Top Row - Dates and Status Cards Side by Side */}
-        <div className="grid grid-cols-2 gap-2 flex-1">
+        <div className="grid grid-cols-2 gap-2">
           {/* Dates Card */}
           <div className="bg-card border border-border rounded-lg p-3">
             <h5 className="text-xs font-medium text-industrial-red mb-2">Inspection Dates</h5>
