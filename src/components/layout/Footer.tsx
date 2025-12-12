@@ -46,7 +46,7 @@ const Footer = () => {
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="px-4 pb-4 overflow-auto max-h-64">
+        <div className="px-3 py-2 overflow-auto max-h-56">
           <table className="data-table w-full text-xs">
             <thead>
               <tr>
