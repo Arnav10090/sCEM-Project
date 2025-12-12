@@ -114,54 +114,58 @@ const MainDashboard = () => {
 
   return (
     <div className="space-y-2 animate-fade-in">
-      {/* Top Section - Two Column Layout */}
-      <div className="grid grid-cols-2 gap-2 items-end">
-        {/* Left Column - Stacked Images */}
+      {/* Top Section - Three Column Layout */}
+      <div className="grid grid-cols-3 gap-2">
+        {/* Left Column - Side by Side Images */}
         <div className="flex flex-col gap-1">
           <ImagePanel title="Image Captured During Inspection" />
           <ImagePanel title="Last Image Captured" />
         </div>
 
-        {/* Right Column - Checklist Table and Status Card */}
-        <div className="space-y-2">
-          {/* Checklist Table */}
+        {/* Middle Column - Checklist Table */}
+        <div>
           <ChecklistTable initialItems={currentChecklist} />
+        </div>
 
-          {/* Overall Equipment Status Card */}
+        {/* Right Column - Inspection Dates and Status Card */}
+        <div className="space-y-2">
+          {/* Inspection Dates Card */}
           <div className="bg-card border border-border rounded-lg p-3">
-            <div className="space-y-2 text-xs mb-3">
+            <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
+            <div className="space-y-1 text-xs mb-3">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Last Inspection Date:</span>
+                <span className="text-muted-foreground">Last:</span>
                 <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Scheduled Inspection Date:</span>
+                <span className="text-muted-foreground">Scheduled:</span>
                 <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Actual Inspection Date:</span>
+                <span className="text-muted-foreground">Actual:</span>
                 <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
               </div>
             </div>
+          </div>
 
-            <div className="p-2 border border-border rounded-lg">
-              <h5 className="text-xs font-medium text-industrial-red mb-1">Overall Equipment Status</h5>
-              <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
-                {overallStatus}
-              </div>
-              <div className="flex gap-1">
-                {(['Good', 'Bad', 'Worst'] as const).map((status) => (
-                  <Button
-                    key={status}
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 text-xs py-1 h-auto"
-                    onClick={() => setOverallStatus(status)}
-                  >
-                    {status}
-                  </Button>
-                ))}
-              </div>
+          {/* Overall Equipment Status Card */}
+          <div className="bg-card border border-border rounded-lg p-3">
+            <h5 className="text-xs font-medium text-industrial-red mb-1">Overall Equipment Status</h5>
+            <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
+              {overallStatus}
+            </div>
+            <div className="flex gap-1">
+              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs py-1 h-auto"
+                  onClick={() => setOverallStatus(status)}
+                >
+                  {status}
+                </Button>
+              ))}
             </div>
           </div>
         </div>
