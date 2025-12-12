@@ -55,7 +55,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
             <img
               src={images[currentIndex]}
               alt={`${title} - Image ${currentIndex + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           ) : (
             <div className="text-center text-muted-foreground">
