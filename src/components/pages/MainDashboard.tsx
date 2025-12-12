@@ -128,8 +128,8 @@ const MainDashboard = () => {
           <ChecklistTable initialItems={currentChecklist} />
 
           {/* Overall Equipment Status Card */}
-          <div className="bg-card border border-border rounded-lg p-4">
-            <div className="space-y-3 text-sm mb-4">
+          <div className="bg-card border border-border rounded-lg p-3">
+            <div className="space-y-2 text-xs mb-3">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Last Inspection Date:</span>
                 <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
