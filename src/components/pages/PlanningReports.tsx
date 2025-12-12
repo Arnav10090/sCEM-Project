@@ -217,8 +217,10 @@ const PlanningReports = () => {
                 setSearchTerm('');
                 setPlantFilter('');
                 setStatusFilter('');
-                setStartDate('');
-                setEndDate('');
+                setFromLastInspectionDate('');
+                setToLastInspectionDate('');
+                setFromPlannedDate('');
+                setToPlannedDate('');
                 setCurrentPage(1);
               }}
             >
