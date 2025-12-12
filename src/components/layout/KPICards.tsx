@@ -91,9 +91,11 @@ const KPICards = () => {
 
       {/* Card 5: Equipment Status */}
       <div className="kpi-card">
-        <span className="kpi-label">Equipment Status</span>
-        <div className={`px-3 py-2 rounded font-medium text-white text-xs mt-2 text-center`} style={{ backgroundColor: selectedEquipment.statusColor }}>
-          {selectedEquipment.status}
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Equipment Status</div>
+          <div className={`px-2 py-1 rounded font-medium text-white text-xs text-center mt-1`} style={{ backgroundColor: selectedEquipment.statusColor }}>
+            {selectedEquipment.status}
+          </div>
         </div>
       </div>
 
