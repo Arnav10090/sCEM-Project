@@ -71,7 +71,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: Che
                   />
                 </div>
               </td>
-              <td className="px-3 py-1">
+              <td className="px-3 py-3">
                 <textarea
                   value={item.comment}
                   onChange={(e) => handleCommentChange(item.id, e.target.value)}
