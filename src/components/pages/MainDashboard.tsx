@@ -128,7 +128,7 @@ const MainDashboard = () => {
       {/* Right Column: All cards stacked */}
       <div className="flex flex-col gap-2 h-full min-h-0 overflow-auto">
         {/* Top Row: Observations and Overall Status */}
-        <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+        <div className="grid grid-cols-2 gap-2">
           {/* Observations Based on Image Comparison */}
           <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
             <h4 className="text-xs font-medium text-industrial-red mb-2 flex-shrink-0">
