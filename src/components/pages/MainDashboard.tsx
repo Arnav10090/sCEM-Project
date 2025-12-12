@@ -117,7 +117,7 @@ const MainDashboard = () => {
       {/* Top Section - Two Column Layout */}
       <div className="grid grid-cols-2 gap-4 items-end">
         {/* Left Column - Stacked Images */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <ImagePanel title="Image Captured During Inspection" />
           <ImagePanel title="Last Image Captured" />
         </div>
