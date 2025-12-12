@@ -20,18 +20,18 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-2">
+    <div className="bg-card border border-border rounded-lg p-2 flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-2 flex-shrink-0">
         <Camera className="w-3 h-3 text-industrial-red" />
         <h3 className="text-xs font-medium text-industrial-red">{title}</h3>
       </div>
 
       {/* Image Container with Navigation */}
-      <div className="relative">
+      <div className="relative flex-1">
         {/* Top Navigation */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <button 
+          <button
             onClick={() => navigate('up')}
             className="nav-circle"
           >
@@ -41,7 +41,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
 
         {/* Left Navigation */}
         <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <button 
+          <button
             onClick={() => navigate('left')}
             className="nav-circle"
           >
@@ -50,7 +50,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
 
         {/* Image Area */}
-        <div className="h-40 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
+        <div className="h-full bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
           {images.length > 0 ? (
             <img
               src={images[currentIndex]}
