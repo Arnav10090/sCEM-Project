@@ -1,23 +1,62 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useEquipment } from '@/context/EquipmentContext';
 import DropdownSelect from '../common/DropdownSelect';
 import { Button } from '@/components/ui/button';
 import { Camera } from 'lucide-react';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
-const interlocks = [
-  { id: 1, name: 'High Temperature', description: 'Image taken for this with instrument at site' },
-  { id: 2, name: 'Vibration Interlock', description: 'Image taken for this with sensors at site' },
-  { id: 3, name: 'Safety Interlock', description: 'Image taken for this at site' },
-  { id: 4, name: 'High Current', description: 'Image taken for this with instrument at site' },
-  { id: 5, name: 'xxxxxxxxxxxxx', description: 'Image taken for this with sensors at site' },
-  { id: 6, name: 'xxxxxxxxxxxxx', description: 'Image taken for this at site' },
-];
+const equipmentInterlocks: Record<string, Array<{ id: number; name: string; description: string }>> = {
+  'motor-001': [
+    { id: 1, name: 'High Temperature', description: 'Image taken for this with instrument at site' },
+    { id: 2, name: 'Vibration Interlock', description: 'Image taken for this with sensors at site' },
+    { id: 3, name: 'Safety Interlock', description: 'Image taken for this at site' },
+    { id: 4, name: 'High Current', description: 'Image taken for this with instrument at site' },
+    { id: 5, name: 'Overload Protection', description: 'Image taken for this with sensors at site' },
+    { id: 6, name: 'Phase Failure', description: 'Image taken for this at site' }
+  ],
+  'plc-001': [
+    { id: 1, name: 'Communication Failure', description: 'Image taken for this with instrument at site' },
+    { id: 2, name: 'Power Supply Fault', description: 'Image taken for this with sensors at site' },
+    { id: 3, name: 'CPU Error', description: 'Image taken for this at site' },
+    { id: 4, name: 'I/O Module Fault', description: 'Image taken for this with instrument at site' },
+    { id: 5, name: 'Watchdog Timer', description: 'Image taken for this with sensors at site' },
+    { id: 6, name: 'Program Execution Error', description: 'Image taken for this at site' }
+  ],
+  'drive-001': [
+    { id: 1, name: 'Overvoltage Protection', description: 'Image taken for this with instrument at site' },
+    { id: 2, name: 'Undervoltage Protection', description: 'Image taken for this with sensors at site' },
+    { id: 3, name: 'Overcurrent Trip', description: 'Image taken for this at site' },
+    { id: 4, name: 'Overtemperature', description: 'Image taken for this with instrument at site' },
+    { id: 5, name: 'Ground Fault', description: 'Image taken for this with sensors at site' },
+    { id: 6, name: 'Emergency Stop', description: 'Image taken for this at site' }
+  ],
+  'pump-001': [
+    { id: 1, name: 'High Pressure', description: 'Image taken for this with instrument at site' },
+    { id: 2, name: 'Low Flow', description: 'Image taken for this with sensors at site' },
+    { id: 3, name: 'Cavitation Detection', description: 'Image taken for this at site' },
+    { id: 4, name: 'Seal Leakage', description: 'Image taken for this with instrument at site' },
+    { id: 5, name: 'Bearing Temperature', description: 'Image taken for this with sensors at site' },
+    { id: 6, name: 'Vibration Alert', description: 'Image taken for this at site' }
+  ]
+};
 
 const EquipmentVerification = () => {
+  const { selectedEquipment } = useEquipment();
+  const [interlocks, setInterlocks] = useState<Array<{ id: number; name: string; description: string }>>([]);
   const [verifiedBy, setVerifiedBy] = useState<string>('');
   const [confirmedBy, setConfirmedBy] = useState<string>('');
   const [overallStatus, setOverallStatus] = useState<'Good' | 'Bad' | 'Worst'>('Good');
+
+  useEffect(() => {
+    if (selectedEquipment) {
+      const equipmentInterlock = equipmentInterlocks[selectedEquipment.id];
+      setInterlocks(equipmentInterlock || equipmentInterlocks['motor-001']);
+      setVerifiedBy('');
+      setConfirmedBy('');
+      setOverallStatus('Good');
+    }
+  }, [selectedEquipment?.id]);
 
   const getStatusClass = () => {
     switch (overallStatus) {
@@ -37,7 +76,7 @@ const EquipmentVerification = () => {
           </h4>
           <ul className="space-y-2 text-sm text-industrial-red">
             {interlocks.map((interlock) => (
-              <li key={interlock.id}>{interlock.name}</li>
+              <li key={interlock.id}>{interlock.id}. {interlock.name}</li>
             ))}
           </ul>
         </div>
@@ -66,15 +105,15 @@ const EquipmentVerification = () => {
           <div className="space-y-4 text-sm">
             <div>
               <span className="text-muted-foreground block">Last Inspection Date:</span>
-              <span className="font-mono">12/01/2024</span>
+              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
             </div>
             <div>
               <span className="text-muted-foreground block">Scheduled Inspection Date:</span>
-              <span className="font-mono">12/15/2024</span>
+              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
             </div>
             <div>
               <span className="text-muted-foreground block">Actual Inspection Date:</span>
-              <span className="font-mono">12/10/2024</span>
+              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
             </div>
           </div>
         </div>
@@ -87,8 +126,8 @@ const EquipmentVerification = () => {
           <div>
             <h5 className="text-sm font-medium text-industrial-red mb-2">Observations by person checking</h5>
             <ul className="text-xs text-muted-foreground space-y-1">
-              <li>• xxxxxxxxxxxxxx</li>
-              <li>• xxxxxxxxxxxxxx</li>
+              <li>• Equipment: {selectedEquipment?.name}</li>
+              <li>• Type: {selectedEquipment?.type}</li>
             </ul>
           </div>
 

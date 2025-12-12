@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useEquipment } from '@/context/EquipmentContext';
 import TrendChart from '../common/TrendChart';
 
 interface Parameter {
@@ -11,16 +12,48 @@ interface Parameter {
   remarks: string;
 }
 
-const initialParameters: Parameter[] = [
-  { sn: 1, name: 'Vibration DS', unit: 'mm/s', min: 0, max: 10, present: 4.5, remarks: '' },
-  { sn: 2, name: 'Vibration NDS', unit: 'mm/s', min: 0, max: 10, present: 3.8, remarks: '' },
-  { sn: 3, name: 'Temperature Bearing - DS', unit: '°C', min: 20, max: 80, present: 55, remarks: '' },
-  { sn: 4, name: 'Temperature Bearing - NDS', unit: '°C', min: 20, max: 80, present: 52, remarks: '' },
-  { sn: 5, name: 'Current', unit: 'A', min: 0, max: 100, present: 45, remarks: '' },
-  { sn: 6, name: 'Speed', unit: 'RPM', min: 0, max: 3000, present: 1480, remarks: '' },
-  { sn: 7, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
-  { sn: 8, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
-];
+const equipmentParameters: Record<string, Parameter[]> = {
+  'motor-001': [
+    { sn: 1, name: 'Vibration DS', unit: 'mm/s', min: 0, max: 10, present: 4.5, remarks: '' },
+    { sn: 2, name: 'Vibration NDS', unit: 'mm/s', min: 0, max: 10, present: 3.8, remarks: '' },
+    { sn: 3, name: 'Temperature Bearing - DS', unit: '°C', min: 20, max: 80, present: 55, remarks: '' },
+    { sn: 4, name: 'Temperature Bearing - NDS', unit: '°C', min: 20, max: 80, present: 52, remarks: '' },
+    { sn: 5, name: 'Current', unit: 'A', min: 0, max: 100, present: 45, remarks: '' },
+    { sn: 6, name: 'Speed', unit: 'RPM', min: 0, max: 3000, present: 1480, remarks: '' },
+    { sn: 7, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+    { sn: 8, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+  ],
+  'plc-001': [
+    { sn: 1, name: 'CPU Temperature', unit: '°C', min: 20, max: 60, present: 38, remarks: '' },
+    { sn: 2, name: 'Power Supply Voltage', unit: 'V', min: 20, max: 28, present: 24, remarks: '' },
+    { sn: 3, name: 'Communication Status', unit: 'Status', min: 0, max: 1, present: 1, remarks: '' },
+    { sn: 4, name: 'Scan Time', unit: 'ms', min: 0, max: 100, present: 25, remarks: '' },
+    { sn: 5, name: 'I/O Module Status', unit: 'Status', min: 0, max: 1, present: 1, remarks: '' },
+    { sn: 6, name: 'Memory Usage', unit: '%', min: 0, max: 100, present: 65, remarks: '' },
+    { sn: 7, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+    { sn: 8, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+  ],
+  'drive-001': [
+    { sn: 1, name: 'Output Frequency', unit: 'Hz', min: 0, max: 60, present: 50, remarks: '' },
+    { sn: 2, name: 'Output Current', unit: 'A', min: 0, max: 200, present: 85, remarks: '' },
+    { sn: 3, name: 'DC Bus Voltage', unit: 'V', min: 300, max: 800, present: 650, remarks: '' },
+    { sn: 4, name: 'Heat Sink Temperature', unit: '°C', min: 20, max: 70, present: 45, remarks: '' },
+    { sn: 5, name: 'Drive Status', unit: 'Status', min: 0, max: 1, present: 1, remarks: '' },
+    { sn: 6, name: 'Efficiency', unit: '%', min: 85, max: 100, present: 96, remarks: '' },
+    { sn: 7, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+    { sn: 8, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+  ],
+  'pump-001': [
+    { sn: 1, name: 'Flow Rate', unit: 'L/min', min: 0, max: 500, present: 350, remarks: '' },
+    { sn: 2, name: 'Discharge Pressure', unit: 'bar', min: 0, max: 20, present: 15, remarks: '' },
+    { sn: 3, name: 'Bearing Temperature', unit: '°C', min: 20, max: 80, present: 55, remarks: '' },
+    { sn: 4, name: 'Motor Current', unit: 'A', min: 0, max: 150, present: 75, remarks: '' },
+    { sn: 5, name: 'Vibration Level', unit: 'mm/s', min: 0, max: 8, present: 2.5, remarks: '' },
+    { sn: 6, name: 'Efficiency', unit: '%', min: 70, max: 100, present: 88, remarks: '' },
+    { sn: 7, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+    { sn: 8, name: '', unit: '', min: 0, max: 0, present: 0, remarks: '' },
+  ]
+};
 
 const generateTimeLabels = () => {
   const labels = [];
@@ -33,12 +66,20 @@ const generateTimeLabels = () => {
 };
 
 const generateRandomData = (base: number, variance: number) => {
-  return base + (Math.random() - 0.5) * variance * 2;
+  return parseFloat((base + (Math.random() - 0.5) * variance * 2).toFixed(2));
 };
 
 const ParameterMonitoring = () => {
-  const [parameters] = useState<Parameter[]>(initialParameters);
+  const { selectedEquipment } = useEquipment();
+  const [parameters, setParameters] = useState<Parameter[]>([]);
   const [chartData, setChartData] = useState<{ time: string; vibration: number; vibration2: number; temperature: number; temperature2: number; current: number; speed: number; speed2: number }[]>([]);
+
+  useEffect(() => {
+    if (selectedEquipment) {
+      const equipmentParams = equipmentParameters[selectedEquipment.id] || equipmentParameters['motor-001'];
+      setParameters(equipmentParams);
+    }
+  }, [selectedEquipment?.id]);
 
   useEffect(() => {
     const updateChartData = () => {
@@ -64,7 +105,7 @@ const ParameterMonitoring = () => {
   return (
     <div className="space-y-4 animate-fade-in">
       <p className="text-xs text-muted-foreground italic">
-        These parameters will depend on equipment's & critical parameters.
+        Parameters for {selectedEquipment?.name || 'selected equipment'} - critical parameters and real-time monitoring data.
       </p>
 
       <div className="grid grid-cols-2 gap-4">
