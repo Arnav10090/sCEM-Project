@@ -144,7 +144,7 @@ const PlanningReports = () => {
   const isFiltered = searchTerm || plantFilter || statusFilter || fromLastInspectionDate || toLastInspectionDate || fromPlannedDate || toPlannedDate;
 
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-4 animate-fade-in mt-6">
       {/* Controls */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2 flex-1 flex-wrap">
