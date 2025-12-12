@@ -291,15 +291,16 @@ const PlanningReports = () => {
             </div>
           )}
 
-          {startDate && (
+          {(fromLastInspectionDate || toLastInspectionDate) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Last Inspection: {startDate}</span>
+              <span>Last Inspection: {fromLastInspectionDate} to {toLastInspectionDate}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setStartDate('');
+                  setFromLastInspectionDate('');
+                  setToLastInspectionDate('');
                   setCurrentPage(1);
                 }}
               >
@@ -308,15 +309,16 @@ const PlanningReports = () => {
             </div>
           )}
 
-          {endDate && (
+          {(fromPlannedDate || toPlannedDate) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Planned Inspection: {endDate}</span>
+              <span>Planned Inspection: {fromPlannedDate} to {toPlannedDate}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setEndDate('');
+                  setFromPlannedDate('');
+                  setToPlannedDate('');
                   setCurrentPage(1);
                 }}
               >
