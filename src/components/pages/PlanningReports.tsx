@@ -201,7 +201,7 @@ const PlanningReports = () => {
             </tr>
           </thead>
           <tbody>
-            {inspectionRecords.map((record) => (
+            {displayedRecords.map((record) => (
               <tr key={record.sn}>
                 <td className="text-center">{record.sn}</td>
                 <td>{record.plant}</td>
