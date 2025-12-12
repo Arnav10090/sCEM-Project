@@ -115,18 +115,20 @@ const MainDashboard = () => {
  return (
     <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 h-full">
         <ImagePanel title="Image Captured During Inspection" />
         <ImagePanel title="Last Image Captured" />
       </div>
 
       {/* Middle Column: Checklist Table */}
-      <div className="h-full">
-        <ChecklistTable initialItems={currentChecklist} />
+      <div className="h-full flex">
+        <div className="flex-1">
+          <ChecklistTable initialItems={currentChecklist} />
+        </div>
       </div>
 
       {/* Right Column: All cards stacked */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 h-full">
         {/* Top Row: Observations and Overall Status */}
         <div className="grid grid-cols-2 gap-2">
           {/* Observations Based on Image Comparison */}
