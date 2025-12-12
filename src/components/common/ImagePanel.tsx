@@ -50,18 +50,18 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
 
         {/* Image Area */}
-        <div className="aspect-video bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
+        <div className="h-40 bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
           {images.length > 0 ? (
-            <img 
-              src={images[currentIndex]} 
+            <img
+              src={images[currentIndex]}
               alt={`${title} - Image ${currentIndex + 1}`}
               className="w-full h-full object-cover"
             />
           ) : (
             <div className="text-center text-muted-foreground">
-              <Camera className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">Equipment Image</p>
-              <p className="text-xs">No image available</p>
+              <Camera className="w-10 h-10 mx-auto mb-2 opacity-50" />
+              <p className="text-xs">Equipment Image</p>
+              <p className="text-xs opacity-75">No image available</p>
             </div>
           )}
         </div>
