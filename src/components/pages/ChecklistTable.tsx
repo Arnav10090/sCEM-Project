@@ -1,0 +1,90 @@
+import { useState } from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
+
+interface ChecklistItem {
+  id: string;
+  parameter: string;
+  isChecked: boolean;
+  comment: string;
+}
+
+interface ChecklistTableProps {
+  equipmentType?: string;
+  initialItems?: ChecklistItem[];
+}
+
+const defaultChecklist: ChecklistItem[] = [
+  { id: '1', parameter: 'Temperature of Bearing', isChecked: false, comment: '' },
+  { id: '2', parameter: 'Vibration in Motor', isChecked: false, comment: '' },
+  { id: '3', parameter: 'Physical - Dust', isChecked: false, comment: '' },
+  { id: '4', parameter: 'Overall status', isChecked: false, comment: '' },
+];
+
+const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps) => {
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(initialItems);
+
+  const handleCheckChange = (id: string) => {
+    setChecklist(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, isChecked: !item.isChecked } : item
+      )
+    );
+  };
+
+  const handleCommentChange = (id: string, comment: string) => {
+    setChecklist(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, comment } : item
+      )
+    );
+  };
+
+  return (
+    <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-muted border-b border-border">
+            <th className="text-left px-4 py-3 text-sm font-medium text-industrial-red border-r border-border">
+              Various parameters of equipment ex.
+            </th>
+            <th className="text-center px-4 py-3 text-sm font-medium text-industrial-red border-r border-border w-32">
+              Status in Checked/Not-Checked to be displayed
+            </th>
+            <th className="text-left px-4 py-3 text-sm font-medium text-industrial-red">
+              Add comments during inspection ex.
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {checklist.map((item, index) => (
+            <tr key={item.id} className="border-b border-border hover:bg-muted/30 transition-colors">
+              <td className="px-4 py-3 text-sm text-industrial-red border-r border-border">
+                {item.parameter}
+              </td>
+              <td className="px-4 py-3 text-center border-r border-border">
+                <div className="flex items-center justify-center">
+                  <Checkbox
+                    checked={item.isChecked}
+                    onCheckedChange={() => handleCheckChange(item.id)}
+                    className="h-5 w-5"
+                  />
+                </div>
+              </td>
+              <td className="px-4 py-3">
+                <input
+                  type="text"
+                  value={item.comment}
+                  onChange={(e) => handleCommentChange(item.id, e.target.value)}
+                  placeholder="Add comment..."
+                  className="w-full px-2 py-1 text-sm border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default ChecklistTable;
