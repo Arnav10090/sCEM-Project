@@ -94,7 +94,7 @@ const MainDashboard = () => {
     }
   };
 
-  const currentObservations = selectedEquipment 
+  const currentObservations = selectedEquipment
     ? equipmentObservations[selectedEquipment.id] || equipmentObservations['motor-001']
     : equipmentObservations['motor-001'];
 
@@ -122,9 +122,7 @@ const MainDashboard = () => {
 
       {/* Middle Column: Checklist Table */}
       <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-auto">
-          <ChecklistTable initialItems={currentChecklist} />
-        </div>
+        <ChecklistTable initialItems={currentChecklist} className="h-full" />
       </div>
 
       {/* Right Column: All cards stacked */}
