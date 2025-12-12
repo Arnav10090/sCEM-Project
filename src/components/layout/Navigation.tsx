@@ -27,12 +27,12 @@ const navItems: PageName[] = [
 const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
   return (
     <nav className="bg-card border-b border-border px-4 overflow-x-auto">
-      <div className="flex gap-1">
+      <div className="flex gap-1 justify-evenly w-full">
         {navItems.map((item) => (
           <button
             key={item}
             onClick={() => setCurrentPage(item)}
-            className={`nav-tab whitespace-nowrap ${
+            className={`nav-tab whitespace-nowrap flex-1 ${
               currentPage === item ? 'nav-tab-active' : 'nav-tab-inactive'
             }`}
           >
