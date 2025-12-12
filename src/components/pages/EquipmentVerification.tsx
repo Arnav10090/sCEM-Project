@@ -68,16 +68,44 @@ const EquipmentVerification = () => {
 
   return (
     <div className="grid grid-cols-4 gap-2 h-full animate-fade-in">
-      {/* Left Column - Interlock List */}
-      <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
-        <h4 className="text-xs font-medium text-industrial-red mb-2">
-          Critical / Important Interlock List
-        </h4>
-        <ul className="space-y-1 text-xs text-industrial-red">
-          {interlocks.map((interlock) => (
-            <li key={interlock.id} className="truncate">{interlock.id}. {interlock.name}</li>
-          ))}
-        </ul>
+      {/* Left Column - Interlock List & Observations */}
+      <div className="flex flex-col gap-2 h-full">
+        {/* Critical Interlock List */}
+        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
+          <h4 className="text-xs font-medium text-industrial-red mb-2">
+            Critical / Important Interlock List
+          </h4>
+          <ul className="space-y-1 text-xs text-industrial-red">
+            {interlocks.map((interlock) => (
+              <li key={interlock.id} className="truncate">{interlock.id}. {interlock.name}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Observations by Person Checking */}
+        <div className="bg-card border border-border rounded-lg p-3 h-1/2 overflow-auto">
+          <h5 className="text-xs font-medium text-industrial-red mb-2">Observations by person checking</h5>
+          <ul className="text-xs text-muted-foreground space-y-1 mb-3">
+            <li>• {selectedEquipment?.name}</li>
+            <li>• {selectedEquipment?.type}</li>
+          </ul>
+          <DropdownSelect
+            label="Verified By"
+            options={engineers}
+            value={verifiedBy}
+            onChange={setVerifiedBy}
+            placeholder="Select..."
+          />
+          <div className="mt-2">
+            <DropdownSelect
+              label="Confirmed By"
+              options={engineers}
+              value={confirmedBy}
+              onChange={setConfirmedBy}
+              placeholder="Select..."
+            />
+          </div>
+        </div>
       </div>
 
       {/* Middle Column - Interlock Status Boxes (Grid 2x3) */}
@@ -140,31 +168,6 @@ const EquipmentVerification = () => {
                 {status}
               </Button>
             ))}
-          </div>
-        </div>
-
-        {/* Observations & Verification */}
-        <div className="bg-card border border-border rounded-lg p-3">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Observations</h5>
-          <ul className="text-xs text-muted-foreground space-y-1 mb-3">
-            <li>• {selectedEquipment?.name}</li>
-            <li>• {selectedEquipment?.type}</li>
-          </ul>
-          <DropdownSelect
-            label="Verified By"
-            options={engineers}
-            value={verifiedBy}
-            onChange={setVerifiedBy}
-            placeholder="Select..."
-          />
-          <div className="mt-2">
-            <DropdownSelect
-              label="Confirmed By"
-              options={engineers}
-              value={confirmedBy}
-              onChange={setConfirmedBy}
-              placeholder="Select..."
-            />
           </div>
         </div>
       </div>
