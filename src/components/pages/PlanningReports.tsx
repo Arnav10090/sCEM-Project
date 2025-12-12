@@ -181,31 +181,33 @@ const PlanningReports = () => {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Last:</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Inspection Date - Last:"
+            fromDate={fromLastInspectionDate}
+            toDate={toLastInspectionDate}
+            onFromDateChange={(date) => {
+              setFromLastInspectionDate(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToLastInspectionDate(date);
+              setCurrentPage(1);
+            }}
+          />
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Planned:</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Inspection Date - Planned:"
+            fromDate={fromPlannedDate}
+            toDate={toPlannedDate}
+            onFromDateChange={(date) => {
+              setFromPlannedDate(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToPlannedDate(date);
+              setCurrentPage(1);
+            }}
+          />
 
           {isFiltered && (
             <Button
