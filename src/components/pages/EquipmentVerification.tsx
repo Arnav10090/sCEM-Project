@@ -68,16 +68,28 @@ const EquipmentVerification = () => {
 
   return (
     <div className="grid grid-cols-4 gap-2 h-full animate-fade-in">
-      {/* Left Column - Interlock List */}
-      <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
-        <h4 className="text-xs font-medium text-industrial-red mb-2">
-          Critical / Important Interlock List
-        </h4>
-        <ul className="space-y-1 text-xs text-industrial-red">
-          {interlocks.map((interlock) => (
-            <li key={interlock.id} className="truncate">{interlock.id}. {interlock.name}</li>
-          ))}
-        </ul>
+      {/* Left Column - Interlock List & Observations */}
+      <div className="flex flex-col gap-2 h-full">
+        {/* Critical Interlock List */}
+        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
+          <h4 className="text-xs font-medium text-industrial-red mb-2">
+            Critical / Important Interlock List
+          </h4>
+          <ul className="space-y-1 text-xs text-industrial-red">
+            {interlocks.map((interlock) => (
+              <li key={interlock.id} className="truncate">{interlock.id}. {interlock.name}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Observations by Person Checking */}
+        <div className="bg-card border border-border rounded-lg p-3 h-1/2 overflow-auto">
+          <h5 className="text-xs font-medium text-industrial-red mb-2">Observations by person checking</h5>
+          <ul className="text-xs text-muted-foreground space-y-1">
+            <li>• {selectedEquipment?.name}</li>
+            <li>• {selectedEquipment?.type}</li>
+          </ul>
+        </div>
       </div>
 
       {/* Middle Column - Interlock Status Boxes (Grid 2x3) */}
@@ -100,56 +112,55 @@ const EquipmentVerification = () => {
       </div>
 
       {/* Right Columns - Status & Info */}
-      <div className="flex flex-col gap-2">
-        {/* Dates Card */}
-        <div className="bg-card border border-border rounded-lg p-3">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Inspection Dates</h5>
-          <div className="space-y-1 text-xs">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Last:</span>
-              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+      <div className="flex flex-col gap-2 h-full">
+        {/* Top Row - Dates and Status Cards Side by Side */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Dates Card */}
+          <div className="bg-card border border-border rounded-lg p-3">
+            <h5 className="text-xs font-medium text-industrial-red mb-2">Inspection Dates</h5>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Last:</span>
+                <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Scheduled:</span>
+                <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Actual:</span>
+                <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Scheduled:</span>
-              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+          </div>
+
+          {/* Overall Status Card */}
+          <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+            <div>
+              <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
+              <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
+                {overallStatus}
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Actual:</span>
-              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+            <div className="flex gap-1">
+              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs py-0 h-auto"
+                  onClick={() => setOverallStatus(status)}
+                >
+                  {status}
+                </Button>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Overall Status Card */}
-        <div className="bg-card border border-border rounded-lg p-3 flex-1 flex flex-col justify-between">
-          <div>
-            <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
-            <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
-              {overallStatus}
-            </div>
-          </div>
-          <div className="flex gap-1">
-            {(['Good', 'Bad', 'Worst'] as const).map((status) => (
-              <Button
-                key={status}
-                variant="outline"
-                size="sm"
-                className="flex-1 text-xs py-0 h-auto"
-                onClick={() => setOverallStatus(status)}
-              >
-                {status}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Observations & Verification */}
+        {/* Verification Card */}
         <div className="bg-card border border-border rounded-lg p-3">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Observations</h5>
-          <ul className="text-xs text-muted-foreground space-y-1 mb-3">
-            <li>• {selectedEquipment?.name}</li>
-            <li>• {selectedEquipment?.type}</li>
-          </ul>
+          <h5 className="text-xs font-medium text-industrial-red mb-3">Verification</h5>
           <DropdownSelect
             label="Verified By"
             options={engineers}

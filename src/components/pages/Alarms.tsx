@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, RotateCcw, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { Search, RotateCcw, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface AlarmRecord {
   no: string;
@@ -50,16 +57,34 @@ const allAlarms = generateAlarms(50);
 
 const Alarms = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [levelFilter, setLevelFilter] = useState<string>('');
+  const [deviceFilter, setDeviceFilter] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 15;
 
-  const filteredAlarms = allAlarms.filter(
-    (alarm) =>
+  const uniqueLevels = Array.from(new Set(allAlarms.map(a => a.level)));
+  const uniqueDevices = Array.from(new Set(allAlarms.map(a => a.device)));
+
+  const filteredAlarms = allAlarms.filter((alarm) => {
+    const matchesSearch =
       alarm.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
       alarm.device.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      alarm.level.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      alarm.alarmNo.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesLevel = !levelFilter || alarm.level === levelFilter;
+    const matchesDevice = !deviceFilter || alarm.device === deviceFilter;
+
+    let matchesDateRange = true;
+    if (startDate || endDate) {
+      const eventDate = alarm.eventTime.split(' ')[0];
+      if (startDate && eventDate < startDate) matchesDateRange = false;
+      if (endDate && eventDate > endDate) matchesDateRange = false;
+    }
+
+    return matchesSearch && matchesLevel && matchesDevice && matchesDateRange;
+  });
 
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -67,29 +92,204 @@ const Alarms = () => {
 
   const handleReset = () => {
     setSearchTerm('');
+    setLevelFilter('');
+    setDeviceFilter('');
+    setStartDate('');
+    setEndDate('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
+  const isFiltered = searchTerm || levelFilter || deviceFilter || startDate || endDate;
+
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Controls */}
-      <div className="flex items-center justify-end gap-2">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search alarms..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 w-64"
-          />
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 flex-1">
+          <div className="relative flex-1 max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search alarms..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+
+          <Select value={levelFilter} onValueChange={setLevelFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Level" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueLevels.map(level => (
+                <SelectItem key={level} value={level}>{level}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={deviceFilter} onValueChange={setDeviceFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Device" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueDevices.map(device => (
+                <SelectItem key={device} value={device}>{device}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Event Time:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Recovered Time:</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
+
+          {isFiltered && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSearchTerm('');
+                setLevelFilter('');
+                setDeviceFilter('');
+                setStartDate('');
+                setEndDate('');
+                setCurrentPage(1);
+              }}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
         </div>
+
         <Button variant="outline" size="sm" onClick={() => setShowResetDialog(true)}>
           <RotateCcw className="w-4 h-4 mr-1" />
           RESET
         </Button>
       </div>
+
+      {/* Applied Filters */}
+      {isFiltered && (
+        <div className="flex flex-wrap items-center gap-2 p-3 bg-muted rounded-lg border border-border">
+          <span className="text-xs font-medium text-muted-foreground">Applied Filters:</span>
+
+          {searchTerm && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Search: {searchTerm}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setSearchTerm('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {levelFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Level: {levelFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setLevelFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {deviceFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Device: {deviceFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setDeviceFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {startDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Event Time: {startDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setStartDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {endDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Recovered Time: {endDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setEndDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs ml-2"
+            onClick={() => handleReset()}
+          >
+            Clear All
+          </Button>
+        </div>
+      )}
 
       {/* Alarm Table */}
       <div className="bg-card border border-border rounded-lg overflow-hidden">

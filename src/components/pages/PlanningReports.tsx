@@ -1,4 +1,22 @@
-import { Camera } from 'lucide-react';
+import { useState } from 'react';
+import { Camera, Search, RotateCcw, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 interface InspectionRecord {
   sn: number;
@@ -71,8 +89,245 @@ const inspectionRecords: InspectionRecord[] = [
 ];
 
 const PlanningReports = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [plantFilter, setPlantFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const itemsPerPage = 10;
+
+  const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
+  const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
+
+  const filteredRecords = inspectionRecords.filter((record) => {
+    const matchesSearch =
+      record.equipment.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.plant.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.lastObservation.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesPlant = !plantFilter || record.plant === plantFilter;
+    const matchesStatus = !statusFilter || record.status === statusFilter;
+
+    let matchesDateRange = true;
+    if (startDate) {
+      const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
+      if (lastInspDate < startDate) matchesDateRange = false;
+    }
+    if (endDate) {
+      const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
+      if (plannedInspDate > endDate) matchesDateRange = false;
+    }
+
+    return matchesSearch && matchesPlant && matchesStatus && matchesDateRange;
+  });
+
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedRecords = filteredRecords.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleReset = () => {
+    setSearchTerm('');
+    setPlantFilter('');
+    setStatusFilter('');
+    setStartDate('');
+    setEndDate('');
+    setCurrentPage(1);
+    setShowResetDialog(false);
+  };
+
+  const isFiltered = searchTerm || plantFilter || statusFilter || startDate || endDate;
+
   return (
-    <div className="animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
+      {/* Controls */}
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-1 flex-wrap">
+          <div className="relative flex-1 max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search reports..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+
+          <Select value={plantFilter} onValueChange={setPlantFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Plant" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniquePlants.map(plant => (
+                <SelectItem key={plant} value={plant}>{plant}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Filter by Status" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueStatuses.map(status => (
+                <SelectItem key={status} value={status}>{status}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Last:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Planned:</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
+
+          {isFiltered && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSearchTerm('');
+                setPlantFilter('');
+                setStatusFilter('');
+                setStartDate('');
+                setEndDate('');
+                setCurrentPage(1);
+              }}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+
+        <Button variant="outline" size="sm" onClick={() => setShowResetDialog(true)}>
+          <RotateCcw className="w-4 h-4 mr-1" />
+          RESET
+        </Button>
+      </div>
+
+      {/* Applied Filters */}
+      {isFiltered && (
+        <div className="flex flex-wrap items-center gap-2 p-3 bg-muted rounded-lg border border-border">
+          <span className="text-xs font-medium text-muted-foreground">Applied Filters:</span>
+
+          {searchTerm && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Search: {searchTerm}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setSearchTerm('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {plantFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Plant: {plantFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setPlantFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {statusFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Status: {statusFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setStatusFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {startDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Last Inspection: {startDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setStartDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {endDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Planned Inspection: {endDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setEndDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs ml-2"
+            onClick={() => handleReset()}
+          >
+            Clear All
+          </Button>
+        </div>
+      )}
+
+      {/* Table */}
       <div className="bg-card border border-border rounded-lg overflow-hidden">
         <table className="data-table">
           <thead>
@@ -89,7 +344,7 @@ const PlanningReports = () => {
             </tr>
           </thead>
           <tbody>
-            {inspectionRecords.map((record) => (
+            {displayedRecords.map((record) => (
               <tr key={record.sn}>
                 <td className="text-center">{record.sn}</td>
                 <td>{record.plant}</td>
@@ -122,6 +377,68 @@ const PlanningReports = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-end gap-2">
+        <span className="text-sm text-muted-foreground">PAGE</span>
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage(1)}
+          disabled={currentPage === 1}
+        >
+          <ChevronsLeft className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          disabled={currentPage === 1}
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        <span className="text-sm font-mono px-2">
+          {currentPage} / {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          disabled={currentPage === totalPages}
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCurrentPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          <ChevronsRight className="w-4 h-4" />
+        </Button>
+      </div>
+
+      {/* Reset Confirmation Dialog */}
+      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>RESET</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to reset the filters?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
+              NO
+            </Button>
+            <Button onClick={handleReset}>YES</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
