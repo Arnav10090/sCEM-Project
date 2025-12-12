@@ -121,7 +121,7 @@ const MainDashboard = () => {
       </div>
 
       {/* Middle Column: Checklist Table */}
-      <div className="flex flex-col h-full min-h-0">
+      <div className="flex flex-col h-full min-h-0 overflow-auto">
         <ChecklistTable initialItems={currentChecklist} className="h-full" />
       </div>
 
