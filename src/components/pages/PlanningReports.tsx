@@ -173,27 +173,31 @@ const PlanningReports = () => {
             </SelectContent>
           </Select>
 
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => {
-              setStartDate(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            placeholder="Start Date"
-          />
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Last:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
 
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => {
-              setEndDate(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            placeholder="End Date"
-          />
+          <div className="flex items-center gap-2">
+            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Planned:</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            />
+          </div>
 
           {isFiltered && (
             <Button
