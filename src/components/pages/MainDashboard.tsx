@@ -115,9 +115,9 @@ const MainDashboard = () => {
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Top Section - Two Column Layout */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 items-end">
         {/* Left Column - Stacked Images */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <ImagePanel title="Image Captured During Inspection" />
           <ImagePanel title="Last Image Captured" />
         </div>
