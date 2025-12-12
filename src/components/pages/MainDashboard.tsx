@@ -123,7 +123,7 @@ const MainDashboard = () => {
         </div>
 
         {/* Right Column - Checklist Table and Status Card */}
-        <div className="space-y-4">
+        <div className="space-y-2">
           {/* Checklist Table */}
           <ChecklistTable initialItems={currentChecklist} />
 
