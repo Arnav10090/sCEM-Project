@@ -112,46 +112,49 @@ const EquipmentVerification = () => {
       </div>
 
       {/* Right Columns - Status & Info */}
-      <div className="flex flex-col gap-2">
-        {/* Dates Card */}
-        <div className="bg-card border border-border rounded-lg p-3">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Inspection Dates</h5>
-          <div className="space-y-1 text-xs">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Last:</span>
-              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Scheduled:</span>
-              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Actual:</span>
-              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+      <div className="flex flex-col gap-2 h-full">
+        {/* Top Row - Dates and Status Cards Side by Side */}
+        <div className="grid grid-cols-2 gap-2 flex-1">
+          {/* Dates Card */}
+          <div className="bg-card border border-border rounded-lg p-3">
+            <h5 className="text-xs font-medium text-industrial-red mb-2">Inspection Dates</h5>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Last:</span>
+                <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Scheduled:</span>
+                <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Actual:</span>
+                <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Overall Status Card */}
-        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between flex-1">
-          <div>
-            <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
-            <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
-              {overallStatus}
+          {/* Overall Status Card */}
+          <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+            <div>
+              <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Status</h5>
+              <div className={`text-center py-1 rounded font-bold text-white text-xs ${getStatusClass()}`}>
+                {overallStatus}
+              </div>
             </div>
-          </div>
-          <div className="flex gap-1">
-            {(['Good', 'Bad', 'Worst'] as const).map((status) => (
-              <Button
-                key={status}
-                variant="outline"
-                size="sm"
-                className="flex-1 text-xs py-0 h-auto"
-                onClick={() => setOverallStatus(status)}
-              >
-                {status}
-              </Button>
-            ))}
+            <div className="flex gap-1">
+              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs py-0 h-auto"
+                  onClick={() => setOverallStatus(status)}
+                >
+                  {status}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
 
