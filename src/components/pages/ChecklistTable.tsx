@@ -11,6 +11,7 @@ interface ChecklistItem {
 interface ChecklistTableProps {
   equipmentType?: string;
   initialItems?: ChecklistItem[];
+  className?: string;
 }
 
 const defaultChecklist: ChecklistItem[] = [
@@ -20,7 +21,7 @@ const defaultChecklist: ChecklistItem[] = [
   { id: '4', parameter: 'Overall status', isChecked: false, comment: '' },
 ];
 
-const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps) => {
+const ChecklistTable = ({ initialItems = defaultChecklist, className = '' }: ChecklistTableProps) => {
   const [checklist, setChecklist] = useState<ChecklistItem[]>(initialItems);
 
   const handleCheckChange = (id: string) => {
@@ -40,7 +41,7 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-auto flex flex-col max-h-96">
+    <div className={`bg-card border border-border rounded-lg overflow-auto flex flex-col ${className || 'max-h-96'}`}>
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-muted border-b border-border">
