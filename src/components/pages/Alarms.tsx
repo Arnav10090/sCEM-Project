@@ -66,7 +66,8 @@ const Alarms = () => {
   const [toRecoveredTime, setToRecoveredTime] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
-  const itemsPerPage = 15;
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const rowsPerPageOptions = [5, 15, 25, 50];
 
   const uniqueLevels = Array.from(new Set(allAlarms.map(a => a.level)));
   const uniqueDevices = Array.from(new Set(allAlarms.map(a => a.device)));
