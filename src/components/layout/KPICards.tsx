@@ -22,7 +22,7 @@ const KPICards = () => {
 
   if (!selectedEquipment) {
     return (
-      <div className="grid grid-cols-7 gap-4 p-4 bg-muted/30">
+      <div className="grid grid-cols-7 gap-4 px-4 py-2 bg-muted/30">
         <EquipmentSelectorCard />
         <div className="col-span-6 flex items-center justify-center bg-card border border-border rounded-lg p-4">
           <p className="text-muted-foreground text-sm">Please select an equipment to view details</p>
