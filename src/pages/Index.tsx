@@ -54,7 +54,7 @@ const Index = () => {
       {showKPICards && <KPICards />}
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 pt-1 overflow-auto min-h-0">
+      <main className="flex-1 p-4 pt-1 overflow-hidden min-h-0">
         {renderPage()}
       </main>
 
