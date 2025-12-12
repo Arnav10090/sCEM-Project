@@ -9,9 +9,11 @@ const KPICards = () => {
       <div className="grid grid-cols-7 gap-4 p-4 bg-muted/30">
         {[...Array(7)].map((_, i) => (
           <div key={i} className="kpi-card animate-pulse">
-            <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
-            <div className="h-12 bg-muted rounded mb-2"></div>
-            <div className="h-4 bg-muted rounded w-1/2"></div>
+            <div className="flex-1">
+              <div className="h-3 bg-muted rounded w-3/4 mb-1"></div>
+              <div className="h-3 bg-muted rounded w-1/2"></div>
+            </div>
+            <div className="w-8 h-8 bg-muted rounded flex-shrink-0"></div>
           </div>
         ))}
       </div>
