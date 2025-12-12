@@ -112,17 +112,17 @@ const PlanningReports = () => {
     const matchesPlant = !plantFilter || record.plant === plantFilter;
     const matchesStatus = !statusFilter || record.status === statusFilter;
 
-    let matchesDateRange = true;
-    if (startDate) {
-      const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
-      if (lastInspDate < startDate) matchesDateRange = false;
-    }
-    if (endDate) {
-      const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
-      if (plannedInspDate > endDate) matchesDateRange = false;
-    }
+    let matchesLastInspectionDateRange = true;
+    const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
+    if (fromLastInspectionDate && lastInspDate < fromLastInspectionDate) matchesLastInspectionDateRange = false;
+    if (toLastInspectionDate && lastInspDate > toLastInspectionDate) matchesLastInspectionDateRange = false;
 
-    return matchesSearch && matchesPlant && matchesStatus && matchesDateRange;
+    let matchesPlannedDateRange = true;
+    const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
+    if (fromPlannedDate && plannedInspDate < fromPlannedDate) matchesPlannedDateRange = false;
+    if (toPlannedDate && plannedInspDate > toPlannedDate) matchesPlannedDateRange = false;
+
+    return matchesSearch && matchesPlant && matchesStatus && matchesLastInspectionDateRange && matchesPlannedDateRange;
   });
 
   const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
