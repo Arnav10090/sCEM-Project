@@ -28,7 +28,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
       </div>
 
       {/* Image Container with Navigation */}
-      <div className="relative flex-1">
+      <div className="relative flex-1 max-h-48">
         {/* Top Navigation */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
           <button
@@ -55,7 +55,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
             <img
               src={images[currentIndex]}
               alt={`${title} - Image ${currentIndex + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           ) : (
             <div className="text-center text-muted-foreground">
@@ -87,12 +87,6 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
       </div>
 
-      {/* Image Counter */}
-      {images.length > 0 && (
-        <div className="text-center mt-1 text-xs text-muted-foreground flex-shrink-0">
-          Image {currentIndex + 1} of {images.length}
-        </div>
-      )}
     </div>
   );
 };

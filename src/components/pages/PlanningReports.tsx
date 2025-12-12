@@ -365,11 +365,17 @@ const PlanningReports = () => {
                 <td className="font-mono">{record.lastInspectionDate}</td>
                 <td className="font-mono">{record.plannedInspectionDate}</td>
                 <td>
-                  <div className="flex items-start gap-3">
-                    <span className="text-industrial-red flex-1">{record.lastObservation || '-'}</span>
+                  <div className="flex flex-col items-start gap-2">
+                    <span className="text-industrial-red">{record.lastObservation || '-'}</span>
                     {record.lastObservation && (
-                      <div className="w-16 h-12 bg-muted border border-border rounded flex items-center justify-center flex-shrink-0">
-                        <Camera className="w-4 h-4 text-muted-foreground" />
+                      <div className="w-40 h-32 bg-muted border border-border rounded flex items-center justify-center">
+                        {record.sn === 1 ? (
+                          <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
+                        ) : record.sn === 2 ? (
+                          <img src="/image2.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
+                        ) : (
+                          <Camera className="w-4 h-4 text-muted-foreground" />
+                        )}
                       </div>
                     )}
                   </div>
