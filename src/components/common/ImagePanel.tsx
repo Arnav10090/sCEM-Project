@@ -87,12 +87,6 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
       </div>
 
-      {/* Image Counter */}
-      {images.length > 0 && (
-        <div className="text-center mt-1 text-xs text-muted-foreground flex-shrink-0">
-          Image {currentIndex + 1} of {images.length}
-        </div>
-      )}
     </div>
   );
 };
