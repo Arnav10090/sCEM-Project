@@ -75,8 +75,8 @@ const ChecklistTable = ({ initialItems = defaultChecklist }: ChecklistTableProps
                   value={item.comment}
                   onChange={(e) => handleCommentChange(item.id, e.target.value)}
                   placeholder="Add comment..."
-                  rows={2}
-                  className="w-full px-2 py-2 text-sm border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground resize-none"
+                  rows={1}
+                  className="w-full px-2 py-1 text-xs border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red placeholder-muted-foreground resize-none"
                 />
               </td>
             </tr>
