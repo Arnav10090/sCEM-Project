@@ -59,6 +59,8 @@ const Alarms = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [levelFilter, setLevelFilter] = useState<string>('');
   const [deviceFilter, setDeviceFilter] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 15;
@@ -74,7 +76,14 @@ const Alarms = () => {
     const matchesLevel = !levelFilter || alarm.level === levelFilter;
     const matchesDevice = !deviceFilter || alarm.device === deviceFilter;
 
-    return matchesSearch && matchesLevel && matchesDevice;
+    let matchesDateRange = true;
+    if (startDate || endDate) {
+      const eventDate = alarm.eventTime.split(' ')[0];
+      if (startDate && eventDate < startDate) matchesDateRange = false;
+      if (endDate && eventDate > endDate) matchesDateRange = false;
+    }
+
+    return matchesSearch && matchesLevel && matchesDevice && matchesDateRange;
   });
 
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
