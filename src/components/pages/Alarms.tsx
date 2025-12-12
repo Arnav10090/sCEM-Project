@@ -60,8 +60,10 @@ const Alarms = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [levelFilter, setLevelFilter] = useState<string>('');
   const [deviceFilter, setDeviceFilter] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [fromEventTime, setFromEventTime] = useState<string>('');
+  const [toEventTime, setToEventTime] = useState<string>('');
+  const [fromRecoveredTime, setFromRecoveredTime] = useState<string>('');
+  const [toRecoveredTime, setToRecoveredTime] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const itemsPerPage = 15;
