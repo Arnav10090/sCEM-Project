@@ -226,6 +226,107 @@ const PlanningReports = () => {
         </Button>
       </div>
 
+      {/* Applied Filters */}
+      {isFiltered && (
+        <div className="flex flex-wrap items-center gap-2 p-3 bg-muted rounded-lg border border-border">
+          <span className="text-xs font-medium text-muted-foreground">Applied Filters:</span>
+
+          {searchTerm && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Search: {searchTerm}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setSearchTerm('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {plantFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Plant: {plantFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setPlantFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {statusFilter && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Status: {statusFilter}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setStatusFilter('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {startDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Last Inspection: {startDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setStartDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          {endDate && (
+            <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
+              <span>Planned Inspection: {endDate}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 ml-1"
+                onClick={() => {
+                  setEndDate('');
+                  setCurrentPage(1);
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs ml-2"
+            onClick={() => handleReset()}
+          >
+            Clear All
+          </Button>
+        </div>
+      )}
+
       {/* Table */}
       <div className="bg-card border border-border rounded-lg overflow-hidden">
         <table className="data-table">
