@@ -116,8 +116,8 @@ const MainDashboard = () => {
     <div className="grid grid-cols-3 gap-3 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-3 h-full min-h-0">
-        <ImagePanel title="Image Captured During Inspection" />
-        <ImagePanel title="Last Image Captured" />
+        <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} />
+        <ImagePanel title="Last Image Captured" images={['/motor2.png']} />
       </div>
 
       {/* Middle Column: Checklist Table */}
