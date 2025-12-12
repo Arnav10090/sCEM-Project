@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { DateRangeFilter } from '@/components/common/DateRangeFilter';
 
 interface InspectionRecord {
   sn: number;
