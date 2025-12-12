@@ -1,88 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Industrial Monitoring Color Palette */
+    --background: 0 0% 96%;
+    --foreground: 0 0% 20%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 0 0% 20%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --popover-foreground: 0 0% 20%;
+    
+    --primary: 122 39% 49%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
+    
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+    
+    --accent: 207 89% 94%;
+    --accent-foreground: 0 0% 20%;
+    
+    --destructive: 4 82% 56%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 122 39% 49%;
+    
+    /* Custom Industrial Colors */
+    --industrial-red: 4 82% 56%;
+    --industrial-green: 122 39% 49%;
+    --industrial-green-light: 120 73% 75%;
+    --industrial-cyan: 207 89% 94%;
+    --industrial-amber: 45 100% 90%;
+    --industrial-gray: 0 0% 88%;
+    --industrial-dark: 0 0% 20%;
+    
     --radius: 0.5rem;
-
+    
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 98%;
+    
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 122 39% 49%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 64%;
+    
+    --accent: 207 40% 20%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 4 82% 56%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 122 39% 49%;
+    
+    --industrial-red: 4 82% 56%;
+    --industrial-green: 122 39% 49%;
+    --industrial-green-light: 120 50% 35%;
+    --industrial-cyan: 207 40% 20%;
+    --industrial-amber: 45 50% 25%;
+    --industrial-gray: 0 0% 25%;
+    --industrial-dark: 0 0% 90%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -98,8 +108,134 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-roboto antialiased;
+  }
+}
+
+@layer components {
+  /* Scrolling Alert Animation */
+  .scrolling-alert {
+    animation: scroll-left 20s linear infinite;
+  }
+  
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Navigation Tab Styles */
+  .nav-tab {
+    @apply px-4 py-2 text-sm font-medium transition-all duration-200 border-b-2 border-transparent;
+  }
+  
+  .nav-tab-active {
+    @apply bg-primary text-primary-foreground rounded-t-lg border-b-0;
+  }
+  
+  .nav-tab-inactive {
+    @apply bg-card text-foreground hover:bg-industrial-green-light/20 border border-border;
+  }
+  
+  /* KPI Card Styles */
+  .kpi-card {
+    @apply bg-card border border-border rounded-md p-3 flex flex-col items-center justify-center min-h-[80px];
+  }
+  
+  .kpi-label {
+    @apply text-xs font-medium text-industrial-red uppercase tracking-wide mb-1;
+  }
+  
+  .kpi-value {
+    @apply text-sm font-bold text-foreground;
+  }
+  
+  /* Data Table Styles */
+  .data-table {
+    @apply w-full border-collapse bg-card;
+  }
+  
+  .data-table th {
+    @apply bg-industrial-red text-white text-xs font-bold uppercase px-3 py-2 text-left border border-border;
+  }
+  
+  .data-table td {
+    @apply px-3 py-2 text-sm border border-border;
+  }
+  
+  .data-table tr:nth-child(even) {
+    @apply bg-muted/50;
+  }
+  
+  /* Image Panel Navigation Circles */
+  .nav-circle {
+    @apply w-6 h-6 rounded-full bg-muted border border-border flex items-center justify-center cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all;
+  }
+  
+  /* Footer Expand Animation */
+  .footer-expanded {
+    animation: expand-up 0.3s ease-out forwards;
+  }
+  
+  @keyframes expand-up {
+    from {
+      max-height: 50px;
+    }
+    to {
+      max-height: 300px;
+    }
+  }
+  
+  /* Chart Container */
+  .chart-container {
+    @apply bg-card border border-border rounded-md p-4;
+  }
+  
+  /* Status Indicators */
+  .status-good {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  .status-bad {
+    @apply bg-yellow-500 text-white;
+  }
+  
+  .status-worst {
+    @apply bg-destructive text-destructive-foreground;
+  }
+}
+
+@layer utilities {
+  .text-industrial-red {
+    color: hsl(var(--industrial-red));
+  }
+  
+  .bg-industrial-red {
+    background-color: hsl(var(--industrial-red));
+  }
+  
+  .text-industrial-green {
+    color: hsl(var(--industrial-green));
+  }
+  
+  .bg-industrial-green {
+    background-color: hsl(var(--industrial-green));
+  }
+  
+  .bg-industrial-cyan {
+    background-color: hsl(var(--industrial-cyan));
+  }
+  
+  .bg-industrial-amber {
+    background-color: hsl(var(--industrial-amber));
+  }
+  
+  .border-industrial-gray {
+    border-color: hsl(var(--industrial-gray));
   }
 }
