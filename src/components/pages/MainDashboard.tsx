@@ -112,8 +112,8 @@ const MainDashboard = () => {
     setOverallStatus('Good');
   }, [selectedEquipment?.id]);
 
-  return (
-    <div className="grid grid-cols-5 gap-2 h-full animate-fade-in">
+ return (
+    <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-2">
         <ImagePanel title="Image Captured During Inspection" />
@@ -125,82 +125,83 @@ const MainDashboard = () => {
         <ChecklistTable initialItems={currentChecklist} />
       </div>
 
-      {/* Right Columns: Cards */}
+      {/* Right Column: All cards stacked */}
       <div className="flex flex-col gap-2">
-        {/* Observations Based on Image Comparison */}
-        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
-          <h4 className="text-xs font-medium text-industrial-red mb-2">
-            Observations based on image comparison (Old and Latest)
-          </h4>
-          <ul className="space-y-1 text-xs text-industrial-red">
-            {currentObservations.map((obs, idx) => (
-              <li key={idx}>{obs}</li>
-            ))}
-          </ul>
-        </div>
+        {/* Top Row: Observations and Overall Status */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Observations Based on Image Comparison */}
+          <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+            <h4 className="text-xs font-medium text-industrial-red mb-2">
+              Observations based on image comparison (Old and Latest)
+            </h4>
+            <ul className="space-y-1 text-xs text-industrial-red">
+              {currentObservations.map((obs, idx) => (
+                <li key={idx}>{obs}</li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Last Inspection Date */}
-        <div className="bg-card border border-border rounded-lg p-3 flex-1">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
-          <div className="space-y-1 text-xs">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Last:</span>
-              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+          {/* Overall Equipment Status */}
+          <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+            <div>
+              <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
+              <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
+                {overallStatus}
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Scheduled:</span>
-              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Actual:</span>
-              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+            <div className="flex gap-1">
+              {(['Good', 'Bad', 'Worst'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs py-0 h-auto"
+                  onClick={() => setOverallStatus(status)}
+                >
+                  {status}
+                </Button>
+              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Fourth Column: Status & Observations */}
-      <div className="flex flex-col gap-2">
-        {/* Overall Equipment Status */}
-        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between flex-1">
-          <div>
-            <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
-            <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
-              {overallStatus}
+        {/* Middle Row: Last Inspection Date and Observations by Person */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Last Inspection Date */}
+          <div className="bg-card border border-border rounded-lg p-3">
+            <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Last:</span>
+                <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Scheduled:</span>
+                <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Actual:</span>
+                <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+              </div>
             </div>
           </div>
-          <div className="flex gap-1">
-            {(['Good', 'Bad', 'Worst'] as const).map((status) => (
-              <Button
-                key={status}
-                variant="outline"
-                size="sm"
-                className="flex-1 text-xs py-0 h-auto"
-                onClick={() => setOverallStatus(status)}
-              >
-                {status}
-              </Button>
-            ))}
+
+          {/* Observations by Person Checking */}
+          <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+            <h4 className="text-xs font-medium text-industrial-red mb-2">
+              Observations by person checking
+            </h4>
+            <ul className="space-y-1 text-xs text-muted-foreground">
+              {currentComments.map((comment, idx) => (
+                <li key={idx}>{comment}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Observations by Person Checking */}
-        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
-          <h4 className="text-xs font-medium text-industrial-red mb-2">
-            Observations by person checking
-          </h4>
-          <ul className="space-y-1 text-xs text-muted-foreground">
-            {currentComments.map((comment, idx) => (
-              <li key={idx}>{comment}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Fifth Column: Verified/Confirmed By */}
-      <div>
-        <div className="bg-card border border-border rounded-lg p-3 h-full flex flex-col justify-center">
-          <div className="space-y-3">
+        {/* Bottom Row: Verified/Confirmed By spanning full width */}
+        <div className="bg-card border border-border rounded-lg p-3">
+          <div className="grid grid-cols-2 gap-3">
             <DropdownSelect
               label="Verified By"
               options={engineers}
