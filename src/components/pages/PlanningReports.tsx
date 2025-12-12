@@ -173,6 +173,28 @@ const PlanningReports = () => {
             </SelectContent>
           </Select>
 
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => {
+              setStartDate(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            placeholder="Start Date"
+          />
+
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => {
+              setEndDate(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="px-3 py-2 text-xs border border-input rounded-md bg-background"
+            placeholder="End Date"
+          />
+
           {isFiltered && (
             <Button
               variant="ghost"
@@ -181,6 +203,8 @@ const PlanningReports = () => {
                 setSearchTerm('');
                 setPlantFilter('');
                 setStatusFilter('');
+                setStartDate('');
+                setEndDate('');
                 setCurrentPage(1);
               }}
             >
