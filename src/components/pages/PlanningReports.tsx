@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { DateRangeFilter } from '@/components/common/DateRangeFilter';
 
 interface InspectionRecord {
   sn: number;
@@ -92,11 +93,14 @@ const PlanningReports = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [plantFilter, setPlantFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [fromLastInspectionDate, setFromLastInspectionDate] = useState<string>('');
+  const [toLastInspectionDate, setToLastInspectionDate] = useState<string>('');
+  const [fromPlannedDate, setFromPlannedDate] = useState<string>('');
+  const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const rowsPerPageOptions = [5, 15, 25, 50];
 
   const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
   const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
@@ -109,17 +113,17 @@ const PlanningReports = () => {
     const matchesPlant = !plantFilter || record.plant === plantFilter;
     const matchesStatus = !statusFilter || record.status === statusFilter;
 
-    let matchesDateRange = true;
-    if (startDate) {
-      const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
-      if (lastInspDate < startDate) matchesDateRange = false;
-    }
-    if (endDate) {
-      const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
-      if (plannedInspDate > endDate) matchesDateRange = false;
-    }
+    let matchesLastInspectionDateRange = true;
+    const lastInspDate = record.lastInspectionDate.split('/').reverse().join('-');
+    if (fromLastInspectionDate && lastInspDate < fromLastInspectionDate) matchesLastInspectionDateRange = false;
+    if (toLastInspectionDate && lastInspDate > toLastInspectionDate) matchesLastInspectionDateRange = false;
 
-    return matchesSearch && matchesPlant && matchesStatus && matchesDateRange;
+    let matchesPlannedDateRange = true;
+    const plannedInspDate = record.plannedInspectionDate.split('/').reverse().join('-');
+    if (fromPlannedDate && plannedInspDate < fromPlannedDate) matchesPlannedDateRange = false;
+    if (toPlannedDate && plannedInspDate > toPlannedDate) matchesPlannedDateRange = false;
+
+    return matchesSearch && matchesPlant && matchesStatus && matchesLastInspectionDateRange && matchesPlannedDateRange;
   });
 
   const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
@@ -130,16 +134,18 @@ const PlanningReports = () => {
     setSearchTerm('');
     setPlantFilter('');
     setStatusFilter('');
-    setStartDate('');
-    setEndDate('');
+    setFromLastInspectionDate('');
+    setToLastInspectionDate('');
+    setFromPlannedDate('');
+    setToPlannedDate('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
-  const isFiltered = searchTerm || plantFilter || statusFilter || startDate || endDate;
+  const isFiltered = searchTerm || plantFilter || statusFilter || fromLastInspectionDate || toLastInspectionDate || fromPlannedDate || toPlannedDate;
 
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-4 animate-fade-in mt-6">
       {/* Controls */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2 flex-1 flex-wrap">
@@ -176,31 +182,33 @@ const PlanningReports = () => {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Last:</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Inspection Date - Last:"
+            fromDate={fromLastInspectionDate}
+            toDate={toLastInspectionDate}
+            onFromDateChange={(date) => {
+              setFromLastInspectionDate(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToLastInspectionDate(date);
+              setCurrentPage(1);
+            }}
+          />
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Inspection Date - Planned:</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Inspection Date - Planned:"
+            fromDate={fromPlannedDate}
+            toDate={toPlannedDate}
+            onFromDateChange={(date) => {
+              setFromPlannedDate(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToPlannedDate(date);
+              setCurrentPage(1);
+            }}
+          />
 
           {isFiltered && (
             <Button
@@ -210,8 +218,10 @@ const PlanningReports = () => {
                 setSearchTerm('');
                 setPlantFilter('');
                 setStatusFilter('');
-                setStartDate('');
-                setEndDate('');
+                setFromLastInspectionDate('');
+                setToLastInspectionDate('');
+                setFromPlannedDate('');
+                setToPlannedDate('');
                 setCurrentPage(1);
               }}
             >
@@ -282,15 +292,16 @@ const PlanningReports = () => {
             </div>
           )}
 
-          {startDate && (
+          {(fromLastInspectionDate || toLastInspectionDate) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Last Inspection: {startDate}</span>
+              <span>Last Inspection: {fromLastInspectionDate} to {toLastInspectionDate}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setStartDate('');
+                  setFromLastInspectionDate('');
+                  setToLastInspectionDate('');
                   setCurrentPage(1);
                 }}
               >
@@ -299,15 +310,16 @@ const PlanningReports = () => {
             </div>
           )}
 
-          {endDate && (
+          {(fromPlannedDate || toPlannedDate) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Planned Inspection: {endDate}</span>
+              <span>Planned Inspection: {fromPlannedDate} to {toPlannedDate}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setEndDate('');
+                  setFromPlannedDate('');
+                  setToPlannedDate('');
                   setCurrentPage(1);
                 }}
               >
@@ -378,48 +390,68 @@ const PlanningReports = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-end gap-2">
-        <span className="text-sm text-muted-foreground">PAGE</span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(1)}
-          disabled={currentPage === 1}
-        >
-          <ChevronsLeft className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-        <span className="text-sm font-mono px-2">
-          {currentPage} / {totalPages}
-        </span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronsRight className="w-4 h-4" />
-        </Button>
+      {/* Rows Per Page and Pagination */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-muted-foreground">Rows per page:</label>
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+            setItemsPerPage(parseInt(value));
+            setCurrentPage(1);
+          }}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {rowsPerPageOptions.map(option => (
+                <SelectItem key={option} value={option.toString()}>{option}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-end gap-2">
+          <span className="text-sm text-muted-foreground">PAGE</span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronsLeft className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+          <span className="text-sm font-mono px-2">
+            {currentPage} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronsRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Reset Confirmation Dialog */}

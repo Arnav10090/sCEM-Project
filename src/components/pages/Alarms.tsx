@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DateRangeFilter } from '@/components/common/DateRangeFilter';
 
 interface AlarmRecord {
   no: string;
@@ -59,11 +60,14 @@ const Alarms = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [levelFilter, setLevelFilter] = useState<string>('');
   const [deviceFilter, setDeviceFilter] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [fromEventTime, setFromEventTime] = useState<string>('');
+  const [toEventTime, setToEventTime] = useState<string>('');
+  const [fromRecoveredTime, setFromRecoveredTime] = useState<string>('');
+  const [toRecoveredTime, setToRecoveredTime] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
-  const itemsPerPage = 15;
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const rowsPerPageOptions = [5, 15, 25, 50];
 
   const uniqueLevels = Array.from(new Set(allAlarms.map(a => a.level)));
   const uniqueDevices = Array.from(new Set(allAlarms.map(a => a.device)));
@@ -76,14 +80,19 @@ const Alarms = () => {
     const matchesLevel = !levelFilter || alarm.level === levelFilter;
     const matchesDevice = !deviceFilter || alarm.device === deviceFilter;
 
-    let matchesDateRange = true;
-    if (startDate || endDate) {
-      const eventDate = alarm.eventTime.split(' ')[0];
-      if (startDate && eventDate < startDate) matchesDateRange = false;
-      if (endDate && eventDate > endDate) matchesDateRange = false;
+    let matchesEventTimeRange = true;
+    const eventDate = alarm.eventTime.split(' ')[0];
+    if (fromEventTime && eventDate < fromEventTime) matchesEventTimeRange = false;
+    if (toEventTime && eventDate > toEventTime) matchesEventTimeRange = false;
+
+    let matchesRecoveredTimeRange = true;
+    if (alarm.recoveredTime !== '-') {
+      const recoveredDate = alarm.recoveredTime.split(' ')[0];
+      if (fromRecoveredTime && recoveredDate < fromRecoveredTime) matchesRecoveredTimeRange = false;
+      if (toRecoveredTime && recoveredDate > toRecoveredTime) matchesRecoveredTimeRange = false;
     }
 
-    return matchesSearch && matchesLevel && matchesDevice && matchesDateRange;
+    return matchesSearch && matchesLevel && matchesDevice && matchesEventTimeRange && matchesRecoveredTimeRange;
   });
 
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
@@ -94,16 +103,18 @@ const Alarms = () => {
     setSearchTerm('');
     setLevelFilter('');
     setDeviceFilter('');
-    setStartDate('');
-    setEndDate('');
+    setFromEventTime('');
+    setToEventTime('');
+    setFromRecoveredTime('');
+    setToRecoveredTime('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
-  const isFiltered = searchTerm || levelFilter || deviceFilter || startDate || endDate;
+  const isFiltered = searchTerm || levelFilter || deviceFilter || fromEventTime || toEventTime || fromRecoveredTime || toRecoveredTime;
 
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-4 animate-fade-in mt-6">
       {/* Controls */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 flex-1">
@@ -140,31 +151,33 @@ const Alarms = () => {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Event Time:</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Event Time:"
+            fromDate={fromEventTime}
+            toDate={toEventTime}
+            onFromDateChange={(date) => {
+              setFromEventTime(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToEventTime(date);
+              setCurrentPage(1);
+            }}
+          />
 
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-muted-foreground whitespace-nowrap">Recovered Time:</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                setCurrentPage(1);
-              }}
-              className="px-3 py-2 text-xs border border-input rounded-md bg-background"
-            />
-          </div>
+          <DateRangeFilter
+            label="Recovered Time:"
+            fromDate={fromRecoveredTime}
+            toDate={toRecoveredTime}
+            onFromDateChange={(date) => {
+              setFromRecoveredTime(date);
+              setCurrentPage(1);
+            }}
+            onToDateChange={(date) => {
+              setToRecoveredTime(date);
+              setCurrentPage(1);
+            }}
+          />
 
           {isFiltered && (
             <Button
@@ -174,8 +187,10 @@ const Alarms = () => {
                 setSearchTerm('');
                 setLevelFilter('');
                 setDeviceFilter('');
-                setStartDate('');
-                setEndDate('');
+                setFromEventTime('');
+                setToEventTime('');
+                setFromRecoveredTime('');
+                setToRecoveredTime('');
                 setCurrentPage(1);
               }}
             >
@@ -246,15 +261,16 @@ const Alarms = () => {
             </div>
           )}
 
-          {startDate && (
+          {(fromEventTime || toEventTime) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Event Time: {startDate}</span>
+              <span>Event Time: {fromEventTime} to {toEventTime}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setStartDate('');
+                  setFromEventTime('');
+                  setToEventTime('');
                   setCurrentPage(1);
                 }}
               >
@@ -263,15 +279,16 @@ const Alarms = () => {
             </div>
           )}
 
-          {endDate && (
+          {(fromRecoveredTime || toRecoveredTime) && (
             <div className="inline-flex items-center gap-2 px-2 py-1 bg-background border border-input rounded-full text-xs">
-              <span>Recovered Time: {endDate}</span>
+              <span>Recovered Time: {fromRecoveredTime} to {toRecoveredTime}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1"
                 onClick={() => {
-                  setEndDate('');
+                  setFromRecoveredTime('');
+                  setToRecoveredTime('');
                   setCurrentPage(1);
                 }}
               >
@@ -329,48 +346,68 @@ const Alarms = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-end gap-2">
-        <span className="text-sm text-muted-foreground">PAGE</span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(1)}
-          disabled={currentPage === 1}
-        >
-          <ChevronsLeft className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </Button>
-        <span className="text-sm font-mono px-2">
-          {currentPage} / {totalPages}
-        </span>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCurrentPage(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronsRight className="w-4 h-4" />
-        </Button>
+      {/* Rows Per Page and Pagination */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-muted-foreground">Rows per page:</label>
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+            setItemsPerPage(parseInt(value));
+            setCurrentPage(1);
+          }}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {rowsPerPageOptions.map(option => (
+                <SelectItem key={option} value={option.toString()}>{option}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-end gap-2">
+          <span className="text-sm text-muted-foreground">PAGE</span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronsLeft className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+          <span className="text-sm font-mono px-2">
+            {currentPage} / {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronsRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Reset Confirmation Dialog */}
