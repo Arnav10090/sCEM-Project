@@ -99,7 +99,8 @@ const PlanningReports = () => {
   const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showResetDialog, setShowResetDialog] = useState(false);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const rowsPerPageOptions = [5, 15, 25, 50];
 
   const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
   const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
