@@ -94,11 +94,13 @@ const Alarms = () => {
     setSearchTerm('');
     setLevelFilter('');
     setDeviceFilter('');
+    setStartDate('');
+    setEndDate('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
 
-  const isFiltered = searchTerm || levelFilter || deviceFilter;
+  const isFiltered = searchTerm || levelFilter || deviceFilter || startDate || endDate;
 
   return (
     <div className="space-y-4 animate-fade-in">
