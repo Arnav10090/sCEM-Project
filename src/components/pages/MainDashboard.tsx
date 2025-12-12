@@ -113,48 +113,22 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid grid-cols-3 gap-2 h-full animate-fade-in">
+    <div className="grid grid-cols-5 gap-2 h-full animate-fade-in">
       {/* Left Column: Images (stacked) */}
-      <div className="flex flex-col gap-2 h-full">
-        <div className="flex-1">
-          <ImagePanel title="Image Captured During Inspection" />
-        </div>
-        <div className="flex-1">
-          <ImagePanel title="Last Image Captured" />
-        </div>
+      <div className="flex flex-col gap-2">
+        <ImagePanel title="Image Captured During Inspection" />
+        <ImagePanel title="Last Image Captured" />
       </div>
 
-      {/* Middle Column: Checklist Table + Verified/Confirmed By */}
-      <div className="flex flex-col gap-2 h-full">
-        <div className="flex-1 overflow-auto">
-          <ChecklistTable initialItems={currentChecklist} />
-        </div>
-
-        {/* Verified/Confirmed By */}
-        <div className="bg-card border border-border rounded-lg p-3">
-          <div className="grid grid-cols-2 gap-4">
-            <DropdownSelect
-              label="Verified By"
-              options={engineers}
-              value={verifiedBy}
-              onChange={setVerifiedBy}
-              placeholder="Name from drop down list"
-            />
-            <DropdownSelect
-              label="Confirmed By"
-              options={engineers}
-              value={confirmedBy}
-              onChange={setConfirmedBy}
-              placeholder="Name from drop down list"
-            />
-          </div>
-        </div>
+      {/* Middle Column: Checklist Table */}
+      <div>
+        <ChecklistTable initialItems={currentChecklist} />
       </div>
 
-      {/* Right Column: 2x2 Grid of Cards */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
-        {/* Top Left: Observations Based on Image Comparison */}
-        <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+      {/* Right Columns: Cards */}
+      <div className="flex flex-col gap-2">
+        {/* Observations Based on Image Comparison */}
+        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
           <h4 className="text-xs font-medium text-industrial-red mb-2">
             Observations based on image comparison (Old and Latest)
           </h4>
@@ -165,8 +139,30 @@ const MainDashboard = () => {
           </ul>
         </div>
 
-        {/* Top Right: Overall Equipment Status */}
-        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between">
+        {/* Last Inspection Date */}
+        <div className="bg-card border border-border rounded-lg p-3 flex-1">
+          <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
+          <div className="space-y-1 text-xs">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Last:</span>
+              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Scheduled:</span>
+              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Actual:</span>
+              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fourth Column: Status & Observations */}
+      <div className="flex flex-col gap-2">
+        {/* Overall Equipment Status */}
+        <div className="bg-card border border-border rounded-lg p-3 flex flex-col justify-between flex-1">
           <div>
             <h5 className="text-xs font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
             <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
@@ -188,27 +184,8 @@ const MainDashboard = () => {
           </div>
         </div>
 
-        {/* Bottom Left: Last Inspection Date */}
-        <div className="bg-card border border-border rounded-lg p-3">
-          <h5 className="text-xs font-medium text-industrial-red mb-2">Last Inspection Date</h5>
-          <div className="space-y-1 text-xs">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Last:</span>
-              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Scheduled:</span>
-              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Actual:</span>
-              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Right: Observations by Person Checking */}
-        <div className="bg-card border border-border rounded-lg p-3 overflow-auto">
+        {/* Observations by Person Checking */}
+        <div className="bg-card border border-border rounded-lg p-3 overflow-auto flex-1">
           <h4 className="text-xs font-medium text-industrial-red mb-2">
             Observations by person checking
           </h4>
@@ -219,8 +196,29 @@ const MainDashboard = () => {
           </ul>
         </div>
       </div>
+
+      {/* Fifth Column: Verified/Confirmed By */}
+      <div>
+        <div className="bg-card border border-border rounded-lg p-3 h-full flex flex-col justify-center">
+          <div className="space-y-3">
+            <DropdownSelect
+              label="Verified By"
+              options={engineers}
+              value={verifiedBy}
+              onChange={setVerifiedBy}
+              placeholder="Name from drop down list"
+            />
+            <DropdownSelect
+              label="Confirmed By"
+              options={engineers}
+              value={confirmedBy}
+              onChange={setConfirmedBy}
+              placeholder="Name from drop down list"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-    </div >
   );
 };
 
