@@ -144,12 +144,12 @@ const MainDashboard = () => {
               </div>
             </div>
 
-            <div className="p-3 border border-border rounded-lg">
-              <h5 className="text-sm font-medium text-industrial-red mb-2">Overall Equipment Status</h5>
-              <div className={`text-center py-3 rounded font-bold text-white mb-3 ${getStatusClass()}`}>
+            <div className="p-2 border border-border rounded-lg">
+              <h5 className="text-xs font-medium text-industrial-red mb-1">Overall Equipment Status</h5>
+              <div className={`text-center py-1 rounded font-bold text-white mb-2 text-xs ${getStatusClass()}`}>
                 {overallStatus}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 {(['Good', 'Bad', 'Worst'] as const).map((status) => (
                   <Button
                     key={status}
