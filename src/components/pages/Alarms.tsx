@@ -83,9 +83,13 @@ const Alarms = () => {
 
   const handleReset = () => {
     setSearchTerm('');
+    setLevelFilter('');
+    setDeviceFilter('');
     setCurrentPage(1);
     setShowResetDialog(false);
   };
+
+  const isFiltered = searchTerm || levelFilter || deviceFilter;
 
   return (
     <div className="space-y-4 animate-fade-in">
