@@ -1,11 +1,86 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useEquipment } from '@/context/EquipmentContext';
 import ImagePanel from '../common/ImagePanel';
 import DropdownSelect from '../common/DropdownSelect';
 import { Button } from '@/components/ui/button';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
+const equipmentObservations: Record<string, string[]> = {
+  'motor-001': [
+    '1. High vibration detected on bearing',
+    '2. Temperature slightly elevated',
+    '3. Abnormal noise detected'
+  ],
+  'plc-001': [
+    '1. CPU temperature nominal',
+    '2. No communication errors',
+    '3. All modules responsive'
+  ],
+  'drive-001': [
+    '1. Output frequency stable',
+    '2. No overcurrent detected',
+    '3. Heat sink temperature normal'
+  ],
+  'pump-001': [
+    '1. Flow rate within limits',
+    '2. Pressure stable',
+    '3. No cavitation detected'
+  ]
+};
+
+const equipmentChecklists: Record<string, string[]> = {
+  'motor-001': [
+    '1. Temperature of Bearing',
+    '2. Vibration in Motor',
+    '3. Physical - Dust',
+    '4. Overall status'
+  ],
+  'plc-001': [
+    '1. CPU Temperature',
+    '2. Power Supply Voltage',
+    '3. Communication Status',
+    '4. I/O Module Status'
+  ],
+  'drive-001': [
+    '1. Output Frequency',
+    '2. Output Current',
+    '3. Heat Sink Temperature',
+    '4. Drive Status'
+  ],
+  'pump-001': [
+    '1. Flow Rate',
+    '2. Discharge Pressure',
+    '3. Vibration Level',
+    '4. Motor Current'
+  ]
+};
+
+const equipmentComments: Record<string, string[]> = {
+  'motor-001': [
+    '• More vibrations',
+    '• Noise from bearings',
+    '• Motor heated up'
+  ],
+  'plc-001': [
+    '• Program execution stable',
+    '• Watchdog timer normal',
+    '• No errors detected'
+  ],
+  'drive-001': [
+    '• Operating at rated capacity',
+    '• Cooling system effective',
+    '• Protection circuits active'
+  ],
+  'pump-001': [
+    '• No cavitation issues',
+    '• Seal condition good',
+    '• Impeller balanced'
+  ]
+};
+
 const MainDashboard = () => {
+  const { selectedEquipment } = useEquipment();
   const [verifiedBy, setVerifiedBy] = useState<string>('');
   const [confirmedBy, setConfirmedBy] = useState<string>('');
   const [overallStatus, setOverallStatus] = useState<'Good' | 'Bad' | 'Worst'>('Good');
@@ -17,6 +92,24 @@ const MainDashboard = () => {
       case 'Worst': return 'status-worst';
     }
   };
+
+  const currentObservations = selectedEquipment 
+    ? equipmentObservations[selectedEquipment.id] || equipmentObservations['motor-001']
+    : equipmentObservations['motor-001'];
+
+  const currentChecklist = selectedEquipment
+    ? equipmentChecklists[selectedEquipment.id] || equipmentChecklists['motor-001']
+    : equipmentChecklists['motor-001'];
+
+  const currentComments = selectedEquipment
+    ? equipmentComments[selectedEquipment.id] || equipmentComments['motor-001']
+    : equipmentComments['motor-001'];
+
+  useEffect(() => {
+    setVerifiedBy('');
+    setConfirmedBy('');
+    setOverallStatus('Good');
+  }, [selectedEquipment?.id]);
 
   return (
     <div className="space-y-4 animate-fade-in">
@@ -34,9 +127,9 @@ const MainDashboard = () => {
             Observations based on image comparison (Old and Latest)
           </h4>
           <ul className="space-y-2 text-sm text-industrial-red">
-            <li>1. Predefined observations - xxxxxxxxxxxxx</li>
-            <li>2. xxxxxxxxxxxxxxxxxxx</li>
-            <li>3. xxxxxxxxxxxxxxxxxxx</li>
+            {currentObservations.map((obs, idx) => (
+              <li key={idx}>{obs}</li>
+            ))}
           </ul>
         </div>
 
@@ -47,10 +140,9 @@ const MainDashboard = () => {
           </h4>
           <p className="text-xs text-industrial-red mb-2">Various parameters of equipment ex.</p>
           <ul className="space-y-1 text-sm text-industrial-red">
-            <li>1. Temperature of Bearing</li>
-            <li>2. Vibration in Motor</li>
-            <li>3. Physical - Dust</li>
-            <li>4. Overall status</li>
+            {currentChecklist.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
           </ul>
           <div className="mt-4 p-2 bg-muted rounded text-xs text-center">
             <p>Status in Checked/Not-Checked</p>
@@ -65,9 +157,9 @@ const MainDashboard = () => {
               Observations by person checking
             </h4>
             <ul className="space-y-1 text-sm text-muted-foreground">
-              <li>• xxxxxxxxxxxxxx</li>
-              <li>• xxxxxxxxxxxxxx</li>
-              <li>• xxxxxxxxxxxxxx</li>
+              {currentComments.map((obs, idx) => (
+                <li key={idx}>{obs}</li>
+              ))}
             </ul>
           </div>
           <div className="bg-card border border-border rounded-lg p-4">
@@ -75,9 +167,9 @@ const MainDashboard = () => {
               Add comments during inspection
             </h4>
             <ul className="space-y-1 text-sm text-industrial-red">
-              <li>1. More vibrations</li>
-              <li>2. Noise from bearings</li>
-              <li>3. Motor heated up</li>
+              {currentComments.map((comment, idx) => (
+                <li key={idx}>{comment}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -87,15 +179,15 @@ const MainDashboard = () => {
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Last Inspection Date:</span>
-              <span className="font-mono">12/01/2024</span>
+              <span className="font-mono">{selectedEquipment?.lastInspectionDate || '12/01/2024'}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Scheduled Inspection Date:</span>
-              <span className="font-mono">12/15/2024</span>
+              <span className="font-mono">{selectedEquipment?.scheduledInspectionDate || '12/15/2024'}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Actual Inspection Date:</span>
-              <span className="font-mono">12/10/2024</span>
+              <span className="font-mono">{selectedEquipment?.actualInspectionDate || '12/10/2024'}</span>
             </div>
           </div>
 
