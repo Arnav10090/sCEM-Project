@@ -89,7 +89,7 @@ const ChecklistTable = ({
                       </span>
                     </div>
                   </td>
-                  <td className="px-2 py-5 flex-1 text-center">
+                  <td className="px-2 py-5 w-1/3 text-center">
                     <textarea
                       value={item.comment}
                       onChange={(e) =>
