@@ -161,7 +161,7 @@
   }
 
   .data-table th {
-    @apply bg-muted text-gray-900 text-sm font-bold uppercase px-3 py-3 text-center border border-border;
+    @apply bg-black text-white text-sm font-bold uppercase px-3 py-3 text-center border border-border;
   }
 
   .data-table td {
