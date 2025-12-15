@@ -60,7 +60,7 @@ const ChecklistTable = ({
                 <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-1/3">
                   Various parameters of equipment ex.
                 </th>
-                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-20">
+                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-32">
                   Status
                 </th>
                 <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 flex-1">
@@ -77,7 +77,7 @@ const ChecklistTable = ({
                   <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3">
                     {item.parameter}
                   </td>
-                  <td className="px-3 py-3 text-center border-r border-border align-middle w-20">
+                  <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
                     <div className="flex flex-col items-center justify-center h-full gap-2">
                       <Checkbox
                         checked={item.isChecked}
