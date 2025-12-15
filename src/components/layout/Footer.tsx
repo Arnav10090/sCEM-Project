@@ -41,18 +41,16 @@ const Footer = () => {
       </button>
 
       {/* Expanded Content */}
-      {isExpanded && (
-        <div className="px-4 py-3 overflow-auto max-h-64 bg-white">
-          <div className="space-y-2">
-            {sampleAlarms.map((alarm, idx) => (
-              <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
-                <span className="text-sm text-gray-800 flex-1">{alarm.message}</span>
-                <span className="text-xs text-gray-600 font-medium ml-4 flex-shrink-0">{alarm.time}</span>
-              </div>
-            ))}
-          </div>
+      <div className={`px-4 py-3 overflow-auto max-h-64 bg-white transition-all duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="space-y-2">
+          {sampleAlarms.map((alarm, idx) => (
+            <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+              <span className="text-sm text-gray-800 flex-1">{alarm.message}</span>
+              <span className="text-xs text-gray-600 font-medium ml-4 flex-shrink-0">{alarm.time}</span>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
