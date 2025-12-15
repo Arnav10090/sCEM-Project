@@ -74,11 +74,11 @@ const ChecklistTable = ({
                   key={item.id}
                   className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
-                  <td className="px-3 py-3 text-xs text-black border-r border-border w-1/4 text-center">
+                  <td className="px-2 py-3 text-xs text-black border-r border-border w-1/5 text-center">
                     {item.parameter}
                   </td>
-                  <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
-                    <div className="flex flex-col items-center justify-center h-full gap-2">
+                  <td className="px-2 py-3 text-center border-r border-border align-middle w-20">
+                    <div className="flex flex-col items-center justify-center h-full gap-1">
                       <Checkbox
                         checked={item.isChecked}
                         onCheckedChange={() => handleCheckChange(item.id)}
@@ -89,7 +89,7 @@ const ChecklistTable = ({
                       </span>
                     </div>
                   </td>
-                  <td className="px-3 py-5 w-2/5 text-center">
+                  <td className="px-2 py-5 flex-1 text-center">
                     <textarea
                       value={item.comment}
                       onChange={(e) =>
