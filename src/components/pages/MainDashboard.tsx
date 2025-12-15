@@ -61,24 +61,24 @@ const equipmentChecklists: Record<string, Array<{ id: string; parameter: string;
 
 const defaultEquipmentComments: Record<string, string[]> = {
   'motor-001': [
-    '• More vibrations',
-    '• Noise from bearings',
-    '• Motor heated up'
+    'More vibrations',
+    'Noise from bearings',
+    'Motor heated up'
   ],
   'plc-001': [
-    '• Program execution stable',
-    '• Watchdog timer normal',
-    '• No errors detected'
+    'Program execution stable',
+    'Watchdog timer normal',
+    'No errors detected'
   ],
   'drive-001': [
-    '• Operating at rated capacity',
-    '• Cooling system effective',
-    '• Protection circuits active'
+    'Operating at rated capacity',
+    'Cooling system effective',
+    'Protection circuits active'
   ],
   'pump-001': [
-    '• No cavitation issues',
-    '• Seal condition good',
-    '• Impeller balanced'
+    'No cavitation issues',
+    'Seal condition good',
+    'Impeller balanced'
   ]
 };
 
