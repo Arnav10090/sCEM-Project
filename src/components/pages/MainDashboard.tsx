@@ -190,7 +190,7 @@ const MainDashboard = () => {
           <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} showUploadButton={true} />
         </div>
         <div className="flex-1 min-h-0">
-          <ImagePanel title="Last Image Captured" images={['/motor2.png']} showUploadButton={false} />
+          <ImagePanel title="Last Image Captured" images={['/motor2.png']} showUploadButton={false} showImageInfo={true} />
         </div>
       </div>
 
