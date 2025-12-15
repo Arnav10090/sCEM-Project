@@ -100,6 +100,7 @@ const PlanningReports = () => {
   const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
   const handleRemarksChange = (sn: number, value: string) => {
@@ -370,7 +371,16 @@ const PlanningReports = () => {
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-xs">{record.lastObservation}</span>
                       {record.lastObservation && (
-                        <div className="w-24 h-20 bg-muted border border-border rounded flex items-center justify-center">
+                        <button
+                          onClick={() => {
+                            if (record.sn === 1) {
+                              setSelectedImage('/image.png');
+                            } else if (record.sn === 2) {
+                              setSelectedImage('/image2.png');
+                            }
+                          }}
+                          className="w-24 h-20 bg-muted border border-border rounded flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                        >
                           {record.sn === 1 ? (
                             <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
                           ) : record.sn === 2 ? (
@@ -378,7 +388,7 @@ const PlanningReports = () => {
                           ) : (
                             <Camera className="w-4 h-4 text-muted-foreground" />
                           )}
-                        </div>
+                        </button>
                       )}
                     </div>
                   ) : (
@@ -473,6 +483,26 @@ const PlanningReports = () => {
         </div>
       </div>
 
+      {/* Image Popup Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Inspection Image</DialogTitle>
+          </DialogHeader>
+          {selectedImage && (
+            <div className="flex items-center justify-center py-4">
+              <img
+                src={selectedImage}
+                alt="Enlarged inspection observation"
+                className="max-w-full max-h-[70vh] object-contain rounded-lg"
+              />
+            </div>
+          )}
+          <DialogFooter>
+            <Button onClick={() => setSelectedImage(null)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
