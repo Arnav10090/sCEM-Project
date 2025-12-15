@@ -13,10 +13,13 @@ import PlanningReports from '@/components/pages/PlanningReports';
 import Alarms from '@/components/pages/Alarms';
 import SystemArchitecture from '@/components/pages/SystemArchitecture';
 import SpareTab from '@/components/pages/SpareTab';
+import { useAlarmGenerator } from '@/hooks/useAlarmGenerator';
 
 const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring', 'Equipment Configuration'];
 
 const Index = () => {
+  useAlarmGenerator();
+
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const saved = localStorage.getItem('currentPage');
     return (saved as PageName) || 'Main Dashboard';
