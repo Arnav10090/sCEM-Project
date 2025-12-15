@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { DateRangeFilter } from '@/components/common/DateRangeFilter';
+import { useAlarm } from '@/context/AlarmContext';
 
 interface AlarmRecord {
   no: string;
@@ -57,6 +58,7 @@ const generateAlarms = (count: number): AlarmRecord[] => {
 const allAlarms = generateAlarms(50);
 
 const Alarms = () => {
+  const { archivedAlarms } = useAlarm();
   const [searchTerm, setSearchTerm] = useState('');
   const [levelFilter, setLevelFilter] = useState<string>('');
   const [deviceFilter, setDeviceFilter] = useState<string>('');
@@ -68,10 +70,23 @@ const Alarms = () => {
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
-  const uniqueLevels = Array.from(new Set(allAlarms.map(a => a.level)));
-  const uniqueDevices = Array.from(new Set(allAlarms.map(a => a.device)));
+  const combinedAlarms = [
+    ...archivedAlarms.map((alarm) => ({
+      no: alarm.id,
+      level: alarm.level,
+      alarmNo: alarm.id.substring(0, 8),
+      message: alarm.message,
+      device: alarm.device,
+      eventTime: alarm.eventTime,
+      recoveredTime: alarm.acknowledgedTime || '-',
+    })),
+    ...allAlarms
+  ];
 
-  const filteredAlarms = allAlarms.filter((alarm) => {
+  const uniqueLevels = Array.from(new Set(combinedAlarms.map(a => a.level)));
+  const uniqueDevices = Array.from(new Set(combinedAlarms.map(a => a.device)));
+
+  const filteredAlarms = combinedAlarms.filter((alarm) => {
     const matchesSearch =
       alarm.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
       alarm.device.toLowerCase().includes(searchTerm.toLowerCase()) ||

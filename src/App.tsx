@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { EquipmentProvider } from "@/context/EquipmentContext";
+import { AlarmProvider } from "@/context/AlarmContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -15,13 +16,15 @@ const App = () => (
       <Toaster />
       <Sonner />
       <EquipmentProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <AlarmProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AlarmProvider>
       </EquipmentProvider>
     </TooltipProvider>
   </QueryClientProvider>

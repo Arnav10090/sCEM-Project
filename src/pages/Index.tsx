@@ -4,6 +4,7 @@ import ScrollingAlert from '@/components/layout/ScrollingAlert';
 import Navigation, { PageName } from '@/components/layout/Navigation';
 import KPICards from '@/components/layout/KPICards';
 import Footer from '@/components/layout/Footer';
+import AlarmPopup from '@/components/layout/AlarmPopup';
 import MainDashboard from '@/components/pages/MainDashboard';
 import EquipmentVerification from '@/components/pages/EquipmentVerification';
 import ParameterMonitoring from '@/components/pages/ParameterMonitoring';
@@ -12,10 +13,13 @@ import PlanningReports from '@/components/pages/PlanningReports';
 import Alarms from '@/components/pages/Alarms';
 import SystemArchitecture from '@/components/pages/SystemArchitecture';
 import SpareTab from '@/components/pages/SpareTab';
+import { useAlarmGenerator } from '@/hooks/useAlarmGenerator';
 
 const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring', 'Equipment Configuration'];
 
 const Index = () => {
+  useAlarmGenerator();
+
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const saved = localStorage.getItem('currentPage');
     return (saved as PageName) || 'Main Dashboard';
@@ -67,6 +71,9 @@ const Index = () => {
       }`}>
         {renderPage()}
       </main>
+
+      {/* Alarm Popup - Displayed on all pages */}
+      <AlarmPopup />
 
       {/* Fixed Footer */}
       <Footer />
