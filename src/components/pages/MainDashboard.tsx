@@ -207,14 +207,14 @@ const MainDashboard = () => {
               options={engineers}
               value={verifiedBy}
               onChange={setVerifiedBy}
-              placeholder="Name from drop down list"
+              placeholder="Select Name"
             />
             <DropdownSelect
               label="Confirmed By"
               options={engineers}
               value={confirmedBy}
               onChange={setConfirmedBy}
-              placeholder="Name from drop down list"
+              placeholder="Select Name"
             />
           </div>
         </div>
