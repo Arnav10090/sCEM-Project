@@ -74,9 +74,9 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
 
         {/* Image Area */}
         <div className="h-full bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
-          {images.length > 0 ? (
+          {localImages.length > 0 ? (
             <img
-              src={images[currentIndex]}
+              src={localImages[currentIndex]}
               alt={`${title} - Image ${currentIndex + 1}`}
               className="w-full h-full object-contain"
             />
