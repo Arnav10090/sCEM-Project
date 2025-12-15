@@ -183,9 +183,9 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid gap-3 h-full animate-fade-in" style={{ gridTemplateColumns: '1.1fr 0.8fr 1.1fr' }}>
+    <div className="grid gap-6 h-full animate-fade-in" style={{ gridTemplateColumns: '1.1fr 0.8fr 1.1fr' }}>
       {/* Left Column: Images (stacked) */}
-      <div className="flex flex-col gap-3 h-full min-h-0">
+      <div className="flex flex-col gap-6 h-full min-h-0">
         <div className="flex-1 min-h-0">
           <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} showUploadButton={true} />
         </div>
@@ -200,9 +200,9 @@ const MainDashboard = () => {
       </div>
 
       {/* Right Column: All cards stacked */}
-      <div className="flex flex-col gap-3 h-full min-h-0">
+      <div className="flex flex-col gap-6 h-full min-h-0">
         {/* Top Row: Observations and Overall Status */}
-        <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
+        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
           {/* Observations Based on Image Comparison */}
           <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0 flex flex-col">
             <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
@@ -290,7 +290,7 @@ const MainDashboard = () => {
         </div>
 
         {/* Middle Row: Last Inspection Date and Observations by Person */}
-        <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
+        <div className="grid grid-cols-2 gap-6 flex-1 min-h-0">
           {/* Last Inspection Date */}
           <div className="bg-card border border-border rounded-lg p-4">
             <h5 className="text-sm font-medium text-gray-900 mb-3">Last Inspection Date</h5>
@@ -375,7 +375,7 @@ const MainDashboard = () => {
 
         {/* Bottom Row: Verified/Confirmed By spanning full width */}
         <div className="bg-card border border-border rounded-lg p-4 flex-shrink-0">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-6">
             <DropdownSelect
               label="Verified By"
               options={engineers}
