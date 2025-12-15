@@ -167,6 +167,14 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
           </Button>
         </div>
       )}
+
+      {/* Image Info */}
+      {showImageInfo && localImages.length > 0 && imageMetadata[currentIndex] && (
+        <div className="mt-2 p-2 bg-muted rounded text-xs text-muted-foreground flex-shrink-0">
+          <div>Image size - {formatFileSize(imageMetadata[currentIndex].size)}</div>
+          <div>Image uploaded on {formatDateTime(imageMetadata[currentIndex].uploadedAt)}</div>
+        </div>
+      )}
     </div>
   );
 };
