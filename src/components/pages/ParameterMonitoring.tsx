@@ -143,7 +143,14 @@ const ParameterMonitoring = () => {
                   <td className="text-center font-mono font-medium">
                     {param.present || '-'}
                   </td>
-                  <td>{param.remarks}</td>
+                  <td className="p-0">
+                    <Input
+                      value={param.remarks}
+                      onChange={(e) => handleRemarksChange(param.sn, e.target.value)}
+                      placeholder="Enter remarks..."
+                      className="border-0 text-xs h-auto py-1 px-2"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
