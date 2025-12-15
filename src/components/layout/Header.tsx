@@ -47,7 +47,7 @@ const Header = ({ currentPage }: HeaderProps) => {
           <span className="font-mono">{formatDateTime(currentDateTime)}</span>
         </div>
         <div className="w-28 h-12 border border-gray-400 rounded flex items-center justify-center bg-white flex-shrink-0">
-          <span className="text-gray-800 font-semibold text-xs">HITACHI</span>
+          <img src="https://cdn.builder.io/api/v1/image/assets%2F6495670efba34e5e9d1b6e43dcd63ffa%2F842f3f5e3603476ab02d10d14a61bcd2?format=webp&width=800" alt="Hitachi logo" className="w-25 h-10 object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/Hitachi-Logo.png' }} />
         </div>
       </div>
     </header>
