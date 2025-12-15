@@ -187,10 +187,10 @@ const MainDashboard = () => {
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-3 h-full min-h-0">
         <div className="flex-1 min-h-0">
-          <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} />
+          <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} showUploadButton={true} />
         </div>
         <div className="flex-1 min-h-0">
-          <ImagePanel title="Last Image Captured" images={['/motor2.png']} />
+          <ImagePanel title="Last Image Captured" images={['/motor2.png']} showUploadButton={false} />
         </div>
       </div>
 
