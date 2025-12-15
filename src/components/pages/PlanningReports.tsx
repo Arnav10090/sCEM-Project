@@ -345,15 +345,15 @@ const PlanningReports = () => {
         <table className="data-table">
           <thead>
             <tr>
-              <th className="w-12 text-black">S.N</th>
-              <th className="w-20 text-black">Plant</th>
-              <th className="w-28 text-black">Equipment</th>
-              <th className="w-32 text-black">Critical level for process</th>
-              <th className="w-32 text-black">Last Inspection Date</th>
-              <th className="w-32 text-black">Planned Inspection Date</th>
-              <th className="w-32 text-black">Last Inspection Observation</th>
-              <th className="w-32 text-black">Status of Inspection</th>
-              <th className="w-40 text-black">Remarks</th>
+              <th className="w-12">S.N</th>
+              <th className="w-20">Plant</th>
+              <th className="w-28">Equipment</th>
+              <th className="w-32">Critical level for process</th>
+              <th className="w-32">Last Inspection Date</th>
+              <th className="w-32">Planned Inspection Date</th>
+              <th className="w-32">Last Inspection Observation</th>
+              <th className="w-32">Status of Inspection</th>
+              <th className="w-40">Remarks</th>
             </tr>
           </thead>
           <tbody>
