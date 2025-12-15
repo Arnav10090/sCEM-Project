@@ -46,8 +46,8 @@ const KPICards = () => {
 
   const criticality = selectedEquipment.criticality;
   const criticalities: Record<string, string> = {
-    'Most critical': 'text-industrial-red',
-    'High': 'text-industrial-red',
+    'Most critical': 'text-gray-900',
+    'High': 'text-gray-900',
     'Medium': 'text-industrial-amber',
     'Low': 'text-industrial-gray'
   };

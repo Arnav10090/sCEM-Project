@@ -72,10 +72,10 @@ const EquipmentVerification = () => {
       <div className="flex flex-col gap-3 h-full">
         {/* Critical Interlock List */}
         <div className="bg-card border border-border rounded-lg p-4 overflow-auto flex-1">
-          <h4 className="text-sm font-medium text-industrial-red mb-3">
+          <h4 className="text-sm font-medium text-gray-900 mb-3">
             Critical / Important Interlock List
           </h4>
-          <ul className="space-y-2 text-sm text-industrial-red">
+          <ul className="space-y-2 text-sm text-gray-900">
             {interlocks.map((interlock) => (
               <li key={interlock.id} className="truncate">{interlock.id}. {interlock.name}</li>
             ))}
@@ -84,7 +84,7 @@ const EquipmentVerification = () => {
 
         {/* Observations by Person Checking */}
         <div className="bg-card border border-border rounded-lg p-4 h-1/2 overflow-auto">
-          <h5 className="text-sm font-medium text-industrial-red mb-3">Observations by person checking</h5>
+          <h5 className="text-sm font-medium text-gray-900 mb-3">Observations by person checking</h5>
           <ul className="text-sm text-muted-foreground space-y-2">
             <li>• {selectedEquipment?.name}</li>
             <li>• {selectedEquipment?.type}</li>
@@ -104,7 +104,7 @@ const EquipmentVerification = () => {
                 <div className="flex-1 bg-muted border border-border rounded flex items-center justify-center mb-2">
                   <Camera className="w-6 h-6 text-muted-foreground opacity-50" />
                 </div>
-                <p className="text-sm text-industrial-red text-center line-clamp-2">{interlock.description}</p>
+                <p className="text-sm text-gray-900 text-center line-clamp-2">{interlock.description}</p>
               </div>
             </div>
           ))}
@@ -117,7 +117,7 @@ const EquipmentVerification = () => {
         <div className="grid grid-cols-2 gap-3">
           {/* Dates Card */}
           <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="text-sm font-medium text-industrial-red mb-3">Inspection Dates</h5>
+            <h5 className="text-sm font-medium text-gray-900 mb-3">Inspection Dates</h5>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Last:</span>
@@ -137,7 +137,7 @@ const EquipmentVerification = () => {
           {/* Overall Status Card */}
           <div className="bg-card border border-border rounded-lg p-4 flex flex-col justify-between">
             <div>
-              <h5 className="text-sm font-medium text-industrial-red mb-3">Overall Status</h5>
+              <h5 className="text-sm font-medium text-gray-900 mb-3">Overall Status</h5>
               <div className={`text-center py-2 rounded font-bold text-white text-sm ${getStatusClass()}`}>
                 {overallStatus}
               </div>
@@ -160,7 +160,7 @@ const EquipmentVerification = () => {
 
         {/* Verification Card */}
         <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="text-sm font-medium text-industrial-red mb-4">Verification</h5>
+          <h5 className="text-sm font-medium text-gray-900 mb-4">Verification</h5>
           <DropdownSelect
             label="Verified By"
             options={engineers}

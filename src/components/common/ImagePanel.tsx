@@ -23,8 +23,8 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
     <div className="bg-card border border-border rounded-lg p-2 flex flex-col h-full flex-1 min-h-0">
       {/* Header */}
       <div className="flex items-center gap-2 mb-2 flex-shrink-0">
-        <Camera className="w-3 h-3 text-industrial-red" />
-        <h3 className="text-xs font-medium text-industrial-red">{title}</h3>
+        <Camera className="w-3 h-3 text-gray-900" />
+        <h3 className="text-xs font-medium text-gray-900">{title}</h3>
       </div>
 
       {/* Image Container with Navigation */}

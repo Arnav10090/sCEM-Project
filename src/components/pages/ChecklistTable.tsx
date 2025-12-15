@@ -57,13 +57,13 @@ const ChecklistTable = ({
           <table className="w-full border-collapse">
             <thead className="sticky top-0 bg-muted">
               <tr className="border-b border-border">
-                <th className="text-left px-3 py-2 text-xs font-medium text-industrial-red border-r border-border w-1/3">
+                <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-1/3">
                   Various parameters of equipment ex.
                 </th>
-                <th className="text-center px-3 py-2 text-xs font-medium text-industrial-red border-r border-border w-20">
-                  Status in Checked/Not-Checked to be displayed
+                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-32">
+                  Status
                 </th>
-                <th className="text-left px-3 py-2 text-xs font-medium text-industrial-red flex-1">
+                <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 flex-1">
                   Add comments during inspection ex.
                 </th>
               </tr>
@@ -72,18 +72,21 @@ const ChecklistTable = ({
               {checklist.map((item) => (
                 <tr
                   key={item.id}
-                  className="border-b border-border hover:bg-muted/30 transition-colors align-top h-24"
+                  className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
-                  <td className="px-3 py-3 text-xs text-industrial-red border-r border-border w-1/3">
+                  <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3">
                     {item.parameter}
                   </td>
-                  <td className="px-3 py-3 text-center border-r border-border align-middle w-20">
-                    <div className="flex items-center justify-center h-full">
+                  <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
+                    <div className="flex flex-col items-center justify-center h-full gap-2">
                       <Checkbox
                         checked={item.isChecked}
                         onCheckedChange={() => handleCheckChange(item.id)}
                         className="h-4 w-4"
                       />
+                      <span className="text-xs font-medium text-gray-900">
+                        {item.isChecked ? 'Checked' : 'Not Checked'}
+                      </span>
                     </div>
                   </td>
                   <td className="px-3 py-5 flex-1">
@@ -95,8 +98,8 @@ const ChecklistTable = ({
                       placeholder="Add comment..."
                       rows={3}
                       className="w-full px-2 py-2 text-xs border border-border rounded bg-background 
-focus:outline-none focus:ring-2 focus:ring-primary/20 text-industrial-red 
-placeholder-muted-foreground resize-none h-16"
+focus:outline-none focus:ring-2 focus:ring-primary/20 text-gray-900
+placeholder-muted-foreground resize-none h-20"
                     />
                   </td>
                 </tr>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, Search, RotateCcw, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
+import { Camera, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -98,7 +98,6 @@ const PlanningReports = () => {
   const [fromPlannedDate, setFromPlannedDate] = useState<string>('');
   const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [showResetDialog, setShowResetDialog] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
@@ -129,18 +128,6 @@ const PlanningReports = () => {
   const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedRecords = filteredRecords.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleReset = () => {
-    setSearchTerm('');
-    setPlantFilter('');
-    setStatusFilter('');
-    setFromLastInspectionDate('');
-    setToLastInspectionDate('');
-    setFromPlannedDate('');
-    setToPlannedDate('');
-    setCurrentPage(1);
-    setShowResetDialog(false);
-  };
 
   const isFiltered = searchTerm || plantFilter || statusFilter || fromLastInspectionDate || toLastInspectionDate || fromPlannedDate || toPlannedDate;
 
@@ -230,10 +217,6 @@ const PlanningReports = () => {
           )}
         </div>
 
-        <Button variant="outline" size="sm" onClick={() => setShowResetDialog(true)}>
-          <RotateCcw className="w-4 h-4 mr-1" />
-          RESET
-        </Button>
       </div>
 
       {/* Applied Filters */}
@@ -332,7 +315,16 @@ const PlanningReports = () => {
             variant="ghost"
             size="sm"
             className="text-xs ml-2"
-            onClick={() => handleReset()}
+            onClick={() => {
+              setSearchTerm('');
+              setPlantFilter('');
+              setStatusFilter('');
+              setFromLastInspectionDate('');
+              setToLastInspectionDate('');
+              setFromPlannedDate('');
+              setToPlannedDate('');
+              setCurrentPage(1);
+            }}
           >
             Clear All
           </Button>
@@ -366,7 +358,7 @@ const PlanningReports = () => {
                 <td className="font-mono">{record.plannedInspectionDate}</td>
                 <td>
                   <div className="flex flex-col items-start gap-2">
-                    <span className="text-industrial-red">{record.lastObservation || '-'}</span>
+                    <span className="text-gray-900">{record.lastObservation || '-'}</span>
                     {record.lastObservation && (
                       <div className="w-40 h-32 bg-muted border border-border rounded flex items-center justify-center">
                         {record.sn === 1 ? (
@@ -460,23 +452,6 @@ const PlanningReports = () => {
         </div>
       </div>
 
-      {/* Reset Confirmation Dialog */}
-      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>RESET</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to reset the filters?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
-              NO
-            </Button>
-            <Button onClick={handleReset}>YES</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

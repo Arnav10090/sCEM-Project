@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, RotateCcw, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, X } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -65,7 +65,6 @@ const Alarms = () => {
   const [fromRecoveredTime, setFromRecoveredTime] = useState<string>('');
   const [toRecoveredTime, setToRecoveredTime] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [showResetDialog, setShowResetDialog] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
@@ -98,18 +97,6 @@ const Alarms = () => {
   const totalPages = Math.ceil(filteredAlarms.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedAlarms = filteredAlarms.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleReset = () => {
-    setSearchTerm('');
-    setLevelFilter('');
-    setDeviceFilter('');
-    setFromEventTime('');
-    setToEventTime('');
-    setFromRecoveredTime('');
-    setToRecoveredTime('');
-    setCurrentPage(1);
-    setShowResetDialog(false);
-  };
 
   const isFiltered = searchTerm || levelFilter || deviceFilter || fromEventTime || toEventTime || fromRecoveredTime || toRecoveredTime;
 
@@ -199,10 +186,6 @@ const Alarms = () => {
           )}
         </div>
 
-        <Button variant="outline" size="sm" onClick={() => setShowResetDialog(true)}>
-          <RotateCcw className="w-4 h-4 mr-1" />
-          RESET
-        </Button>
       </div>
 
       {/* Applied Filters */}
@@ -301,7 +284,16 @@ const Alarms = () => {
             variant="ghost"
             size="sm"
             className="text-xs ml-2"
-            onClick={() => handleReset()}
+            onClick={() => {
+              setSearchTerm('');
+              setLevelFilter('');
+              setDeviceFilter('');
+              setFromEventTime('');
+              setToEventTime('');
+              setFromRecoveredTime('');
+              setToRecoveredTime('');
+              setCurrentPage(1);
+            }}
           >
             Clear All
           </Button>
@@ -410,23 +402,6 @@ const Alarms = () => {
         </div>
       </div>
 
-      {/* Reset Confirmation Dialog */}
-      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>RESET</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to reset the alarm filters?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
-              NO
-            </Button>
-            <Button onClick={handleReset}>YES</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
