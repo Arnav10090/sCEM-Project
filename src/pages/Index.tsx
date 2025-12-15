@@ -23,6 +23,11 @@ const Index = () => {
 
   const showKPICards = pagesWithKPI.includes(currentPage);
 
+  const handleSetCurrentPage = (page: PageName) => {
+    setCurrentPage(page);
+    localStorage.setItem('currentPage', page);
+  };
+
   const renderPage = () => {
     switch (currentPage) {
       case 'Main Dashboard':
