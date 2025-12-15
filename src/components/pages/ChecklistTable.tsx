@@ -57,13 +57,13 @@ const ChecklistTable = ({
           <table className="w-full border-collapse">
             <thead className="sticky top-0 bg-muted">
               <tr className="border-b border-border">
-                <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-1/3">
-                  Parameters of Equipment 
+                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-1/3">
+                  Parameters of Equipment
                 </th>
                 <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-32">
                   Status
                 </th>
-                <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 flex-1">
+                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 flex-1">
                   Comments during Inspection
                 </th>
               </tr>
