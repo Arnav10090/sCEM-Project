@@ -43,6 +43,10 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
       reader.onload = (event) => {
         const dataUrl = event.target?.result as string;
         setLocalImages([...localImages, dataUrl]);
+        setImageMetadata([...imageMetadata, {
+          size: file.size,
+          uploadedAt: new Date()
+        }]);
       };
       reader.readAsDataURL(file);
       if (onImageUpload) {
@@ -52,6 +56,26 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const formatDateTime = (date: Date): string => {
+    return date.toLocaleString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
   };
 
   return (
