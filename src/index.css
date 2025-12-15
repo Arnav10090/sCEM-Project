@@ -131,15 +131,15 @@
   
   /* Navigation Tab Styles */
   .nav-tab {
-    @apply px-4 py-2 text-sm font-medium transition-all duration-200 border-b-2 border-transparent;
+    @apply text-sm font-medium transition-all duration-200 pb-1;
   }
-  
+
   .nav-tab-active {
-    @apply bg-primary text-primary-foreground rounded-t-lg border-b-0;
+    @apply text-gray-900 border-b-2 border-green-500;
   }
-  
+
   .nav-tab-inactive {
-    @apply bg-card text-foreground hover:bg-industrial-green-light/20 border border-border;
+    @apply text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300;
   }
   
   /* KPI Card Styles */
