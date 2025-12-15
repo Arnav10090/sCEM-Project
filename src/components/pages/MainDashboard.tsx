@@ -148,7 +148,7 @@ const MainDashboard = () => {
           {/* Overall Equipment Status */}
           <div className="bg-card border border-border rounded-lg p-4 flex flex-col justify-between">
             <div>
-              <h5 className="text-sm font-medium text-industrial-red mb-3">Overall Equipment Status</h5>
+              <h5 className="text-sm font-medium text-gray-900 mb-3">Overall Equipment Status</h5>
               <div className={`text-center py-2 rounded font-bold text-white mb-2 text-sm ${getStatusClass()}`}>
                 {overallStatus}
               </div>
@@ -173,7 +173,7 @@ const MainDashboard = () => {
         <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
           {/* Last Inspection Date */}
           <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="text-sm font-medium text-industrial-red mb-3">Last Inspection Date</h5>
+            <h5 className="text-sm font-medium text-gray-900 mb-3">Last Inspection Date</h5>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Last:</span>
@@ -192,7 +192,7 @@ const MainDashboard = () => {
 
           {/* Observations by Person Checking */}
           <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
-            <h4 className="text-sm font-medium text-industrial-red mb-3 flex-shrink-0">
+            <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations by person checking
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
