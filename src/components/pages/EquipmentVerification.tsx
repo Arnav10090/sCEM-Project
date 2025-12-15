@@ -75,6 +75,13 @@ const EquipmentVerification = () => {
     const saved = localStorage.getItem('equipmentVerificationImages');
     return saved ? JSON.parse(saved) : {};
   });
+  const [observations, setObservations] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('equipmentVerificationObservations');
+    return saved ? JSON.parse(saved) : defaultEquipmentObservations;
+  });
+  const [editingObsIdx, setEditingObsIdx] = useState<number | null>(null);
+  const [editingObsText, setEditingObsText] = useState<string>('');
+  const [newObsText, setNewObsText] = useState<string>('');
   const fileInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   useEffect(() => {
