@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useEquipment } from '@/context/EquipmentContext';
 import TrendChart from '../common/TrendChart';
+import { Input } from '@/components/ui/input';
 
 interface Parameter {
   sn: number;
