@@ -304,7 +304,7 @@ const EquipmentConfiguration = () => {
             {/* Parameters Section */}
             <div className="flex-1 overflow-y-auto p-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-medium text-industrial-red">
+                <h3 className="text-sm font-medium text-gray-900">
                   Parameters Configuration ({selectedEquipment.parameters.length})
                 </h3>
                 <Button
