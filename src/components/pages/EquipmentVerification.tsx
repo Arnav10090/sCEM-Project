@@ -47,6 +47,11 @@ const EquipmentVerification = () => {
   const [verifiedBy, setVerifiedBy] = useState<string>('');
   const [confirmedBy, setConfirmedBy] = useState<string>('');
   const [overallStatus, setOverallStatus] = useState<'Good' | 'Bad' | 'Worst'>('Good');
+  const [interlockImages, setInterlockImages] = useState<Record<number, string[]>>(() => {
+    const saved = localStorage.getItem('equipmentVerificationImages');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const fileInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
 
   useEffect(() => {
     if (selectedEquipment) {
