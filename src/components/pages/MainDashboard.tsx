@@ -323,6 +323,7 @@ const MainDashboard = () => {
                       <Input
                         value={editingComText}
                         onChange={(e) => setEditingComText(e.target.value)}
+                        placeholder="Enter observation"
                         className="text-xs h-8"
                       />
                       <Button size="sm" onClick={() => updateComment(idx, editingComText)} className="h-8 px-2">Save</Button>
@@ -330,7 +331,7 @@ const MainDashboard = () => {
                     </div>
                   ) : (
                     <>
-                      <span className="flex-1">{comment}</span>
+                      <span className="flex-1">{idx + 1}. {comment}</span>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="sm"
