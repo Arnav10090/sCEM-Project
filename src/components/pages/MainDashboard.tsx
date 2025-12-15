@@ -185,7 +185,7 @@ const MainDashboard = () => {
   return (
     <div className="grid gap-6 h-full animate-fade-in" style={{ gridTemplateColumns: '1.1fr 0.8fr 1.1fr' }}>
       {/* Left Column: Images (stacked) */}
-      <div className="flex flex-col gap-6 h-full min-h-0">
+      <div className="flex flex-col gap-8 h-full min-h-0">
         <div className="flex-1 min-h-0">
           <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} showUploadButton={true} />
         </div>
