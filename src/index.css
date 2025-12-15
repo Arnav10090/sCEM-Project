@@ -159,15 +159,15 @@
   .data-table {
     @apply w-full border-collapse bg-card;
   }
-  
+
   .data-table th {
-    @apply bg-industrial-red text-white text-sm font-bold uppercase px-3 py-3 text-left border border-border;
+    @apply bg-muted text-gray-900 text-sm font-bold uppercase px-3 py-3 text-center border border-border;
   }
-  
+
   .data-table td {
-    @apply px-3 py-3 text-sm border border-border;
+    @apply px-3 py-3 text-sm border border-border text-gray-900 text-center;
   }
-  
+
   .data-table tr:nth-child(even) {
     @apply bg-muted/50;
   }
