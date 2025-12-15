@@ -101,7 +101,7 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
 
         {/* Bottom Navigation */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-10">
-          <button 
+          <button
             onClick={() => navigate('down')}
             className="nav-circle"
           >
@@ -110,6 +110,27 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
         </div>
       </div>
 
+      {/* Upload Button */}
+      {showUploadButton && (
+        <div className="mt-2 flex-shrink-0">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full text-xs"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="w-3 h-3 mr-1" />
+            Upload Image
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
