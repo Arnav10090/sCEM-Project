@@ -100,6 +100,7 @@ const PlanningReports = () => {
   const [toPlannedDate, setToPlannedDate] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
   const handleRemarksChange = (sn: number, value: string) => {
