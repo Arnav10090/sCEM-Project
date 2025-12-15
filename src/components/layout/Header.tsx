@@ -36,14 +36,15 @@ const Header = ({ currentPage }: HeaderProps) => {
       {/* System Title */}
       <div className="flex-1 text-center min-w-0">
         <h1 className="text-gray-800 font-bold text-lg tracking-wide truncate">
-          Truck Turnaround Time Monitoring System (TTMS)
+          Smart Critical Equipment Monitoring System (sCEM) - {currentPage}
         </h1>
       </div>
 
       {/* Date/Time and Hitachi Logo */}
       <div className="flex items-center gap-3 flex-shrink-0">
         <div className="text-sm text-gray-700">
-          <span className="font-medium">Mon, 13 Dec 2023 09:51:04</span>
+          <span className="font-medium">Date: </span>
+          <span className="font-mono">{formatDateTime(currentDateTime)}</span>
         </div>
         <div className="w-28 h-12 border border-gray-400 rounded flex items-center justify-center bg-white flex-shrink-0">
           <span className="text-gray-800 font-semibold text-xs">HITACHI</span>
