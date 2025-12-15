@@ -91,8 +91,41 @@ const EquipmentVerification = () => {
       setVerifiedBy('');
       setConfirmedBy('');
       setOverallStatus('Good');
+      setEditingObsIdx(null);
+      setNewObsText('');
     }
   }, [selectedEquipment?.id]);
+
+  const currentEquipmentId = selectedEquipment?.id || 'motor-001';
+  const currentObservations = observations[currentEquipmentId] || observations['motor-001'];
+
+  const saveObservations = (newObs: Record<string, string[]>) => {
+    setObservations(newObs);
+    localStorage.setItem('equipmentVerificationObservations', JSON.stringify(newObs));
+  };
+
+  const updateObservation = (idx: number, text: string) => {
+    const updated = [...currentObservations];
+    updated[idx] = text;
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+    setEditingObsIdx(null);
+  };
+
+  const deleteObservation = (idx: number) => {
+    const updated = currentObservations.filter((_, i) => i !== idx);
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+  };
+
+  const addObservation = () => {
+    if (newObsText.trim()) {
+      const updated = [...currentObservations, newObsText];
+      const newObs = { ...observations, [currentEquipmentId]: updated };
+      saveObservations(newObs);
+      setNewObsText('');
+    }
+  };
 
   const getStatusClass = () => {
     switch (overallStatus) {
