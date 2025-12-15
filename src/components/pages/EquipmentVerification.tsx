@@ -7,6 +7,29 @@ import { Camera, Upload, X } from 'lucide-react';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
+const defaultEquipmentObservations: Record<string, string[]> = {
+  'motor-001': [
+    '• Equipment condition is normal',
+    '• All connections are secure',
+    '• No visible damage detected'
+  ],
+  'plc-001': [
+    '• System running smoothly',
+    '• All parameters within range',
+    '• No alarms generated'
+  ],
+  'drive-001': [
+    '• Drive is operational',
+    '• Temperature is nominal',
+    '• No faults detected'
+  ],
+  'pump-001': [
+    '• Pump running normally',
+    '• Flow rate stable',
+    '• No leaks observed'
+  ]
+};
+
 const equipmentInterlocks: Record<string, Array<{ id: number; name: string; description: string }>> = {
   'motor-001': [
     { id: 1, name: 'High Temperature', description: 'Image taken for this with instrument at site' },
