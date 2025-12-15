@@ -26,19 +26,29 @@ const navItems: PageName[] = [
 
 const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
   return (
-    <nav className="bg-card border-b border-border px-4 overflow-x-auto">
-      <div className="flex gap-1 justify-evenly w-full">
-        {navItems.map((item) => (
-          <button
-            key={item}
-            onClick={() => setCurrentPage(item)}
-            className={`nav-tab whitespace-nowrap flex-1 ${
-              currentPage === item ? 'nav-tab-active' : 'nav-tab-inactive'
-            }`}
-          >
-            {item}
-          </button>
-        ))}
+    <nav className="bg-blue-50 border-b border-gray-300 px-6 py-3 overflow-x-auto">
+      <div className="flex items-center gap-6 w-full">
+        {/* Admin Dashboard Badge */}
+        <div className="flex-shrink-0">
+          <span className="bg-green-500 text-white px-3 py-1 rounded text-xs font-semibold">
+            Admin Dashboard
+          </span>
+        </div>
+
+        {/* Navigation Items */}
+        <div className="flex gap-6 flex-1">
+          {navItems.map((item) => (
+            <button
+              key={item}
+              onClick={() => setCurrentPage(item)}
+              className={`nav-tab whitespace-nowrap ${
+                currentPage === item ? 'nav-tab-active' : 'nav-tab-inactive'
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
     </nav>
   );
