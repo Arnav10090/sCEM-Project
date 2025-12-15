@@ -15,80 +15,89 @@ const AlarmPopup = () => {
   const getAlarmColor = (level: string) => {
     switch (level) {
       case 'CRITICAL':
-        return 'bg-destructive text-destructive-foreground';
+        return 'bg-destructive text-destructive-foreground border-destructive';
       case 'WARNING':
-        return 'bg-yellow-500 text-white';
+        return 'bg-yellow-500 text-white border-yellow-600';
       case 'INFO':
-        return 'bg-blue-500 text-white';
+        return 'bg-blue-500 text-white border-blue-600';
       default:
-        return 'bg-gray-500 text-white';
+        return 'bg-gray-500 text-white border-gray-600';
+    }
+  };
+
+  const getBgColor = (level: string) => {
+    switch (level) {
+      case 'CRITICAL':
+        return 'bg-red-50';
+      case 'WARNING':
+        return 'bg-yellow-50';
+      case 'INFO':
+        return 'bg-blue-50';
+      default:
+        return 'bg-gray-50';
     }
   };
 
   return (
-    <div className="fixed bottom-32 right-4 w-96 z-40 animate-fade-in">
-      {/* Main Alarm Card */}
-      <div className="bg-card border-2 border-destructive rounded-lg shadow-lg p-4 mb-2">
-        <div className="flex items-start justify-between gap-4 mb-3">
-          <div className="flex items-start gap-3 flex-1">
-            <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${getAlarmColor(firstAlarm.level)}`}>
-                  {firstAlarm.level}
-                </span>
-                {hasMultipleAlarms && (
-                  <span className="text-xs font-medium text-muted-foreground">
-                    +{pendingAlarms.length - 1} more
+    <>
+      {/* Backdrop with blur */}
+      <div
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 animate-fade-in"
+        onClick={() => acknowledgeAlarm(firstAlarm.id)}
+      />
+
+      {/* Centered Modal */}
+      <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+        <div className="pointer-events-auto w-full max-w-md animate-fade-in">
+          {/* Main Alarm Card */}
+          <div className={`${getBgColor(firstAlarm.level)} border-2 ${getAlarmColor(firstAlarm.level)} rounded-lg shadow-2xl p-6`}>
+            <div className="flex items-start gap-4 mb-4">
+              <AlertTriangle className="w-6 h-6 text-destructive flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`px-3 py-1 rounded text-sm font-bold ${getAlarmColor(firstAlarm.level)}`}>
+                    {firstAlarm.level}
                   </span>
-                )}
-              </div>
-              <p className="text-sm font-medium text-foreground mb-1">{firstAlarm.message}</p>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>{firstAlarm.device}</span>
-                <span>•</span>
-                <span>{firstAlarm.eventTime}</span>
+                  {hasMultipleAlarms && (
+                    <span className="text-sm font-medium text-muted-foreground">
+                      +{pendingAlarms.length - 1} more pending
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{firstAlarm.message}</h3>
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <span className="font-medium">{firstAlarm.device}</span>
+                  <span>•</span>
+                  <span>{firstAlarm.eventTime}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <button
-            onClick={() => acknowledgeAlarm(firstAlarm.id)}
-            className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2 pt-3 border-t border-border">
-          <Button
-            onClick={() => acknowledgeAlarm(firstAlarm.id)}
-            className="flex-1"
-            size="sm"
-            variant="default"
-          >
-            Acknowledge
-          </Button>
-          {hasMultipleAlarms && (
-            <Button
-              onClick={acknowledgeAll}
-              className="flex-1"
-              size="sm"
-              variant="outline"
-            >
-              Acknowledge All ({pendingAlarms.length})
-            </Button>
-          )}
+            {/* Buttons */}
+            <div className="flex gap-3 pt-4 border-t border-border">
+              <Button
+                onClick={() => acknowledgeAlarm(firstAlarm.id)}
+                className="flex-1"
+                size="lg"
+                variant="default"
+              >
+                Acknowledge
+              </Button>
+              {hasMultipleAlarms && (
+                <Button
+                  onClick={acknowledgeAll}
+                  className="flex-1"
+                  size="lg"
+                  variant="outline"
+                >
+                  Acknowledge All
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Additional Alarms Indicator */}
-      {hasMultipleAlarms && (
-        <div className="text-xs text-center text-muted-foreground">
-          {pendingAlarms.length - 1} more alarm(s) waiting
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
