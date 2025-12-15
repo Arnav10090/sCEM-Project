@@ -72,7 +72,7 @@ const ChecklistTable = ({
               {checklist.map((item) => (
                 <tr
                   key={item.id}
-                  className="border-b border-border hover:bg-muted/30 transition-colors align-top h-24"
+                  className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
                   <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3">
                     {item.parameter}
@@ -96,7 +96,7 @@ const ChecklistTable = ({
                       rows={3}
                       className="w-full px-2 py-2 text-xs border border-border rounded bg-background 
 focus:outline-none focus:ring-2 focus:ring-primary/20 text-gray-900
-placeholder-muted-foreground resize-none h-16"
+placeholder-muted-foreground resize-none h-20"
                     />
                   </td>
                 </tr>
