@@ -11,24 +11,24 @@ const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', '
 
 const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
-    '1. High vibration detected on bearing',
-    '2. Temperature slightly elevated',
-    '3. Abnormal noise detected'
+    'High vibration detected on bearing',
+    'Temperature slightly elevated',
+    'Abnormal noise detected'
   ],
   'plc-001': [
-    '1. CPU temperature nominal',
-    '2. No communication errors',
-    '3. All modules responsive'
+    'CPU temperature nominal',
+    'No communication errors',
+    'All modules responsive'
   ],
   'drive-001': [
-    '1. Output frequency stable',
-    '2. No overcurrent detected',
-    '3. Heat sink temperature normal'
+    'Output frequency stable',
+    'No overcurrent detected',
+    'Heat sink temperature normal'
   ],
   'pump-001': [
-    '1. Flow rate within limits',
-    '2. Pressure stable',
-    '3. No cavitation detected'
+    'Flow rate within limits',
+    'Pressure stable',
+    'No cavitation detected'
   ]
 };
 
