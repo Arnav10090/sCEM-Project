@@ -36,7 +36,7 @@ const Header = ({ currentPage }: HeaderProps) => {
       {/* System Title */}
       <div className="flex-1 text-center min-w-0">
         <h1 className="text-gray-800 font-bold text-lg tracking-wide truncate">
-          Smart Critical Equipment Monitoring System (sCEM) - {currentPage}
+          Smart Critical Equipment Monitoring System (sCEM)
         </h1>
       </div>
 
