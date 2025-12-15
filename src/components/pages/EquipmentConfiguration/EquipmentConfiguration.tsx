@@ -180,7 +180,7 @@ const EquipmentConfiguration = () => {
       {/* Left Panel - Equipment List */}
       <div className="col-span-1 bg-card border border-border rounded-lg flex flex-col">
         <div className="p-3 border-b border-border">
-          <h3 className="text-sm font-medium text-industrial-red mb-3">Equipment List</h3>
+          <h3 className="text-sm font-medium text-gray-900 mb-3">Equipment List</h3>
           
           {/* Search */}
           <div className="relative mb-2">
