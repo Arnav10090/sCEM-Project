@@ -315,9 +315,9 @@ const Alarms = () => {
           <tbody>
             {displayedAlarms.map((alarm) => (
               <tr key={alarm.no}>
-                <td className="font-mono text-center">{alarm.no}</td>
-                <td>
-                  <div className="flex items-center gap-2">
+                <td className="font-mono text-center text-black">{alarm.no}</td>
+                <td className="text-center text-black">
+                  <div className="flex items-center gap-2 justify-center">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                       alarm.level === 'CRITICAL' ? 'bg-destructive text-destructive-foreground' :
                       alarm.level === 'WARNING' ? 'bg-yellow-500 text-white' :
@@ -325,13 +325,13 @@ const Alarms = () => {
                     }`}>
                       {alarm.level}
                     </span>
-                    <span className="font-mono text-xs">{alarm.alarmNo}:</span>
-                    <span>{alarm.message}</span>
+                    <span className="font-mono text-xs text-black">{alarm.alarmNo}:</span>
+                    <span className="text-black">{alarm.message}</span>
                   </div>
                 </td>
-                <td className="font-mono">{alarm.device}</td>
-                <td className="font-mono text-sm">{alarm.eventTime}</td>
-                <td className="font-mono text-sm">{alarm.recoveredTime}</td>
+                <td className="font-mono text-center text-black">{alarm.device}</td>
+                <td className="font-mono text-sm text-center text-black">{alarm.eventTime}</td>
+                <td className="font-mono text-sm text-center text-black">{alarm.recoveredTime}</td>
               </tr>
             ))}
           </tbody>

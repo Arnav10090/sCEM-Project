@@ -154,20 +154,20 @@ const ParameterMonitoring = () => {
             <tbody>
               {parameters.map((param) => (
                 <tr key={param.sn}>
-                  <td className="text-center">{param.sn}</td>
-                  <td>{param.name}</td>
-                  <td className="text-center">{param.unit}</td>
-                  <td className="text-center">{param.min || '-'}</td>
-                  <td className="text-center">{param.max || '-'}</td>
-                  <td className="text-center font-mono font-medium">
+                  <td className="text-center text-black">{param.sn}</td>
+                  <td className="text-center text-black">{param.name}</td>
+                  <td className="text-center text-black">{param.unit}</td>
+                  <td className="text-center text-black">{param.min || '-'}</td>
+                  <td className="text-center text-black">{param.max || '-'}</td>
+                  <td className="text-center text-black font-mono font-medium">
                     {param.present || '-'}
                   </td>
-                  <td className="p-0">
+                  <td className="p-0 text-center">
                     <Input
                       value={param.remarks}
                       onChange={(e) => handleRemarksChange(param.sn, e.target.value)}
                       placeholder="Enter remarks..."
-                      className="border-0 text-xs h-auto py-1 px-2"
+                      className="border-0 text-xs h-auto py-1 px-2 text-black text-center"
                     />
                   </td>
                 </tr>

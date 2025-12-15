@@ -90,6 +90,7 @@ const inspectionRecords: InspectionRecord[] = [
 ];
 
 const PlanningReports = () => {
+  const [records, setRecords] = useState<InspectionRecord[]>(inspectionRecords);
   const [searchTerm, setSearchTerm] = useState('');
   const [plantFilter, setPlantFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -101,10 +102,18 @@ const PlanningReports = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const rowsPerPageOptions = [5, 15, 25, 50];
 
-  const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
-  const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
+  const handleRemarksChange = (sn: number, value: string) => {
+    setRecords((prev) =>
+      prev.map((record) =>
+        record.sn === sn ? { ...record, remarks: value } : record
+      )
+    );
+  };
 
-  const filteredRecords = inspectionRecords.filter((record) => {
+  const uniquePlants = Array.from(new Set(records.map(r => r.plant)));
+  const uniqueStatuses = Array.from(new Set(records.map(r => r.status)));
+
+  const filteredRecords = records.filter((record) => {
     const matchesSearch =
       record.equipment.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.plant.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -342,46 +351,58 @@ const PlanningReports = () => {
               <th className="w-32">Critical level for process</th>
               <th className="w-32">Last Inspection Date</th>
               <th className="w-32">Planned Inspection Date</th>
-              <th>Last Inspection Observation with image</th>
-              <th className="w-28">Status of Inspection</th>
-              <th className="w-24">Remarks</th>
+              <th className="w-32">Last Inspection Observation</th>
+              <th className="w-32">Status of Inspection</th>
+              <th className="w-40">Remarks</th>
             </tr>
           </thead>
           <tbody>
             {displayedRecords.map((record) => (
               <tr key={record.sn}>
-                <td className="text-center">{record.sn}</td>
-                <td>{record.plant}</td>
-                <td>{record.equipment}</td>
-                <td className="text-industrial-red font-medium">{record.criticalLevel}</td>
-                <td className="font-mono">{record.lastInspectionDate}</td>
-                <td className="font-mono">{record.plannedInspectionDate}</td>
-                <td>
-                  <div className="flex flex-col items-start gap-2">
-                    <span className="text-gray-900">{record.lastObservation || '-'}</span>
-                    {record.lastObservation && (
-                      <div className="w-40 h-32 bg-muted border border-border rounded flex items-center justify-center">
-                        {record.sn === 1 ? (
-                          <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
-                        ) : record.sn === 2 ? (
-                          <img src="/image2.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
-                        ) : (
-                          <Camera className="w-4 h-4 text-muted-foreground" />
-                        )}
-                      </div>
-                    )}
-                  </div>
+                <td className="text-center text-black">{record.sn}</td>
+                <td className="text-center text-black">{record.plant}</td>
+                <td className="text-center text-black">{record.equipment}</td>
+                <td className="text-center text-black font-medium">{record.criticalLevel}</td>
+                <td className="text-center text-black font-mono">{record.lastInspectionDate}</td>
+                <td className="text-center text-black font-mono">{record.plannedInspectionDate}</td>
+                <td className="text-center text-black">
+                  {record.lastObservation ? (
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-xs">{record.lastObservation}</span>
+                      {record.lastObservation && (
+                        <div className="w-24 h-20 bg-muted border border-border rounded flex items-center justify-center">
+                          {record.sn === 1 ? (
+                            <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
+                          ) : record.sn === 2 ? (
+                            <img src="/image2.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
+                          ) : (
+                            <Camera className="w-4 h-4 text-muted-foreground" />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    '-'
+                  )}
                 </td>
-                <td>
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${
-                    record.status === 'Done' 
-                      ? 'bg-primary text-primary-foreground' 
+                <td className="text-center">
+                  <span className={`px-3 py-2 rounded text-sm font-medium inline-block ${
+                    record.status === 'Done'
+                      ? 'bg-primary text-primary-foreground'
                       : 'bg-muted text-muted-foreground'
                   }`}>
                     {record.status}
                   </span>
                 </td>
-                <td>{record.remarks || '-'}</td>
+                <td className="text-center">
+                  <input
+                    type="text"
+                    value={record.remarks}
+                    onChange={(e) => handleRemarksChange(record.sn, e.target.value)}
+                    placeholder="Add remarks..."
+                    className="w-full px-2 py-2 text-sm border border-border rounded bg-background text-black placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

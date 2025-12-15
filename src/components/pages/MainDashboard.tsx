@@ -11,24 +11,24 @@ const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', '
 
 const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
-    '1. High vibration detected on bearing',
-    '2. Temperature slightly elevated',
-    '3. Abnormal noise detected'
+    'High vibration detected on bearing',
+    'Temperature slightly elevated',
+    'Abnormal noise detected'
   ],
   'plc-001': [
-    '1. CPU temperature nominal',
-    '2. No communication errors',
-    '3. All modules responsive'
+    'CPU temperature nominal',
+    'No communication errors',
+    'All modules responsive'
   ],
   'drive-001': [
-    '1. Output frequency stable',
-    '2. No overcurrent detected',
-    '3. Heat sink temperature normal'
+    'Output frequency stable',
+    'No overcurrent detected',
+    'Heat sink temperature normal'
   ],
   'pump-001': [
-    '1. Flow rate within limits',
-    '2. Pressure stable',
-    '3. No cavitation detected'
+    'Flow rate within limits',
+    'Pressure stable',
+    'No cavitation detected'
   ]
 };
 
@@ -61,24 +61,24 @@ const equipmentChecklists: Record<string, Array<{ id: string; parameter: string;
 
 const defaultEquipmentComments: Record<string, string[]> = {
   'motor-001': [
-    '• More vibrations',
-    '• Noise from bearings',
-    '• Motor heated up'
+    'More vibrations',
+    'Noise from bearings',
+    'Motor heated up'
   ],
   'plc-001': [
-    '• Program execution stable',
-    '• Watchdog timer normal',
-    '• No errors detected'
+    'Program execution stable',
+    'Watchdog timer normal',
+    'No errors detected'
   ],
   'drive-001': [
-    '• Operating at rated capacity',
-    '• Cooling system effective',
-    '• Protection circuits active'
+    'Operating at rated capacity',
+    'Cooling system effective',
+    'Protection circuits active'
   ],
   'pump-001': [
-    '• No cavitation issues',
-    '• Seal condition good',
-    '• Impeller balanced'
+    'No cavitation issues',
+    'Seal condition good',
+    'Impeller balanced'
   ]
 };
 
@@ -183,7 +183,7 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid gap-3 h-full animate-fade-in" style={{ gridTemplateColumns: '1fr 2fr 1fr' }}>
+    <div className="grid gap-3 h-full animate-fade-in" style={{ gridTemplateColumns: '1.1fr 0.8fr 1.1fr' }}>
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-3 h-full min-h-0">
         <div className="flex-1 min-h-0">
@@ -216,6 +216,7 @@ const MainDashboard = () => {
                       <Input
                         value={editingObsText}
                         onChange={(e) => setEditingObsText(e.target.value)}
+                        placeholder="Enter observation"
                         className="text-xs h-8"
                       />
                       <Button size="sm" onClick={() => updateObservation(idx, editingObsText)} className="h-8 px-2">Save</Button>
@@ -223,7 +224,7 @@ const MainDashboard = () => {
                     </div>
                   ) : (
                     <>
-                      <span className="flex-1">{obs}</span>
+                      <span className="flex-1">{idx + 1}. {obs}</span>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="sm"
@@ -322,6 +323,7 @@ const MainDashboard = () => {
                       <Input
                         value={editingComText}
                         onChange={(e) => setEditingComText(e.target.value)}
+                        placeholder="Enter observation"
                         className="text-xs h-8"
                       />
                       <Button size="sm" onClick={() => updateComment(idx, editingComText)} className="h-8 px-2">Save</Button>
@@ -329,7 +331,7 @@ const MainDashboard = () => {
                     </div>
                   ) : (
                     <>
-                      <span className="flex-1">{comment}</span>
+                      <span className="flex-1">{idx + 1}. {comment}</span>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="sm"

@@ -9,24 +9,24 @@ const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', '
 
 const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
-    '• Equipment condition is normal',
-    '• All connections are secure',
-    '• No visible damage detected'
+    'Equipment condition is normal',
+    'All connections are secure',
+    'No visible damage detected'
   ],
   'plc-001': [
-    '• System running smoothly',
-    '• All parameters within range',
-    '• No alarms generated'
+    'System running smoothly',
+    'All parameters within range',
+    'No alarms generated'
   ],
   'drive-001': [
-    '• Drive is operational',
-    '• Temperature is nominal',
-    '• No faults detected'
+    'Drive is operational',
+    'Temperature is nominal',
+    'No faults detected'
   ],
   'pump-001': [
-    '• Pump running normally',
-    '• Flow rate stable',
-    '• No leaks observed'
+    'Pump running normally',
+    'Flow rate stable',
+    'No leaks observed'
   ]
 };
 
@@ -156,11 +156,11 @@ const EquipmentVerification = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3 h-full animate-fade-in">
+    <div className="grid grid-cols-4 gap-3 h-full animate-fade-in" style={{ gridTemplateRows: '1fr 1fr' }}>
       {/* Left Column - Interlock List & Observations */}
-      <div className="flex flex-col gap-3 h-full">
+      <div className="flex flex-col gap-3 h-full min-h-0">
         {/* Critical Interlock List */}
-        <div className="bg-card border border-border rounded-lg p-4 overflow-auto flex-1">
+        <div className="bg-card border border-border rounded-lg p-4 overflow-auto flex-1 min-h-0">
           <h4 className="text-sm font-medium text-gray-900 mb-3">
             Critical / Important Interlock List
           </h4>
@@ -172,7 +172,7 @@ const EquipmentVerification = () => {
         </div>
 
         {/* Observations by Person Checking */}
-        <div className="bg-card border border-border rounded-lg p-4 h-1/2 overflow-auto flex flex-col">
+        <div className="bg-card border border-border rounded-lg p-4 flex-1 min-h-0 overflow-hidden flex flex-col">
           <h5 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">Observations by person checking</h5>
           <ul className="text-sm text-muted-foreground space-y-2 flex-1 min-h-0 overflow-y-auto mb-3">
             {currentObservations.map((obs, idx) => (
@@ -182,6 +182,7 @@ const EquipmentVerification = () => {
                     <Input
                       value={editingObsText}
                       onChange={(e) => setEditingObsText(e.target.value)}
+                      placeholder="Enter observation"
                       className="text-xs h-8"
                     />
                     <Button size="sm" onClick={() => updateObservation(idx, editingObsText)} className="h-8 px-2">Save</Button>
@@ -189,7 +190,7 @@ const EquipmentVerification = () => {
                   </div>
                 ) : (
                   <>
-                    <span className="flex-1">{obs}</span>
+                    <span className="flex-1">{idx + 1}. {obs}</span>
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
                         size="sm"
