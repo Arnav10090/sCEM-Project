@@ -182,6 +182,7 @@ const EquipmentVerification = () => {
                     <Input
                       value={editingObsText}
                       onChange={(e) => setEditingObsText(e.target.value)}
+                      placeholder="Enter observation"
                       className="text-xs h-8"
                     />
                     <Button size="sm" onClick={() => updateObservation(idx, editingObsText)} className="h-8 px-2">Save</Button>
@@ -189,7 +190,7 @@ const EquipmentVerification = () => {
                   </div>
                 ) : (
                   <>
-                    <span className="flex-1">{obs}</span>
+                    <span className="flex-1">{idx + 1}. {obs}</span>
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
                         size="sm"
