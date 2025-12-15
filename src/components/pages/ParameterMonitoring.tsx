@@ -75,6 +75,14 @@ const ParameterMonitoring = () => {
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [chartData, setChartData] = useState<{ time: string; vibration: number; vibration2: number; temperature: number; temperature2: number; current: number; speed: number; speed2: number }[]>([]);
 
+  const handleRemarksChange = (sn: number, remarks: string) => {
+    setParameters((prev) =>
+      prev.map((param) =>
+        param.sn === sn ? { ...param, remarks } : param
+      )
+    );
+  };
+
   useEffect(() => {
     if (selectedEquipment) {
       const equipmentParams = equipmentParameters[selectedEquipment.id] || equipmentParameters['motor-001'];
