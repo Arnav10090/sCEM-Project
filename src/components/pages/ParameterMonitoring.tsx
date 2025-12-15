@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { useEquipment } from '@/context/EquipmentContext';
 import TrendChart from '../common/TrendChart';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Parameter {
   sn: number;
