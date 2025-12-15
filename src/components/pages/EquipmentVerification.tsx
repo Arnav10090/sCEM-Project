@@ -71,6 +71,26 @@ const EquipmentVerification = () => {
     }
   };
 
+  const handleImageUpload = (interlockId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        const updatedImages = {
+          ...interlockImages,
+          [interlockId]: [...(interlockImages[interlockId] || []), dataUrl]
+        };
+        setInterlockImages(updatedImages);
+        localStorage.setItem('equipmentVerificationImages', JSON.stringify(updatedImages));
+      };
+      reader.readAsDataURL(file);
+    }
+    if (fileInputRefs.current[interlockId]) {
+      fileInputRefs.current[interlockId]!.value = '';
+    }
+  };
+
   return (
     <div className="grid grid-cols-4 gap-3 h-full animate-fade-in">
       {/* Left Column - Interlock List & Observations */}
