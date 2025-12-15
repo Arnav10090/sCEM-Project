@@ -114,7 +114,7 @@ const AddEquipmentModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-industrial-red">
+          <DialogTitle className="text-gray-900">
             {editingEquipment ? 'Edit Equipment' : 'Add New Equipment'}
           </DialogTitle>
         </DialogHeader>
