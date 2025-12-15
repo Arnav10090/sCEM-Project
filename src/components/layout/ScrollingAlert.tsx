@@ -2,7 +2,7 @@ const ScrollingAlert = () => {
   return (
     <div className="h-10 bg-industrial-cyan overflow-hidden flex items-center">
       <div className="scrolling-alert whitespace-nowrap">
-        <span className="text-industrial-red italic font-medium text-sm">
+        <span className="text-gray-900 italic font-medium text-sm">
           ⚠️ Scrolling Display for Important alerts, messages etc. | 
           Critical: Motor #3 temperature exceeding threshold | 
           Warning: Scheduled maintenance for Pump #7 tomorrow | 

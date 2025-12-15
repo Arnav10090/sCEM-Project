@@ -358,7 +358,7 @@ const PlanningReports = () => {
                 <td className="font-mono">{record.plannedInspectionDate}</td>
                 <td>
                   <div className="flex flex-col items-start gap-2">
-                    <span className="text-industrial-red">{record.lastObservation || '-'}</span>
+                    <span className="text-gray-900">{record.lastObservation || '-'}</span>
                     {record.lastObservation && (
                       <div className="w-40 h-32 bg-muted border border-border rounded flex items-center justify-center">
                         {record.sn === 1 ? (
