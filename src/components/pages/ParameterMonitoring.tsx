@@ -213,13 +213,32 @@ const ParameterMonitoring = () => {
 
       {/* Bottom Section */}
       <div className="bg-card border border-border rounded-lg p-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-sm font-medium text-industrial-red">Manuals / Drawings List</span>
+        <div className="flex items-center justify-between gap-4">
+          <div className="w-1/2">
+            <label className="text-sm font-medium text-gray-900 block mb-2">Manuals / Drawings List</label>
+            <Select value={selectedManual} onValueChange={setSelectedManual}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a manual or drawing..." />
+              </SelectTrigger>
+              <SelectContent>
+                {manualsAndDrawings.map((item) => (
+                  <SelectItem key={item.id} value={item.id}>
+                    {item.name} ({item.type})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="text-sm text-muted-foreground">
-            Drop down list to be displayed
-          </div>
+          {selectedManual && (
+            <div className="flex-1 text-sm text-gray-900">
+              <div className="font-medium">
+                {manualsAndDrawings.find((m) => m.id === selectedManual)?.name}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                Type: {manualsAndDrawings.find((m) => m.id === selectedManual)?.type}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
