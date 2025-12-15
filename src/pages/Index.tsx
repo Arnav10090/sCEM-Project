@@ -16,7 +16,10 @@ import SpareTab from '@/components/pages/SpareTab';
 const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring', 'Equipment Configuration'];
 
 const Index = () => {
-  const [currentPage, setCurrentPage] = useState<PageName>('Main Dashboard');
+  const [currentPage, setCurrentPage] = useState<PageName>(() => {
+    const saved = localStorage.getItem('currentPage');
+    return (saved as PageName) || 'Main Dashboard';
+  });
 
   const showKPICards = pagesWithKPI.includes(currentPage);
 
