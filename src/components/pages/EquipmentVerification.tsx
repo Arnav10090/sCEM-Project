@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useEquipment } from '@/context/EquipmentContext';
 import DropdownSelect from '../common/DropdownSelect';
 import { Button } from '@/components/ui/button';
-import { Camera, Upload } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Camera, Upload, X } from 'lucide-react';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
