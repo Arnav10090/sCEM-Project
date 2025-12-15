@@ -29,7 +29,7 @@ const Header = ({ currentPage }: HeaderProps) => {
   return (
     <header className="h-16 bg-gray-100 border-b border-gray-300 flex items-center justify-between px-4 gap-3">
       {/* Customer Logo */}
-      <div className="w-40 h-12 border border-gray-400 rounded flex items-center justify-center bg-white flex-shrink-0">
+      <div className="w-40 h-12 rounded flex items-center justify-center flex-shrink-0">
         <span className="text-sm text-gray-600 font-medium">Customer Name/Logo</span>
       </div>
 
@@ -46,7 +46,7 @@ const Header = ({ currentPage }: HeaderProps) => {
           <span className="font-medium">Date: </span>
           <span className="font-mono">{formatDateTime(currentDateTime)}</span>
         </div>
-        <div className="w-28 h-12 border border-gray-400 rounded flex items-center justify-center bg-white flex-shrink-0">
+        <div className="w-28 h-12 rounded flex items-center justify-center flex-shrink-0">
           <img src="https://cdn.builder.io/api/v1/image/assets%2F6495670efba34e5e9d1b6e43dcd63ffa%2F842f3f5e3603476ab02d10d14a61bcd2?format=webp&width=800" alt="Hitachi logo" className="w-25 h-10 object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/Hitachi-Logo.png' }} />
         </div>
       </div>

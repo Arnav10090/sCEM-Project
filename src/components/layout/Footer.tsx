@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="flex items-center gap-2 min-w-0">
           <AlertTriangle className="w-5 h-5 text-gray-900 flex-shrink-0" />
           <span className="text-gray-900 font-medium text-sm truncate">
-            System & Solutions related Alarms message at bottom, which can be extended for 5/6 rows. Top side latest alarms
+            System & Solutions related Alarms
           </span>
         </div>
         <div className="flex items-center gap-2 text-gray-900 flex-shrink-0">

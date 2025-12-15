@@ -1,8 +1,26 @@
 import { useEquipment } from '@/context/EquipmentContext';
 import EquipmentSelectorCard from './EquipmentSelectorCard';
+import { useEffect, useState } from 'react';
+
 
 const KPICards = () => {
   const { selectedEquipment, isLoading } = useEquipment();
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentDateTime(new Date());
+      }, 1000);
+      return () => clearInterval(timer);
+    }, []);
+
+    const formatDate = (date: Date) => {
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
 
   if (isLoading) {
     return (
@@ -101,7 +119,15 @@ const KPICards = () => {
         </div>
       </div>
 
-      {/* Card 6: Spare Tab */}
+      {/* Card 6: Inspection Date */}
+      <div className="kpi-card">
+        <div className="flex-1 min-w-0">
+          <div className="kpi-label">Inspection Date</div>
+          <span className="font-mono font-bold">{formatDate(currentDateTime)}</span>
+        </div>
+      </div>
+
+      {/* Card 7: Spare Tab */}
       <div className="kpi-card">
         <div className="flex-1 min-w-0">
           <div className="kpi-label">Spare Tab</div>
@@ -109,27 +135,6 @@ const KPICards = () => {
         </div>
         <div className="w-8 h-8 border border-dashed border-border rounded flex-shrink-0 flex items-center justify-center">
           <span className="text-xs text-muted-foreground">Logo</span>
-        </div>
-      </div>
-
-      {/* Card 7: Inspection Date */}
-      <div className="kpi-card">
-        <div className="flex-1 min-w-0">
-          <div className="kpi-label">Inspection Date</div>
-          <div className="text-xs space-y-0.5 mt-1">
-            <div className="flex justify-between gap-1">
-              <span className="text-muted-foreground text-xs">Last:</span>
-              <span className="font-mono text-xs">{selectedEquipment.lastInspectionDate}</span>
-            </div>
-            <div className="flex justify-between gap-1">
-              <span className="text-muted-foreground text-xs">Sch:</span>
-              <span className="font-mono text-xs">{selectedEquipment.scheduledInspectionDate}</span>
-            </div>
-            <div className="flex justify-between gap-1">
-              <span className="text-muted-foreground text-xs">Act:</span>
-              <span className="font-mono text-xs">{selectedEquipment.actualInspectionDate}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
