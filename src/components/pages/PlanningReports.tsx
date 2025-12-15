@@ -90,6 +90,7 @@ const inspectionRecords: InspectionRecord[] = [
 ];
 
 const PlanningReports = () => {
+  const [records, setRecords] = useState<InspectionRecord[]>(inspectionRecords);
   const [searchTerm, setSearchTerm] = useState('');
   const [plantFilter, setPlantFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -100,6 +101,14 @@ const PlanningReports = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const rowsPerPageOptions = [5, 15, 25, 50];
+
+  const handleRemarksChange = (sn: number, value: string) => {
+    setRecords((prev) =>
+      prev.map((record) =>
+        record.sn === sn ? { ...record, remarks: value } : record
+      )
+    );
+  };
 
   const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
   const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
