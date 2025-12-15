@@ -57,13 +57,13 @@ const ChecklistTable = ({
           <table className="w-full border-collapse">
             <thead className="sticky top-0 bg-muted">
               <tr className="border-b border-border">
-                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-1/3">
+                <th className="text-center px-3 py-2 text-xs font-medium text-black border-r border-border w-1/3">
                   Parameters of Equipment
                 </th>
-                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-32">
+                <th className="text-center px-3 py-2 text-xs font-medium text-black border-r border-border w-32">
                   Status
                 </th>
-                <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 flex-1">
+                <th className="text-center px-3 py-2 text-xs font-medium text-black flex-1">
                   Comments during Inspection
                 </th>
               </tr>
@@ -74,7 +74,7 @@ const ChecklistTable = ({
                   key={item.id}
                   className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
-                  <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3 text-center">
+                  <td className="px-3 py-3 text-xs text-black border-r border-border w-1/3 text-center">
                     {item.parameter}
                   </td>
                   <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
@@ -84,12 +84,12 @@ const ChecklistTable = ({
                         onCheckedChange={() => handleCheckChange(item.id)}
                         className="h-4 w-4"
                       />
-                      <span className="text-xs font-medium text-gray-900">
+                      <span className="text-xs font-medium text-black">
                         {item.isChecked ? 'Checked' : 'Not Checked'}
                       </span>
                     </div>
                   </td>
-                  <td className="px-3 py-5 flex-1">
+                  <td className="px-3 py-5 flex-1 text-center">
                     <textarea
                       value={item.comment}
                       onChange={(e) =>
@@ -97,8 +97,8 @@ const ChecklistTable = ({
                       }
                       placeholder="Add comment..."
                       rows={3}
-                      className="w-full px-2 py-2 text-xs border border-border rounded bg-background 
-focus:outline-none focus:ring-2 focus:ring-primary/20 text-gray-900
+                      className="w-full px-2 py-2 text-xs border border-border rounded bg-background
+focus:outline-none focus:ring-2 focus:ring-primary/20 text-black
 placeholder-muted-foreground resize-none h-20"
                     />
                   </td>
