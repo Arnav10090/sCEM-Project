@@ -4,10 +4,12 @@ import ImagePanel from '../common/ImagePanel';
 import ChecklistTable from './ChecklistTable';
 import DropdownSelect from '../common/DropdownSelect';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { X } from 'lucide-react';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
-const equipmentObservations: Record<string, string[]> = {
+const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
     '1. High vibration detected on bearing',
     '2. Temperature slightly elevated',
@@ -57,7 +59,7 @@ const equipmentChecklists: Record<string, Array<{ id: string; parameter: string;
   ]
 };
 
-const equipmentComments: Record<string, string[]> = {
+const defaultEquipmentComments: Record<string, string[]> = {
   'motor-001': [
     '• More vibrations',
     '• Noise from bearings',
@@ -85,6 +87,20 @@ const MainDashboard = () => {
   const [verifiedBy, setVerifiedBy] = useState<string>('');
   const [confirmedBy, setConfirmedBy] = useState<string>('');
   const [overallStatus, setOverallStatus] = useState<'Good' | 'Bad' | 'Worst'>('Good');
+  const [observations, setObservations] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('dashboardObservations');
+    return saved ? JSON.parse(saved) : defaultEquipmentObservations;
+  });
+  const [comments, setComments] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('dashboardComments');
+    return saved ? JSON.parse(saved) : defaultEquipmentComments;
+  });
+  const [editingObsIdx, setEditingObsIdx] = useState<number | null>(null);
+  const [editingObsText, setEditingObsText] = useState<string>('');
+  const [editingComIdx, setEditingComIdx] = useState<number | null>(null);
+  const [editingComText, setEditingComText] = useState<string>('');
+  const [newObsText, setNewObsText] = useState<string>('');
+  const [newComText, setNewComText] = useState<string>('');
 
   const getStatusClass = () => {
     switch (overallStatus) {
@@ -94,22 +110,76 @@ const MainDashboard = () => {
     }
   };
 
-  const currentObservations = selectedEquipment
-    ? equipmentObservations[selectedEquipment.id] || equipmentObservations['motor-001']
-    : equipmentObservations['motor-001'];
+  const currentEquipmentId = selectedEquipment?.id || 'motor-001';
 
+  const currentObservations = observations[currentEquipmentId] || observations['motor-001'];
   const currentChecklist = selectedEquipment
     ? equipmentChecklists[selectedEquipment.id] || equipmentChecklists['motor-001']
     : equipmentChecklists['motor-001'];
+  const currentComments = comments[currentEquipmentId] || comments['motor-001'];
 
-  const currentComments = selectedEquipment
-    ? equipmentComments[selectedEquipment.id] || equipmentComments['motor-001']
-    : equipmentComments['motor-001'];
+  const saveObservations = (newObs: Record<string, string[]>) => {
+    setObservations(newObs);
+    localStorage.setItem('dashboardObservations', JSON.stringify(newObs));
+  };
+
+  const saveComments = (newCom: Record<string, string[]>) => {
+    setComments(newCom);
+    localStorage.setItem('dashboardComments', JSON.stringify(newCom));
+  };
+
+  const updateObservation = (idx: number, text: string) => {
+    const updated = [...currentObservations];
+    updated[idx] = text;
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+    setEditingObsIdx(null);
+  };
+
+  const deleteObservation = (idx: number) => {
+    const updated = currentObservations.filter((_, i) => i !== idx);
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+  };
+
+  const addObservation = () => {
+    if (newObsText.trim()) {
+      const updated = [...currentObservations, newObsText];
+      const newObs = { ...observations, [currentEquipmentId]: updated };
+      saveObservations(newObs);
+      setNewObsText('');
+    }
+  };
+
+  const updateComment = (idx: number, text: string) => {
+    const updated = [...currentComments];
+    updated[idx] = text;
+    const newCom = { ...comments, [currentEquipmentId]: updated };
+    saveComments(newCom);
+    setEditingComIdx(null);
+  };
+
+  const deleteComment = (idx: number) => {
+    const updated = currentComments.filter((_, i) => i !== idx);
+    const newCom = { ...comments, [currentEquipmentId]: updated };
+    saveComments(newCom);
+  };
+
+  const addComment = () => {
+    if (newComText.trim()) {
+      const updated = [...currentComments, newComText];
+      const newCom = { ...comments, [currentEquipmentId]: updated };
+      saveComments(newCom);
+      setNewComText('');
+    }
+  };
 
   useEffect(() => {
     setVerifiedBy('');
     setConfirmedBy('');
     setOverallStatus('Good');
+    setEditingObsIdx(null);
+    setEditingComIdx(null);
   }, [selectedEquipment?.id]);
 
   return (
