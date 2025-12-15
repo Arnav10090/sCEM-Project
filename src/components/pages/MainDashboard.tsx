@@ -310,15 +310,64 @@ const MainDashboard = () => {
           </div>
 
           {/* Observations by Person Checking */}
-          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
+          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0 flex flex-col">
             <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations by person checking
             </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-2 text-sm text-muted-foreground flex-1 min-h-0 overflow-y-auto mb-3">
               {currentComments.map((comment, idx) => (
-                <li key={idx}>{comment}</li>
+                <li key={idx} className="flex items-start justify-between gap-2 group">
+                  {editingComIdx === idx ? (
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={editingComText}
+                        onChange={(e) => setEditingComText(e.target.value)}
+                        className="text-xs h-8"
+                      />
+                      <Button size="sm" onClick={() => updateComment(idx, editingComText)} className="h-8 px-2">Save</Button>
+                      <Button size="sm" variant="ghost" onClick={() => setEditingComIdx(null)} className="h-8 px-2">Cancel</Button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="flex-1">{comment}</span>
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => {
+                            setEditingComIdx(idx);
+                            setEditingComText(comment);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs text-red-600 hover:text-red-700"
+                          onClick={() => deleteComment(idx)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </li>
               ))}
             </ul>
+            <div className="flex gap-2 mt-2 flex-shrink-0">
+              <Input
+                placeholder="Add new observation"
+                value={newComText}
+                onChange={(e) => setNewComText(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addComment()}
+                className="text-xs h-8"
+              />
+              <Button size="sm" onClick={addComment} className="h-8 px-3 flex-shrink-0">
+                Add
+              </Button>
+            </div>
           </div>
         </div>
 
