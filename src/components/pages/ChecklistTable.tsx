@@ -63,7 +63,7 @@ const ChecklistTable = ({
                 <th className="text-center px-2 py-2 text-xs font-medium text-white border-r border-border w-20">
                   Status
                 </th>
-                <th className="text-center px-2 py-2 text-xs font-medium text-white flex-1">
+                <th className="text-center px-2 py-2 text-xs font-medium text-white w-1/3">
                   Comments during Inspection
                 </th>
               </tr>
