@@ -113,7 +113,7 @@ const MainDashboard = () => {
   }, [selectedEquipment?.id]);
 
   return (
-    <div className="grid grid-cols-3 gap-3 h-full animate-fade-in">
+    <div className="grid gap-3 h-full animate-fade-in" style={{ gridTemplateColumns: '1fr 2fr 1fr' }}>
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-3 h-full min-h-0">
         <div className="flex-1 min-h-0">
