@@ -15,12 +15,30 @@ const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = fals
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = (direction: 'up' | 'down' | 'left' | 'right') => {
-    if (images.length === 0) return;
-    
+    if (localImages.length === 0) return;
+
     if (direction === 'left' || direction === 'up') {
-      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : localImages.length - 1));
     } else {
-      setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+      setCurrentIndex((prev) => (prev < localImages.length - 1 ? prev + 1 : 0));
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        setLocalImages([...localImages, dataUrl]);
+      };
+      reader.readAsDataURL(file);
+      if (onImageUpload) {
+        onImageUpload(file);
+      }
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
