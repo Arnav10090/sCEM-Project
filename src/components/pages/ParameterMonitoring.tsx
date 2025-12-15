@@ -92,6 +92,7 @@ const ParameterMonitoring = () => {
   const { selectedEquipment } = useEquipment();
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [chartData, setChartData] = useState<{ time: string; vibration: number; vibration2: number; temperature: number; temperature2: number; current: number; speed: number; speed2: number }[]>([]);
+  const [selectedManual, setSelectedManual] = useState<string>('');
 
   const handleRemarksChange = (sn: number, remarks: string) => {
     setParameters((prev) =>
