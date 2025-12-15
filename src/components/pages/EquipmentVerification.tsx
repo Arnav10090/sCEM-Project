@@ -126,10 +126,36 @@ const EquipmentVerification = () => {
                 <span className="text-sm font-medium truncate block">{interlock.id}. {interlock.name}</span>
               </div>
               <div className="p-3 flex flex-col flex-1 justify-between">
-                <div className="flex-1 bg-muted border border-border rounded flex items-center justify-center mb-2">
-                  <Camera className="w-6 h-6 text-muted-foreground opacity-50" />
+                <div className="flex-1 bg-muted border border-border rounded flex items-center justify-center mb-2 overflow-hidden">
+                  {interlockImages[interlock.id]?.[0] ? (
+                    <img
+                      src={interlockImages[interlock.id][0]}
+                      alt={`${interlock.name} image`}
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <Camera className="w-6 h-6 text-muted-foreground opacity-50" />
+                  )}
                 </div>
-                <p className="text-sm text-gray-900 text-center line-clamp-2">{interlock.description}</p>
+                <p className="text-sm text-gray-900 text-center line-clamp-2 mb-2">{interlock.description}</p>
+                <input
+                  ref={(el) => {
+                    if (el) fileInputRefs.current[interlock.id] = el;
+                  }}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(interlock.id, e)}
+                  className="hidden"
+                />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full text-xs h-8"
+                  onClick={() => fileInputRefs.current[interlock.id]?.click()}
+                >
+                  <Upload className="w-3 h-3 mr-1" />
+                  Upload
+                </Button>
               </div>
             </div>
           ))}
