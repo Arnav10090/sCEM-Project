@@ -204,15 +204,64 @@ const MainDashboard = () => {
         {/* Top Row: Observations and Overall Status */}
         <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
           {/* Observations Based on Image Comparison */}
-          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
+          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0 flex flex-col">
             <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations based on image comparison (Old and Latest)
             </h4>
-            <ul className="space-y-2 text-sm text-gray-900">
+            <ul className="space-y-2 text-sm text-gray-900 flex-1 min-h-0 overflow-y-auto mb-3">
               {currentObservations.map((obs, idx) => (
-                <li key={idx}>{obs}</li>
+                <li key={idx} className="flex items-start justify-between gap-2 group">
+                  {editingObsIdx === idx ? (
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={editingObsText}
+                        onChange={(e) => setEditingObsText(e.target.value)}
+                        className="text-xs h-8"
+                      />
+                      <Button size="sm" onClick={() => updateObservation(idx, editingObsText)} className="h-8 px-2">Save</Button>
+                      <Button size="sm" variant="ghost" onClick={() => setEditingObsIdx(null)} className="h-8 px-2">Cancel</Button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="flex-1">{obs}</span>
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => {
+                            setEditingObsIdx(idx);
+                            setEditingObsText(obs);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs text-red-600 hover:text-red-700"
+                          onClick={() => deleteObservation(idx)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </li>
               ))}
             </ul>
+            <div className="flex gap-2 mt-2 flex-shrink-0">
+              <Input
+                placeholder="Add new observation"
+                value={newObsText}
+                onChange={(e) => setNewObsText(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addObservation()}
+                className="text-xs h-8"
+              />
+              <Button size="sm" onClick={addObservation} className="h-8 px-3 flex-shrink-0">
+                Add
+              </Button>
+            </div>
           </div>
 
           {/* Overall Equipment Status */}
