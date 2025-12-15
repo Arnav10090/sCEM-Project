@@ -9,24 +9,24 @@ const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', '
 
 const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
-    '• Equipment condition is normal',
-    '• All connections are secure',
-    '• No visible damage detected'
+    'Equipment condition is normal',
+    'All connections are secure',
+    'No visible damage detected'
   ],
   'plc-001': [
-    '• System running smoothly',
-    '• All parameters within range',
-    '• No alarms generated'
+    'System running smoothly',
+    'All parameters within range',
+    'No alarms generated'
   ],
   'drive-001': [
-    '• Drive is operational',
-    '• Temperature is nominal',
-    '• No faults detected'
+    'Drive is operational',
+    'Temperature is nominal',
+    'No faults detected'
   ],
   'pump-001': [
-    '• Pump running normally',
-    '• Flow rate stable',
-    '• No leaks observed'
+    'Pump running normally',
+    'Flow rate stable',
+    'No leaks observed'
   ]
 };
 
