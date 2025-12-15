@@ -305,11 +305,11 @@ const Alarms = () => {
         <table className="data-table">
           <thead>
             <tr>
-              <th className="w-16 text-black">NO.</th>
-              <th className="text-black">ALARM LEVEL & No. & MESSAGE</th>
-              <th className="w-28 text-black">DEVICE</th>
-              <th className="w-44 text-black">EVENT TIME</th>
-              <th className="w-44 text-black">RECOVERED TIME</th>
+              <th className="w-16">NO.</th>
+              <th>ALARM LEVEL & No. & MESSAGE</th>
+              <th className="w-28">DEVICE</th>
+              <th className="w-44">EVENT TIME</th>
+              <th className="w-44">RECOVERED TIME</th>
             </tr>
           </thead>
           <tbody>
