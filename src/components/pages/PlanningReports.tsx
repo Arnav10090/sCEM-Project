@@ -371,7 +371,16 @@ const PlanningReports = () => {
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-xs">{record.lastObservation}</span>
                       {record.lastObservation && (
-                        <div className="w-24 h-20 bg-muted border border-border rounded flex items-center justify-center">
+                        <button
+                          onClick={() => {
+                            if (record.sn === 1) {
+                              setSelectedImage('/image.png');
+                            } else if (record.sn === 2) {
+                              setSelectedImage('/image2.png');
+                            }
+                          }}
+                          className="w-24 h-20 bg-muted border border-border rounded flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                        >
                           {record.sn === 1 ? (
                             <img src="/image.png" alt="Inspection observation" className="w-full h-full object-contain rounded" />
                           ) : record.sn === 2 ? (
@@ -379,7 +388,7 @@ const PlanningReports = () => {
                           ) : (
                             <Camera className="w-4 h-4 text-muted-foreground" />
                           )}
-                        </div>
+                        </button>
                       )}
                     </div>
                   ) : (
