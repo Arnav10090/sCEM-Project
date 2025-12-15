@@ -74,7 +74,7 @@ const ChecklistTable = ({
                   key={item.id}
                   className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
-                  <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3">
+                  <td className="px-3 py-3 text-xs text-gray-900 border-r border-border w-1/3 text-center">
                     {item.parameter}
                   </td>
                   <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
