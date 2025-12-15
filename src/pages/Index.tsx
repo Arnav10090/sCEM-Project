@@ -5,7 +5,6 @@ import Navigation, { PageName } from '@/components/layout/Navigation';
 import KPICards from '@/components/layout/KPICards';
 import Footer from '@/components/layout/Footer';
 import AlarmPopup from '@/components/layout/AlarmPopup';
-import AlarmTestGenerator from '@/components/layout/AlarmTestGenerator';
 import MainDashboard from '@/components/pages/MainDashboard';
 import EquipmentVerification from '@/components/pages/EquipmentVerification';
 import ParameterMonitoring from '@/components/pages/ParameterMonitoring';
@@ -72,9 +71,6 @@ const Index = () => {
 
       {/* Alarm Popup - Displayed on all pages */}
       <AlarmPopup />
-
-      {/* Alarm Test Generator - For testing only */}
-      <AlarmTestGenerator />
 
       {/* Fixed Footer */}
       <Footer />
