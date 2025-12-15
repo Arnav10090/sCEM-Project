@@ -74,7 +74,7 @@ const ChecklistTable = ({
                   key={item.id}
                   className="border-b border-border hover:bg-muted/30 transition-colors align-top h-32"
                 >
-                  <td className="px-3 py-3 text-xs text-black border-r border-border w-1/3 text-center">
+                  <td className="px-3 py-3 text-xs text-black border-r border-border w-1/4 text-center">
                     {item.parameter}
                   </td>
                   <td className="px-3 py-3 text-center border-r border-border align-middle w-32">
@@ -89,7 +89,7 @@ const ChecklistTable = ({
                       </span>
                     </div>
                   </td>
-                  <td className="px-3 py-5 flex-1 text-center">
+                  <td className="px-3 py-5 w-2/5 text-center">
                     <textarea
                       value={item.comment}
                       onChange={(e) =>
