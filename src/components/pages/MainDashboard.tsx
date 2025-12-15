@@ -4,10 +4,12 @@ import ImagePanel from '../common/ImagePanel';
 import ChecklistTable from './ChecklistTable';
 import DropdownSelect from '../common/DropdownSelect';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { X } from 'lucide-react';
 
 const engineers = ['John Smith', 'Jane Doe', 'Mike Johnson', 'Sarah Williams', 'Tom Brown'];
 
-const equipmentObservations: Record<string, string[]> = {
+const defaultEquipmentObservations: Record<string, string[]> = {
   'motor-001': [
     '1. High vibration detected on bearing',
     '2. Temperature slightly elevated',
@@ -57,7 +59,7 @@ const equipmentChecklists: Record<string, Array<{ id: string; parameter: string;
   ]
 };
 
-const equipmentComments: Record<string, string[]> = {
+const defaultEquipmentComments: Record<string, string[]> = {
   'motor-001': [
     '• More vibrations',
     '• Noise from bearings',
@@ -85,6 +87,20 @@ const MainDashboard = () => {
   const [verifiedBy, setVerifiedBy] = useState<string>('');
   const [confirmedBy, setConfirmedBy] = useState<string>('');
   const [overallStatus, setOverallStatus] = useState<'Good' | 'Bad' | 'Worst'>('Good');
+  const [observations, setObservations] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('dashboardObservations');
+    return saved ? JSON.parse(saved) : defaultEquipmentObservations;
+  });
+  const [comments, setComments] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('dashboardComments');
+    return saved ? JSON.parse(saved) : defaultEquipmentComments;
+  });
+  const [editingObsIdx, setEditingObsIdx] = useState<number | null>(null);
+  const [editingObsText, setEditingObsText] = useState<string>('');
+  const [editingComIdx, setEditingComIdx] = useState<number | null>(null);
+  const [editingComText, setEditingComText] = useState<string>('');
+  const [newObsText, setNewObsText] = useState<string>('');
+  const [newComText, setNewComText] = useState<string>('');
 
   const getStatusClass = () => {
     switch (overallStatus) {
@@ -94,22 +110,76 @@ const MainDashboard = () => {
     }
   };
 
-  const currentObservations = selectedEquipment
-    ? equipmentObservations[selectedEquipment.id] || equipmentObservations['motor-001']
-    : equipmentObservations['motor-001'];
+  const currentEquipmentId = selectedEquipment?.id || 'motor-001';
 
+  const currentObservations = observations[currentEquipmentId] || observations['motor-001'];
   const currentChecklist = selectedEquipment
     ? equipmentChecklists[selectedEquipment.id] || equipmentChecklists['motor-001']
     : equipmentChecklists['motor-001'];
+  const currentComments = comments[currentEquipmentId] || comments['motor-001'];
 
-  const currentComments = selectedEquipment
-    ? equipmentComments[selectedEquipment.id] || equipmentComments['motor-001']
-    : equipmentComments['motor-001'];
+  const saveObservations = (newObs: Record<string, string[]>) => {
+    setObservations(newObs);
+    localStorage.setItem('dashboardObservations', JSON.stringify(newObs));
+  };
+
+  const saveComments = (newCom: Record<string, string[]>) => {
+    setComments(newCom);
+    localStorage.setItem('dashboardComments', JSON.stringify(newCom));
+  };
+
+  const updateObservation = (idx: number, text: string) => {
+    const updated = [...currentObservations];
+    updated[idx] = text;
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+    setEditingObsIdx(null);
+  };
+
+  const deleteObservation = (idx: number) => {
+    const updated = currentObservations.filter((_, i) => i !== idx);
+    const newObs = { ...observations, [currentEquipmentId]: updated };
+    saveObservations(newObs);
+  };
+
+  const addObservation = () => {
+    if (newObsText.trim()) {
+      const updated = [...currentObservations, newObsText];
+      const newObs = { ...observations, [currentEquipmentId]: updated };
+      saveObservations(newObs);
+      setNewObsText('');
+    }
+  };
+
+  const updateComment = (idx: number, text: string) => {
+    const updated = [...currentComments];
+    updated[idx] = text;
+    const newCom = { ...comments, [currentEquipmentId]: updated };
+    saveComments(newCom);
+    setEditingComIdx(null);
+  };
+
+  const deleteComment = (idx: number) => {
+    const updated = currentComments.filter((_, i) => i !== idx);
+    const newCom = { ...comments, [currentEquipmentId]: updated };
+    saveComments(newCom);
+  };
+
+  const addComment = () => {
+    if (newComText.trim()) {
+      const updated = [...currentComments, newComText];
+      const newCom = { ...comments, [currentEquipmentId]: updated };
+      saveComments(newCom);
+      setNewComText('');
+    }
+  };
 
   useEffect(() => {
     setVerifiedBy('');
     setConfirmedBy('');
     setOverallStatus('Good');
+    setEditingObsIdx(null);
+    setEditingComIdx(null);
   }, [selectedEquipment?.id]);
 
   return (
@@ -117,10 +187,10 @@ const MainDashboard = () => {
       {/* Left Column: Images (stacked) */}
       <div className="flex flex-col gap-3 h-full min-h-0">
         <div className="flex-1 min-h-0">
-          <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} />
+          <ImagePanel title="Image Captured During Inspection" images={['/motor1.png']} showUploadButton={true} />
         </div>
         <div className="flex-1 min-h-0">
-          <ImagePanel title="Last Image Captured" images={['/motor2.png']} />
+          <ImagePanel title="Last Image Captured" images={['/motor2.png']} showUploadButton={false} showImageInfo={true} />
         </div>
       </div>
 
@@ -134,15 +204,64 @@ const MainDashboard = () => {
         {/* Top Row: Observations and Overall Status */}
         <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
           {/* Observations Based on Image Comparison */}
-          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
+          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0 flex flex-col">
             <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations based on image comparison (Old and Latest)
             </h4>
-            <ul className="space-y-2 text-sm text-gray-900">
+            <ul className="space-y-2 text-sm text-gray-900 flex-1 min-h-0 overflow-y-auto mb-3">
               {currentObservations.map((obs, idx) => (
-                <li key={idx}>{obs}</li>
+                <li key={idx} className="flex items-start justify-between gap-2 group">
+                  {editingObsIdx === idx ? (
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={editingObsText}
+                        onChange={(e) => setEditingObsText(e.target.value)}
+                        className="text-xs h-8"
+                      />
+                      <Button size="sm" onClick={() => updateObservation(idx, editingObsText)} className="h-8 px-2">Save</Button>
+                      <Button size="sm" variant="ghost" onClick={() => setEditingObsIdx(null)} className="h-8 px-2">Cancel</Button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="flex-1">{obs}</span>
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => {
+                            setEditingObsIdx(idx);
+                            setEditingObsText(obs);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs text-red-600 hover:text-red-700"
+                          onClick={() => deleteObservation(idx)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </li>
               ))}
             </ul>
+            <div className="flex gap-2 mt-2 flex-shrink-0">
+              <Input
+                placeholder="Add new observation"
+                value={newObsText}
+                onChange={(e) => setNewObsText(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addObservation()}
+                className="text-xs h-8"
+              />
+              <Button size="sm" onClick={addObservation} className="h-8 px-3 flex-shrink-0">
+                Add
+              </Button>
+            </div>
           </div>
 
           {/* Overall Equipment Status */}
@@ -191,15 +310,64 @@ const MainDashboard = () => {
           </div>
 
           {/* Observations by Person Checking */}
-          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
+          <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0 flex flex-col">
             <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations by person checking
             </h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-2 text-sm text-muted-foreground flex-1 min-h-0 overflow-y-auto mb-3">
               {currentComments.map((comment, idx) => (
-                <li key={idx}>{comment}</li>
+                <li key={idx} className="flex items-start justify-between gap-2 group">
+                  {editingComIdx === idx ? (
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={editingComText}
+                        onChange={(e) => setEditingComText(e.target.value)}
+                        className="text-xs h-8"
+                      />
+                      <Button size="sm" onClick={() => updateComment(idx, editingComText)} className="h-8 px-2">Save</Button>
+                      <Button size="sm" variant="ghost" onClick={() => setEditingComIdx(null)} className="h-8 px-2">Cancel</Button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="flex-1">{comment}</span>
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => {
+                            setEditingComIdx(idx);
+                            setEditingComText(comment);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs text-red-600 hover:text-red-700"
+                          onClick={() => deleteComment(idx)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </li>
               ))}
             </ul>
+            <div className="flex gap-2 mt-2 flex-shrink-0">
+              <Input
+                placeholder="Add new observation"
+                value={newComText}
+                onChange={(e) => setNewComText(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addComment()}
+                className="text-xs h-8"
+              />
+              <Button size="sm" onClick={addComment} className="h-8 px-3 flex-shrink-0">
+                Add
+              </Button>
+            </div>
           </div>
         </div>
 

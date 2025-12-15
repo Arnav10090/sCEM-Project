@@ -26,8 +26,8 @@ const navItems: PageName[] = [
 
 const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
   return (
-    <nav className="bg-card border-b border-border px-4 overflow-x-auto">
-      <div className="flex gap-1 justify-evenly w-full">
+    <nav className="bg-blue-50 border-b border-gray-300 px-4 overflow-x-auto py-2">
+      <div className="flex gap-2 justify-evenly w-full">
         {navItems.map((item) => (
           <button
             key={item}

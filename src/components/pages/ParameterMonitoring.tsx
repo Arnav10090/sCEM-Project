@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useEquipment } from '@/context/EquipmentContext';
 import TrendChart from '../common/TrendChart';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Parameter {
   sn: number;
@@ -69,10 +77,30 @@ const generateRandomData = (base: number, variance: number) => {
   return parseFloat((base + (Math.random() - 0.5) * variance * 2).toFixed(2));
 };
 
+const manualsAndDrawings = [
+  { id: '1', name: 'Motor Assembly Drawing - Rev 2.1', type: 'Drawing' },
+  { id: '2', name: 'Motor Operation Manual - English', type: 'Manual' },
+  { id: '3', name: 'Maintenance Guide - Standard Procedures', type: 'Manual' },
+  { id: '4', name: 'Bearing Assembly Diagram', type: 'Drawing' },
+  { id: '5', name: 'Wiring Schematic - 3PH Motor', type: 'Drawing' },
+  { id: '6', name: 'Technical Specifications Sheet', type: 'Manual' },
+  { id: '7', name: 'Vibration Analysis Guide', type: 'Manual' },
+  { id: '8', name: 'Thermal Management Diagram', type: 'Drawing' }
+];
+
 const ParameterMonitoring = () => {
   const { selectedEquipment } = useEquipment();
   const [parameters, setParameters] = useState<Parameter[]>([]);
   const [chartData, setChartData] = useState<{ time: string; vibration: number; vibration2: number; temperature: number; temperature2: number; current: number; speed: number; speed2: number }[]>([]);
+  const [selectedManual, setSelectedManual] = useState<string>('');
+
+  const handleRemarksChange = (sn: number, remarks: string) => {
+    setParameters((prev) =>
+      prev.map((param) =>
+        param.sn === sn ? { ...param, remarks } : param
+      )
+    );
+  };
 
   useEffect(() => {
     if (selectedEquipment) {
@@ -134,7 +162,14 @@ const ParameterMonitoring = () => {
                   <td className="text-center font-mono font-medium">
                     {param.present || '-'}
                   </td>
-                  <td>{param.remarks}</td>
+                  <td className="p-0">
+                    <Input
+                      value={param.remarks}
+                      onChange={(e) => handleRemarksChange(param.sn, e.target.value)}
+                      placeholder="Enter remarks..."
+                      className="border-0 text-xs h-auto py-1 px-2"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -178,13 +213,32 @@ const ParameterMonitoring = () => {
 
       {/* Bottom Section */}
       <div className="bg-card border border-border rounded-lg p-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-sm font-medium text-industrial-red">Manuals / Drawings List</span>
+        <div className="flex items-center justify-between gap-4">
+          <div className="w-1/2">
+            <label className="text-sm font-medium text-gray-900 block mb-2">Manuals / Drawings List</label>
+            <Select value={selectedManual} onValueChange={setSelectedManual}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a manual or drawing..." />
+              </SelectTrigger>
+              <SelectContent>
+                {manualsAndDrawings.map((item) => (
+                  <SelectItem key={item.id} value={item.id}>
+                    {item.name} ({item.type})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="text-sm text-muted-foreground">
-            Drop down list to be displayed
-          </div>
+          {selectedManual && (
+            <div className="flex-1 text-sm text-gray-900">
+              <div className="font-medium">
+                {manualsAndDrawings.find((m) => m.id === selectedManual)?.name}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                Type: {manualsAndDrawings.find((m) => m.id === selectedManual)?.type}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

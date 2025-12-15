@@ -1,22 +1,81 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Camera } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Camera, Upload } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+interface ImageMetadata {
+  size: number;
+  uploadedAt: Date;
+}
 
 interface ImagePanelProps {
   title: string;
   images?: string[];
+  onImageUpload?: (file: File) => void;
+  showUploadButton?: boolean;
+  showImageInfo?: boolean;
 }
 
-const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
+const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = false, showImageInfo = false }: ImagePanelProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [localImages, setLocalImages] = useState<string[]>(images);
+  const [imageMetadata, setImageMetadata] = useState<ImageMetadata[]>(() => {
+    return images.map(() => ({
+      size: 0,
+      uploadedAt: new Date()
+    }));
+  });
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = (direction: 'up' | 'down' | 'left' | 'right') => {
-    if (images.length === 0) return;
-    
+    if (localImages.length === 0) return;
+
     if (direction === 'left' || direction === 'up') {
-      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : localImages.length - 1));
     } else {
-      setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+      setCurrentIndex((prev) => (prev < localImages.length - 1 ? prev + 1 : 0));
     }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        setLocalImages([...localImages, dataUrl]);
+        setImageMetadata([...imageMetadata, {
+          size: file.size,
+          uploadedAt: new Date()
+        }]);
+      };
+      reader.readAsDataURL(file);
+      if (onImageUpload) {
+        onImageUpload(file);
+      }
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const formatDateTime = (date: Date): string => {
+    return date.toLocaleString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
   };
 
   return (
@@ -51,9 +110,9 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
 
         {/* Image Area */}
         <div className="h-full bg-muted border border-border rounded flex items-center justify-center overflow-hidden">
-          {images.length > 0 ? (
+          {localImages.length > 0 ? (
             <img
-              src={images[currentIndex]}
+              src={localImages[currentIndex]}
               alt={`${title} - Image ${currentIndex + 1}`}
               className="w-full h-full object-contain"
             />
@@ -78,7 +137,7 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
 
         {/* Bottom Navigation */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-10">
-          <button 
+          <button
             onClick={() => navigate('down')}
             className="nav-circle"
           >
@@ -87,6 +146,35 @@ const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
         </div>
       </div>
 
+      {/* Upload Button */}
+      {showUploadButton && (
+        <div className="mt-2 flex-shrink-0">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full text-xs"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="w-3 h-3 mr-1" />
+            Upload Image
+          </Button>
+        </div>
+      )}
+
+      {/* Image Info */}
+      {showImageInfo && localImages.length > 0 && imageMetadata[currentIndex] && (
+        <div className="mt-2 p-2 bg-muted rounded text-xs text-muted-foreground flex-shrink-0">
+          <div>Image size - {formatFileSize(imageMetadata[currentIndex].size)}</div>
+          <div>Image uploaded on {formatDateTime(imageMetadata[currentIndex].uploadedAt)}</div>
+        </div>
+      )}
     </div>
   );
 };

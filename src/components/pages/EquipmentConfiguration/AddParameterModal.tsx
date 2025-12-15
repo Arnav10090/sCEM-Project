@@ -143,7 +143,7 @@ const AddParameterModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-industrial-red">
+          <DialogTitle className="text-gray-900">
             {editingParameter ? 'Edit Parameter' : 'Add New Parameter'}
           </DialogTitle>
         </DialogHeader>

@@ -131,15 +131,15 @@
   
   /* Navigation Tab Styles */
   .nav-tab {
-    @apply px-4 py-2 text-sm font-medium transition-all duration-200 border-b-2 border-transparent;
+    @apply px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md;
   }
-  
+
   .nav-tab-active {
-    @apply bg-primary text-primary-foreground rounded-t-lg border-b-0;
+    @apply bg-green-500 text-white;
   }
-  
+
   .nav-tab-inactive {
-    @apply bg-card text-foreground hover:bg-industrial-green-light/20 border border-border;
+    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50;
   }
   
   /* KPI Card Styles */
@@ -159,15 +159,15 @@
   .data-table {
     @apply w-full border-collapse bg-card;
   }
-  
+
   .data-table th {
-    @apply bg-industrial-red text-white text-sm font-bold uppercase px-3 py-3 text-left border border-border;
+    @apply bg-muted text-gray-900 text-sm font-bold uppercase px-3 py-3 text-center border border-border;
   }
-  
+
   .data-table td {
-    @apply px-3 py-3 text-sm border border-border;
+    @apply px-3 py-3 text-sm border border-border text-gray-900 text-center;
   }
-  
+
   .data-table tr:nth-child(even) {
     @apply bg-muted/50;
   }

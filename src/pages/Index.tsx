@@ -16,9 +16,17 @@ import SpareTab from '@/components/pages/SpareTab';
 const pagesWithKPI: PageName[] = ['Main Dashboard', 'Equipment Verification', 'Parameter Monitoring', 'Equipment Configuration'];
 
 const Index = () => {
-  const [currentPage, setCurrentPage] = useState<PageName>('Main Dashboard');
+  const [currentPage, setCurrentPage] = useState<PageName>(() => {
+    const saved = localStorage.getItem('currentPage');
+    return (saved as PageName) || 'Main Dashboard';
+  });
 
   const showKPICards = pagesWithKPI.includes(currentPage);
+
+  const handleSetCurrentPage = (page: PageName) => {
+    setCurrentPage(page);
+    localStorage.setItem('currentPage', page);
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -48,13 +56,15 @@ const Index = () => {
       {/* Fixed Header Section */}
       <Header currentPage={currentPage} />
       <ScrollingAlert />
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navigation currentPage={currentPage} setCurrentPage={handleSetCurrentPage} />
 
       {/* Conditional KPI Cards */}
       {showKPICards && <KPICards />}
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 pt-4 mt-2 min-h-0 pb-32 overflow-y-auto">
+      <main className={`flex-1 p-4 pt-4 min-h-0 pb-32 overflow-y-auto ${
+        currentPage === 'Planning & Reports' || currentPage === 'Alarms' ? 'mt-0' : 'mt-2'
+      }`}>
         {renderPage()}
       </main>
 

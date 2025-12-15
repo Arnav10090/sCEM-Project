@@ -180,7 +180,7 @@ const EquipmentConfiguration = () => {
       {/* Left Panel - Equipment List */}
       <div className="col-span-1 bg-card border border-border rounded-lg flex flex-col">
         <div className="p-3 border-b border-border">
-          <h3 className="text-sm font-medium text-industrial-red mb-3">Equipment List</h3>
+          <h3 className="text-sm font-medium text-gray-900 mb-3">Equipment List</h3>
           
           {/* Search */}
           <div className="relative mb-2">
@@ -304,7 +304,7 @@ const EquipmentConfiguration = () => {
             {/* Parameters Section */}
             <div className="flex-1 overflow-y-auto p-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-medium text-industrial-red">
+                <h3 className="text-sm font-medium text-gray-900">
                   Parameters Configuration ({selectedEquipment.parameters.length})
                 </h3>
                 <Button
