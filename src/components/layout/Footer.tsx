@@ -1,21 +1,17 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface AlarmEntry {
-  no: string;
-  level: string;
   message: string;
-  device: string;
-  eventTime: string;
-  recoveredTime: string;
+  time: string;
 }
 
 const sampleAlarms: AlarmEntry[] = [
-  { no: '001', level: 'CRITICAL', message: 'Motor temperature exceeded threshold', device: 'MOTOR-01', eventTime: '2024/12/10 14:23:45', recoveredTime: '2024/12/10 14:35:12' },
-  { no: '002', level: 'WARNING', message: 'Vibration levels abnormal', device: 'BEARING-DS', eventTime: '2024/12/10 13:15:00', recoveredTime: '2024/12/10 13:45:30' },
-  { no: '003', level: 'INFO', message: 'Scheduled maintenance reminder', device: 'PUMP-07', eventTime: '2024/12/10 09:00:00', recoveredTime: '-' },
-  { no: '004', level: 'WARNING', message: 'High current detected', device: 'MOTOR-03', eventTime: '2024/12/10 08:45:22', recoveredTime: '2024/12/10 08:50:00' },
-  { no: '005', level: 'CRITICAL', message: 'Safety interlock triggered', device: 'SAFETY-01', eventTime: '2024/12/09 22:30:15', recoveredTime: '2024/12/09 22:45:00' },
+  { message: 'Motor temperature exceeded threshold - requires immediate attention', time: '10:10:42 AM' },
+  { message: 'Safety observation raised for Equipment inspection', time: '10:10:42 AM' },
+  { message: 'System health normal - all parameters within limits', time: '10:10:42 AM' },
+  { message: 'Vibration levels abnormal on bearing assembly', time: '10:09:15 AM' },
+  { message: 'Scheduled maintenance due for Pump #3', time: '10:08:30 AM' },
 ];
 
 const Footer = () => {
@@ -46,39 +42,15 @@ const Footer = () => {
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="px-4 py-3 overflow-auto max-h-64">
-          <table className="data-table w-full text-sm">
-            <thead>
-              <tr>
-                <th className="w-16">Alarm No.</th>
-                <th className="w-24">Level</th>
-                <th>Message</th>
-                <th className="w-28">Device</th>
-                <th className="w-40">Event Time</th>
-                <th className="w-40">Recovered Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sampleAlarms.map((alarm) => (
-                <tr key={alarm.no} className="bg-card">
-                  <td className="font-mono">{alarm.no}</td>
-                  <td>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      alarm.level === 'CRITICAL' ? 'bg-destructive text-destructive-foreground' :
-                      alarm.level === 'WARNING' ? 'bg-yellow-500 text-white' :
-                      'bg-blue-500 text-white'
-                    }`}>
-                      {alarm.level}
-                    </span>
-                  </td>
-                  <td>{alarm.message}</td>
-                  <td className="font-mono">{alarm.device}</td>
-                  <td className="font-mono">{alarm.eventTime}</td>
-                  <td className="font-mono">{alarm.recoveredTime}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="px-4 py-3 overflow-auto max-h-64 bg-white">
+          <div className="space-y-2">
+            {sampleAlarms.map((alarm, idx) => (
+              <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+                <span className="text-sm text-gray-800 flex-1">{alarm.message}</span>
+                <span className="text-xs text-gray-600 font-medium ml-4 flex-shrink-0">{alarm.time}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
