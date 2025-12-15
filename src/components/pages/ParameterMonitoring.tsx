@@ -77,6 +77,17 @@ const generateRandomData = (base: number, variance: number) => {
   return parseFloat((base + (Math.random() - 0.5) * variance * 2).toFixed(2));
 };
 
+const manualsAndDrawings = [
+  { id: '1', name: 'Motor Assembly Drawing - Rev 2.1', type: 'Drawing' },
+  { id: '2', name: 'Motor Operation Manual - English', type: 'Manual' },
+  { id: '3', name: 'Maintenance Guide - Standard Procedures', type: 'Manual' },
+  { id: '4', name: 'Bearing Assembly Diagram', type: 'Drawing' },
+  { id: '5', name: 'Wiring Schematic - 3PH Motor', type: 'Drawing' },
+  { id: '6', name: 'Technical Specifications Sheet', type: 'Manual' },
+  { id: '7', name: 'Vibration Analysis Guide', type: 'Manual' },
+  { id: '8', name: 'Thermal Management Diagram', type: 'Drawing' }
+];
+
 const ParameterMonitoring = () => {
   const { selectedEquipment } = useEquipment();
   const [parameters, setParameters] = useState<Parameter[]>([]);
