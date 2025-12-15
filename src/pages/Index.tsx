@@ -56,7 +56,7 @@ const Index = () => {
       {/* Fixed Header Section */}
       <Header currentPage={currentPage} />
       <ScrollingAlert />
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navigation currentPage={currentPage} setCurrentPage={handleSetCurrentPage} />
 
       {/* Conditional KPI Cards */}
       {showKPICards && <KPICards />}
