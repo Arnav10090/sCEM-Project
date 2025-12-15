@@ -142,13 +142,13 @@ const ParameterMonitoring = () => {
           <table className="data-table">
             <thead>
               <tr>
-                <th className="w-12 text-black">S.N</th>
-                <th className="text-black">Parameter List</th>
-                <th className="w-16 text-black">Unit</th>
-                <th className="w-16 text-black">Min.</th>
-                <th className="w-16 text-black">Max.</th>
-                <th className="w-24 text-black">Present Value</th>
-                <th className="text-black">Remarks from Engineer</th>
+                <th className="w-12">S.N</th>
+                <th>Parameter List</th>
+                <th className="w-16">Unit</th>
+                <th className="w-16">Min.</th>
+                <th className="w-16">Max.</th>
+                <th className="w-24">Present Value</th>
+                <th>Remarks from Engineer</th>
               </tr>
             </thead>
             <tbody>
