@@ -61,7 +61,7 @@ const ChecklistTable = ({
                   Various parameters of equipment ex.
                 </th>
                 <th className="text-center px-3 py-2 text-xs font-medium text-gray-900 border-r border-border w-20">
-                  Status in Checked/Not-Checked to be displayed
+                  Status
                 </th>
                 <th className="text-left px-3 py-2 text-xs font-medium text-gray-900 flex-1">
                   Add comments during inspection ex.
@@ -78,12 +78,15 @@ const ChecklistTable = ({
                     {item.parameter}
                   </td>
                   <td className="px-3 py-3 text-center border-r border-border align-middle w-20">
-                    <div className="flex items-center justify-center h-full">
+                    <div className="flex flex-col items-center justify-center h-full gap-2">
                       <Checkbox
                         checked={item.isChecked}
                         onCheckedChange={() => handleCheckChange(item.id)}
                         className="h-4 w-4"
                       />
+                      <span className="text-xs font-medium text-gray-900">
+                        {item.isChecked ? 'Checked' : 'Not Checked'}
+                      </span>
                     </div>
                   </td>
                   <td className="px-3 py-5 flex-1">
