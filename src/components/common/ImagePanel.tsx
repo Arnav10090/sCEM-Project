@@ -1,13 +1,18 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Camera } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Camera, Upload } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ImagePanelProps {
   title: string;
   images?: string[];
+  onImageUpload?: (file: File) => void;
+  showUploadButton?: boolean;
 }
 
-const ImagePanel = ({ title, images = [] }: ImagePanelProps) => {
+const ImagePanel = ({ title, images = [], onImageUpload, showUploadButton = false }: ImagePanelProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [localImages, setLocalImages] = useState<string[]>(images);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = (direction: 'up' | 'down' | 'left' | 'right') => {
     if (images.length === 0) return;
