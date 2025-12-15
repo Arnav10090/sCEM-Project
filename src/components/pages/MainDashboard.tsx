@@ -131,10 +131,10 @@ const MainDashboard = () => {
         <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
           {/* Observations Based on Image Comparison */}
           <div className="bg-card border border-border rounded-lg p-4 overflow-auto min-h-0">
-            <h4 className="text-sm font-medium text-industrial-red mb-3 flex-shrink-0">
+            <h4 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">
               Observations based on image comparison (Old and Latest)
             </h4>
-            <ul className="space-y-2 text-sm text-industrial-red">
+            <ul className="space-y-2 text-sm text-gray-900">
               {currentObservations.map((obs, idx) => (
                 <li key={idx}>{obs}</li>
               ))}
