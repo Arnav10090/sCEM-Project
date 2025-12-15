@@ -48,7 +48,7 @@ const equipmentData: Equipment[] = [
     criticality: 'High',
     status: 'Run',
     statusColor: '#4CAF50',
-    spareParts: 'Limited',
+    spareParts: 'Available',
     lastInspectionDate: '11/15/2025',
     scheduledInspectionDate: '12/15/2025',
     actualInspectionDate: '11/15/2025'
