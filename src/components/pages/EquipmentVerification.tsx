@@ -156,11 +156,11 @@ const EquipmentVerification = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3 h-full animate-fade-in">
+    <div className="grid grid-cols-4 gap-3 h-full animate-fade-in" style={{ gridTemplateRows: '1fr 1fr' }}>
       {/* Left Column - Interlock List & Observations */}
-      <div className="flex flex-col gap-3 h-full">
+      <div className="flex flex-col gap-3 h-full min-h-0">
         {/* Critical Interlock List */}
-        <div className="bg-card border border-border rounded-lg p-4 overflow-auto flex-1">
+        <div className="bg-card border border-border rounded-lg p-4 overflow-auto flex-1 min-h-0">
           <h4 className="text-sm font-medium text-gray-900 mb-3">
             Critical / Important Interlock List
           </h4>
@@ -172,7 +172,7 @@ const EquipmentVerification = () => {
         </div>
 
         {/* Observations by Person Checking */}
-        <div className="bg-card border border-border rounded-lg p-4 h-1/2 overflow-auto flex flex-col">
+        <div className="bg-card border border-border rounded-lg p-4 flex-1 min-h-0 overflow-hidden flex flex-col">
           <h5 className="text-sm font-medium text-gray-900 mb-3 flex-shrink-0">Observations by person checking</h5>
           <ul className="text-sm text-muted-foreground space-y-2 flex-1 min-h-0 overflow-y-auto mb-3">
             {currentObservations.map((obs, idx) => (
