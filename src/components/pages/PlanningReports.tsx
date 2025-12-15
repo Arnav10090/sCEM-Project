@@ -110,10 +110,10 @@ const PlanningReports = () => {
     );
   };
 
-  const uniquePlants = Array.from(new Set(inspectionRecords.map(r => r.plant)));
-  const uniqueStatuses = Array.from(new Set(inspectionRecords.map(r => r.status)));
+  const uniquePlants = Array.from(new Set(records.map(r => r.plant)));
+  const uniqueStatuses = Array.from(new Set(records.map(r => r.status)));
 
-  const filteredRecords = inspectionRecords.filter((record) => {
+  const filteredRecords = records.filter((record) => {
     const matchesSearch =
       record.equipment.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.plant.toLowerCase().includes(searchTerm.toLowerCase()) ||
