@@ -173,3 +173,9 @@ Built with **shadcn/ui** - a collection of beautifully designed, accessible comp
 - **Sonner** - Beautiful toast notifications
 
 ---
+
+<div align="center">
+
+**Built with ❤️ By Arnav Tiwari**
+
+</div>
