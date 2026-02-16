@@ -1,10 +1,6 @@
 <div align="center">
 
-# 🏭 sCEM - Steel Coil Equipment Management System
-
-<img src="./public/Hitachi-Logo.png" alt="Hitachi Logo" width="200"/>
-
-### 🚀 Next-Generation Industrial Equipment Monitoring & Management Platform
+# 🏭 sCEM - Smart Critical Equipment Monitoring System
 
 [![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -76,39 +72,6 @@
 
 ## 🚀 Installation
 
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **[Bun](https://bun.sh/)** v1.3.4 or higher - A fast all-in-one JavaScript runtime
-  ```bash
-  # Install Bun (Windows)
-  powershell -c "irm bun.sh/install.ps1|iex"
-  
-  # Verify installation
-  bun --version
-  ```
-
-### Quick Start
-
-```bash
-# 1️⃣ Clone the repository
-git clone <YOUR_GIT_URL>
-
-# 2️⃣ Navigate to project directory
-cd sCEM-Project
-
-# 3️⃣ Install dependencies (using Bun for faster installation)
-bun install
-
-# 4️⃣ Start development server
-bun run dev
-
-# 🎉 Open your browser at http://localhost:5173
-```
-
-### Alternative Installation Methods
-
 <details>
 <summary><b>Using npm</b></summary>
 
@@ -118,48 +81,7 @@ npm run dev
 ```
 </details>
 
-<details>
-<summary><b>Using pnpm</b></summary>
-
-```bash
-pnpm install
-pnpm dev
-```
-</details>
-
-<details>
-<summary><b>Using GitHub Codespaces</b></summary>
-
-1. Navigate to the repository on GitHub
-2. Click the **Code** button (green)
-3. Select the **Codespaces** tab
-4. Click **New codespace**
-5. Wait for the environment to initialize
-6. Run `bun install && bun run dev`
-</details>
-
 ---
-
-## 💻 Usage
-
-### Development Commands
-
-```bash
-# Start development server with hot-reload
-bun run dev
-
-# Build for production
-bun run build
-
-# Build for development (with source maps)
-bun run build:dev
-
-# Preview production build
-bun run preview
-
-# Run linter
-bun run lint
-```
 
 ### Project Structure
 
@@ -251,98 +173,3 @@ Built with **shadcn/ui** - a collection of beautifully designed, accessible comp
 - **Sonner** - Beautiful toast notifications
 
 ---
-
-## 📖 Documentation
-
-### Configuration
-
-<details>
-<summary><b>Environment Setup</b></summary>
-
-Create a `.env` file in the root directory for environment-specific configurations:
-
-```env
-# Add your environment variables here
-# VITE_API_URL=your_api_url
-```
-</details>
-
-<details>
-<summary><b>Customization</b></summary>
-
-- **Theme**: Modify `tailwind.config.ts` for custom colors and design tokens
-- **Components**: Customize shadcn/ui components in `src/components/ui/`
-- **Routes**: Add new routes in `src/App.tsx`
-</details>
-
-### Development Guidelines
-
-- **Code Style**: Follow TypeScript best practices
-- **Components**: Use functional components with hooks
-- **State Management**: Leverage React Context for global state
-- **Styling**: Use Tailwind CSS utility classes
-- **Type Safety**: Ensure all components are properly typed
-
----
-
-## 🚢 Deployment
-
-### Build for Production
-
-```bash
-# Create optimized production build
-bun run build
-
-# Preview production build locally
-bun run preview
-```
-
-### Deploy with Lovable
-
-1. Open your [Lovable project dashboard](https://lovable.dev/)
-2. Navigate to **Share → Publish**
-3. Follow the deployment wizard
-
-### Custom Domain
-
-To connect a custom domain:
-1. Go to **Project → Settings → Domains**
-2. Click **Connect Domain**
-3. Follow the [custom domain setup guide](https://docs.lovable.dev/features/custom-domain#custom-domain)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is part of the HICAD Projects portfolio.
-
----
-
-## 🙏 Acknowledgments
-
-- **Hitachi** - For the industrial equipment and domain expertise
-- **shadcn/ui** - For the beautiful component library
-- **Lovable** - For the development platform
-- **Open Source Community** - For the amazing tools and libraries
-
----
-
-<div align="center">
-
-### 🌟 Built with modern web technologies for industrial excellence
-
-**Made with ❤️ for Industrial Automation**
-
-</div>
